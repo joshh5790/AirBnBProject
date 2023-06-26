@@ -17,7 +17,7 @@ router.post('/', async (req, res, next) => {
             }
         }
     })
-    
+
     if (!user ||
         !bcrypt.compareSync(password, user.hashedPassword.toString())) {
         const err = new Error('Login failed!')
@@ -30,8 +30,7 @@ router.post('/', async (req, res, next) => {
     const safeUser = {
         id: user.id,
         email: user.email,
-        username: user.username,
-        hashedPassword: user.hashedPassword
+        username: user.username
     }
 
     await setTokenCookie(res, safeUser)
