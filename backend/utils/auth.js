@@ -29,6 +29,7 @@ const setTokenCookie = (res, user) => {
     return token
 }
 
+// have a problem with restoreUser, cookie isn't saving?
 const restoreUser = (req, res, next) => {
     const { token } = req.cookies
     req.user = null
@@ -41,11 +42,12 @@ const restoreUser = (req, res, next) => {
             if (err) return next()
 
             try {
-                const { id } = jwtPayload.data
-                req.user = await User.findByPk(id, {
+                const { id } = jwtPayload
+                req.user = await User.findOne({
+                    where: { id },
                     attributes: ['email', 'createdAt', 'updatedAt']
                 })
-            } catch(error) {
+            } catch(error) { 
                 res.clearCookie('token')
                 return next()
             }
