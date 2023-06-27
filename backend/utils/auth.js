@@ -14,7 +14,7 @@ const setTokenCookie = (res, user) => {
     }
 
     const token = jwt.sign(
-        safeUser, secret, { expiresIn: parseInt(expiresIn) }
+        {data: safeUser}, secret, { expiresIn: parseInt(expiresIn) }
     )
 
     const isProduction = process.env.NODE_ENV === 'production'
@@ -42,12 +42,12 @@ const restoreUser = (req, res, next) => {
             if (err) return next()
 
             try {
-                const { id } = jwtPayload
+                const { id } = jwtPayload.data
                 req.user = await User.findOne({
                     where: { id },
                     attributes: ['email', 'createdAt', 'updatedAt']
                 })
-            } catch(error) { 
+            } catch(error) {
                 res.clearCookie('token')
                 return next()
             }
