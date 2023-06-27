@@ -1,6 +1,7 @@
 'use strict';
 
 const { defaultConfiguration } = require('../../app');
+const { sequelize } = require('../models');
 
 let options = {}
 if (process.env.NODE_ENV === 'production') {
