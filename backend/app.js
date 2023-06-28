@@ -37,6 +37,12 @@ app.use(
 )
 
 app.use(routes)
+
+app.get('/', (req, res) => {
+    res.json({ message: "Hellooooo"})
+})
+
+
 // error handling middlewares
 app.use((req, res, next) => {
     const err = new Error("The requested resource couldn't be found.");
@@ -71,5 +77,6 @@ app.use((err, _req, res, _next) => {
       stack: isProduction ? null : err.stack
     });
 });
+
 
 module.exports = app
