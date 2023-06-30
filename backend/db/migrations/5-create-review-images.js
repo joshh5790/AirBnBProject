@@ -16,7 +16,12 @@ module.exports = {
         type: Sequelize.BOOLEAN
       },
       reviewId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Reviews',
+          key: 'id'
+        },
+        onDelete: 'Cascade'
       },
       createdAt: {
         allowNull: false,
