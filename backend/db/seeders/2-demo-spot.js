@@ -44,7 +44,6 @@ module.exports = {
                 name, description, price
               } = spotInfo
         const owner = await User.findByPk(spotInfo.ownerId)
-        console.log(owner, owner.id)
         await Spot.create({
           ownerId: owner.id,
           address, city, state,
