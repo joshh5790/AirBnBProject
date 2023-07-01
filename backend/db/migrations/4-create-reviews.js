@@ -15,7 +15,8 @@ module.exports = {
           model: 'Users',
           key: 'id'
         },
-        onDelete: 'Cascade'
+        onDelete: 'Cascade',
+        allowNull: false
       },
       spotId: {
         type: Sequelize.INTEGER,
@@ -23,13 +24,15 @@ module.exports = {
           model: 'Spots',
           key: 'id'
         },
-        onDelete: 'Cascade'
+        onDelete: 'Cascade',
+        allowNull: false
       },
       review: {
         type: Sequelize.TEXT
       },
       stars: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        allowNull: false
       },
       createdAt: {
         allowNull: false,

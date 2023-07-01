@@ -21,7 +21,8 @@ module.exports = {
           model: 'Spots',
           key: 'id'
         },
-        onDelete: 'Cascade'
+        onDelete: 'Cascade',
+        allowNull: false
       },
       createdAt: {
         allowNull: false,

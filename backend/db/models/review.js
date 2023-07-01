@@ -26,10 +26,27 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Review.init({
-    userId: DataTypes.INTEGER,
-    spotId: DataTypes.INTEGER,
-    review: DataTypes.TEXT,
-    stars: DataTypes.INTEGER
+    userId: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    spotId: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    review: {
+      type: DataTypes.TEXT,
+      validate: {
+        len: [0,1000],
+        checkLen(value) {
+          if (value.length > 1000) throw new Error('Review cannot exceed 1000 characters')
+        }
+      }
+    },
+    stars: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
   }, {
     sequelize,
     modelName: 'Review',

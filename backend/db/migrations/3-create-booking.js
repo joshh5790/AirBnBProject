@@ -15,7 +15,8 @@ module.exports = {
           model: 'Spots',
           key: 'id'
         },
-        onDelete: 'Cascade'
+        onDelete: 'Cascade',
+        allowNull: false
       },
       userId: {
         type: Sequelize.INTEGER,
@@ -23,13 +24,16 @@ module.exports = {
           model: 'Users',
           key: 'id'
         },
-        onDelete: 'Cascade'
+        onDelete: 'Cascade',
+        allowNull: false
       },
       startDate: {
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        allowNull: false
       },
       endDate: {
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        allowNull: false
       },
       createdAt: {
         allowNull: false,

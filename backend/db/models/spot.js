@@ -34,16 +34,46 @@ module.exports = (sequelize, DataTypes) => {
       }
   }
   Spot.init({
-    ownerId: DataTypes.INTEGER,
-    address: DataTypes.STRING,
-    city: DataTypes.STRING,
-    state: DataTypes.STRING,
-    country: DataTypes.STRING,
+    ownerId: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    address: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    city: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    state: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    country: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
     lat: DataTypes.FLOAT,
     lng: DataTypes.FLOAT,
-    name: DataTypes.STRING,
-    description: DataTypes.TEXT,
-    price: DataTypes.DECIMAL,
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    description: {
+      type: DataTypes.TEXT,
+      allowNull: false,
+      validate: {
+        len: [0,1000],
+        checkLen(value) {
+          if (value.length > 1000) throw new Error('Description cannot exceed 1000 characters')
+        }
+      }
+    },
+    price: {
+      type: DataTypes.DECIMAL,
+      allowNull: false
+    },
     previewImage: DataTypes.STRING
   }, {
     sequelize,
