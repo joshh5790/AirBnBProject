@@ -1,5 +1,5 @@
 'use strict';
-const { User, Spot } = require('../models');
+const { User, Spot, Review } = require('../models');
 let options = {}
 if (process.env.NODE_ENV === 'production') {
   options.schema = process.env.SCHEMA
