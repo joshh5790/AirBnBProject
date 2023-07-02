@@ -13,7 +13,8 @@ router.get('/:spotId', async (req, res, next) => {
     const currSpot = await Spot.findOne({
         where: { id: req.params.spotId },
         include: [
-            { model: SpotImage }
+            { model: SpotImage },
+            { model: User, as: "Owner" }
         ]
     })
     if (currSpot) res.json(currSpot)
@@ -22,3 +23,5 @@ router.get('/:spotId', async (req, res, next) => {
         next(err)
     }
 })
+
+module.exports = router
