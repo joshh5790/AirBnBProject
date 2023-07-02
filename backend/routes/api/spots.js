@@ -9,7 +9,7 @@ router.get('/', async (req, res) => {
 })
 
 // get details of a spot
-router.get('/:spotId', async (req, res, next) => {
+router.get('/:spotId', async (req, res) => {
     const currSpot = await Spot.findOne({
         where: { id: req.params.spotId },
         include: [
@@ -19,8 +19,8 @@ router.get('/:spotId', async (req, res, next) => {
     })
     if (currSpot) res.json(currSpot)
     else {
-        const err = new Error("Not a valid spot id")
-        next(err)
+        res.status(400)
+        res.json({ message: "Spot couldn't be found"})
     }
 })
 
