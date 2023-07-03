@@ -24,4 +24,20 @@ router.get('/:spotId', async (req, res) => {
     }
 })
 
+// create a new spot, still needs error msgs
+router.post('/', async (req, res) => {
+    const { ownerId, address, city, state,
+        country, lat, lng,
+        name, description, price } = req.body
+
+    const owner = await User.findByPk(ownerId)
+    const newSpot = await owner.createSpot({
+        address, city, state,
+        country, lat, lng,
+        name, description, price
+    })
+
+    res.json(newSpot)
+})
+
 module.exports = router
