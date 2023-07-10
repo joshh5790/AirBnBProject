@@ -38,6 +38,7 @@ app.use(
 
 // app.use(routes)
 app.use('/users', require('./routes/api/users'))
+app.use('/session', require('./routes/api'))
 app.use('/spots', require('./routes/api/spots'))
 
 app.get('/', (req, res) => {
