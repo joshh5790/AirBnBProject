@@ -2,12 +2,6 @@ const express = require('express')
 const router = express.Router()
 const { Spot, SpotImage, User } = require('../../db/models')
 
-// get all spots
-router.get('/', async (req, res) => {
-    const allSpots = await Spot.findAll()
-    res.json(allSpots)
-})
-
 // get details of a spot
 router.get('/:spotId', async (req, res) => {
     const currSpot = await Spot.findOne({
@@ -24,6 +18,12 @@ router.get('/:spotId', async (req, res) => {
     }
 })
 
+// get all spots
+router.get('/', async (req, res) => {
+    const allSpots = await Spot.findAll()
+    res.json(allSpots)
+})
+
 // create a new spot, still needs error msgs
 router.post('/', async (req, res) => {
     const { ownerId, address, city, state,
@@ -36,7 +36,7 @@ router.post('/', async (req, res) => {
         country, lat, lng,
         name, description, price
     })
-
+    res.status(201)
     res.json(newSpot)
 })
 
