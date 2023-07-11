@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const { Spot, SpotImage, User } = require('../../db/models')
+const { DECIMAL, FLOAT } = require('sequelize')
 
 // get details of a spot
 router.get('/:spotId', async (req, res) => {
@@ -31,13 +32,35 @@ router.post('/', async (req, res) => {
         name, description, price } = req.body
 
     const owner = await User.findByPk(ownerId)
-    const newSpot = await owner.createSpot({
-        address, city, state,
-        country, lat, lng,
-        name, description, price
-    })
-    res.status(201)
-    res.json(newSpot)
+    try {
+
+        const newSpot = await Spot.create({
+            ownerId: owner.id,
+            address, city, state,
+            country, lat, lng,
+            name, description, price
+        })
+        res.status(201).json(newSpot)
+    } catch {
+        const errors = {}
+        if (!address) errors.address = 'Street address is required'
+        if (!city) errors.city = 'City is required'
+        if (!state) errors.state = 'State is required'
+        if (!country) errors.country = 'Country is required'
+        if (isNaN(parseFloat(lat))) errors.lat = "Latitude is not valid"
+        if (isNaN(parseFloat(lng))) errors.lng = "Longitude is not valid"
+        if (name.length > 50) errors.name = 'Name must be less than 50 characters'
+        if (!description) errors.description = 'Description is required'
+        if (!price) errors.price = 'Price per day is required'
+
+        res.status(400)
+        .json({
+            message: "Bad Request",
+            errors
+        })
+    }
 })
+
+
 
 module.exports = router
