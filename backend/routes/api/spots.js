@@ -61,6 +61,24 @@ router.post('/', async (req, res) => {
     }
 })
 
+router.post('/:spotId/images', async (req, res) => {
+    const { url, preview } = req.body
+    try {
+        const currSpot = await Spot.findByPk(req.params.spotId)
+        const spotImg = await SpotImage.create({
+            url, preview, spotId: currSpot.id
+        })
+        res.json({
+            id: spotImg.id,
+            url: spotImg.url,
+            preview: spotImg.preview
+        })
+    } catch {
+        res.status(404).json({
+            message: "Spot couldn't be found"
+        })
+    }
+})
 
 
 module.exports = router
