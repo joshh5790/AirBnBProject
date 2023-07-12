@@ -31,6 +31,7 @@ router.post('/', validateLogin, async (req, res, next) => {
             }
         }
     })
+    // console.log(user)
 
     if (!user ||
         !bcrypt.compareSync(password, user.hashedPassword.toString())) {
@@ -42,8 +43,8 @@ router.post('/', validateLogin, async (req, res, next) => {
     }
 
     const safeUser = {
-        firstName: user.firstName,
-        lastName: user.lastName,
+        // firstName: user.firstName,
+        // lastName: user.lastName,
         id: user.id,
         email: user.email,
         username: user.username
@@ -65,6 +66,7 @@ router.delete('/', (req, res) => {
 // get session user!
 router.get('/', (req, res) => {
     const { user } = req
+    console.log("Object.keys(req) in /session", Object.keys(req))
     if (user) {
         const safeUser = {
             id: user.id,

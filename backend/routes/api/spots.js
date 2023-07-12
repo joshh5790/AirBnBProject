@@ -2,6 +2,33 @@ const express = require('express')
 const router = express.Router()
 const { Spot, SpotImage, User } = require('../../db/models')
 
+const checkSpotAttributes = (address, city, state, country, lat, lng, name, description, price) => {
+    const errors = {}
+    if (!address) errors.address = 'Street address is required'
+    if (!city) errors.city = 'City is required'
+    if (!state) errors.state = 'State is required'
+    if (!country) errors.country = 'Country is required'
+    if (isNaN(parseFloat(lat))) errors.lat = "Latitude is not valid"
+    if (isNaN(parseFloat(lng))) errors.lng = "Longitude is not valid"
+    if (name.length > 50) errors.name = 'Name must be less than 50 characters'
+    if (!description) errors.description = 'Description is required'
+    if (!price) errors.price = 'Price per day is required'
+    return errors
+}
+
+router.get('/:spotId/reviews', async (req, res) => {
+
+})
+
+// question for tomorrow: how do I add user id into user.datavalues?
+router.get('/current', async (req, res) => {
+    const { user } = req
+    const userSpots = await Spot.findAll({
+        where: { ownerId: user.dataValues.id }
+    })
+    res.json(userSpots)
+})
+
 // get details of a spot
 router.get('/:spotId', async (req, res) => {
     const currSpot = await Spot.findOne({
@@ -13,8 +40,32 @@ router.get('/:spotId', async (req, res) => {
     })
     if (currSpot) res.json(currSpot)
     else {
-        res.status(400)
-        res.json({ message: "Spot couldn't be found"})
+        res.status(404).json({ message: "Spot couldn't be found"})
+    }
+})
+
+// edit a spot
+router.put('/:spotId', async (req, res) => {
+    const {
+        address, city, state,
+        country, lat, lng,
+        name, description, price
+    } = req.body
+    const currSpot = await Spot.findByPk(req.params.spotId)
+    try {
+        await currSpot.update({
+            address, city, state,
+            country, lat, lng,
+            name, description, price
+        })
+        res.json(currSpot)
+    } catch {
+        if (!currSpot) res.status(404).json({ message: "Spot couldn't be found"})
+        const errors = checkSpotAttributes(address, city, state, country, lat, lng, name, description, price)
+        res.status(400).json({
+            message: "Bad Request",
+            errors
+        })
     }
 })
 
@@ -70,17 +121,7 @@ router.post('/', async (req, res) => {
         })
         res.status(201).json(newSpot)
     } catch {
-        const errors = {}
-        if (!address) errors.address = 'Street address is required'
-        if (!city) errors.city = 'City is required'
-        if (!state) errors.state = 'State is required'
-        if (!country) errors.country = 'Country is required'
-        if (isNaN(parseFloat(lat))) errors.lat = "Latitude is not valid"
-        if (isNaN(parseFloat(lng))) errors.lng = "Longitude is not valid"
-        if (name.length > 50) errors.name = 'Name must be less than 50 characters'
-        if (!description) errors.description = 'Description is required'
-        if (!price) errors.price = 'Price per day is required'
-
+        const errors = checkSpotAttributes(address, city, state, country, lat, lng, name, description, price)
         res.status(400)
         .json({
             message: "Bad Request",

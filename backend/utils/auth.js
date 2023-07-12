@@ -45,7 +45,7 @@ const restoreUser = (req, res, next) => {
                 const { id } = jwtPayload.data
                 req.user = await User.findOne({
                     where: { id },
-                    attributes: ['email', 'createdAt', 'updatedAt']
+                    attributes: { include: ['email', 'createdAt', 'updatedAt'] }
                 })
             } catch(error) {
                 res.clearCookie('token')
