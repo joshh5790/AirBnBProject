@@ -25,7 +25,36 @@ router.get('/', async (req, res) => {
     res.json(allSpots)
 })
 
-// create a new spot, still needs error msgs
+// create a new image for a spot
+router.post('/:spotId/images', async (req, res) => {
+    const { url, preview } = req.body
+    let currSpot
+    try {
+        currSpot = await Spot.findByPk(req.params.spotId)
+        const spotImg = await SpotImage.create({
+            url, preview, spotId: currSpot.id
+        })
+        res.json({
+            id: spotImg.id,
+            url: spotImg.url,
+            preview: spotImg.preview
+        })
+    } catch {
+        res.status(404)
+        if (!currSpot) {
+            res.json({
+                message: "Spot couldn't be found"
+            })
+        }
+        else {
+            res.json({
+                message: "Invalid image url"
+            })
+        }
+    }
+})
+
+// create a new spot
 router.post('/', async (req, res) => {
     const { ownerId, address, city, state,
         country, lat, lng,
@@ -61,34 +90,7 @@ router.post('/', async (req, res) => {
     }
 })
 
-router.post('/:spotId/images', async (req, res) => {
-    const { url, preview } = req.body
-    let currSpot
-    try {
-        currSpot = await Spot.findByPk(req.params.spotId)
-        const spotImg = await SpotImage.create({
-            url, preview, spotId: currSpot.id
-        })
-        res.json({
-            id: spotImg.id,
-            url: spotImg.url,
-            preview: spotImg.preview
-        })
-    } catch {
-        res.status(404)
-        if (!currSpot) {
-            res.json({
-                message: "Spot couldn't be found"
-            })
-        }
-        else {
-            res.json({
-                message: "Invalid image url"
-            })
-        }
-    }
-})
-
+// deletes a spot
 router.delete('/:spotId', async (req, res) => {
     const currSpot = await Spot.findByPk(req.params.spotId)
     try {
