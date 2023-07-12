@@ -66,19 +66,41 @@ router.post('/:spotId/images', async (req, res) => {
     let currSpot
     try {
         currSpot = await Spot.findByPk(req.params.spotId)
+        const spotImg = await SpotImage.create({
+            url, preview, spotId: currSpot.id
+        })
+        res.json({
+            id: spotImg.id,
+            url: spotImg.url,
+            preview: spotImg.preview
+        })
+    } catch {
+        res.status(404)
+        if (!currSpot) {
+            res.json({
+                message: "Spot couldn't be found"
+            })
+        }
+        else {
+            res.json({
+                message: "Invalid image url"
+            })
+        }
+    }
+})
+
+router.delete('/:spotId', async (req, res) => {
+    const currSpot = await Spot.findByPk(req.params.spotId)
+    try {
+        await currSpot.destroy()
+        res.json({
+            message: "Successfully deleted"
+        })
     } catch {
         res.status(404).json({
             message: "Spot couldn't be found"
         })
     }
-    const spotImg = await SpotImage.create({
-        url, preview, spotId: currSpot.id
-    })
-    res.json({
-        id: spotImg.id,
-        url: spotImg.url,
-        preview: spotImg.preview
-    })
 })
 
 
