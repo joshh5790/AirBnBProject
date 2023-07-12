@@ -92,8 +92,8 @@ router.post('/', async (req, res) => {
 
 // deletes a spot
 router.delete('/:spotId', async (req, res) => {
-    const currSpot = await Spot.findByPk(req.params.spotId)
     try {
+        const currSpot = await Spot.findByPk(req.params.spotId)
         await currSpot.destroy()
         res.json({
             message: "Successfully deleted"
