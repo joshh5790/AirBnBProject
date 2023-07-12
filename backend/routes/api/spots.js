@@ -1,7 +1,6 @@
 const express = require('express')
 const router = express.Router()
 const { Spot, SpotImage, User } = require('../../db/models')
-const { DECIMAL, FLOAT } = require('sequelize')
 
 // get details of a spot
 router.get('/:spotId', async (req, res) => {
