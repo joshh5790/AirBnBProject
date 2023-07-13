@@ -3,6 +3,7 @@ const router = express.Router()
 const { Spot, SpotImage, User, Review, ReviewImage, Sequelize } = require('../../db/models')
 const { check } = require('express-validator')
 const { handleValidationErrors } = require('../../utils/validation')
+const reviews = require('./reviews')
 
 
 const validateSpot = [
@@ -108,7 +109,7 @@ router.get('/', async (req, res) => {
 })
 
 // Create a review for a spot
-router.post('/:spotId/reviews', async (req, res) => {
+router.post('/:spotId/reviews', reviews.validateReview, async (req, res) => {
     const { review, stars } = req.body
     const { user } = req
     const currSpot = await Spot.findByPk(req.params.spotId)
@@ -124,16 +125,6 @@ router.post('/:spotId/reviews', async (req, res) => {
         if (!currSpot) res.status(404).json({ message: "Spot couldn't be found"})
         if (error instanceof Sequelize.UniqueConstraintError) {
             res.status(500).json({ message: "User already has a review for this spot" })
-        }
-        const errors = {}
-        const rating = parseInt(stars)
-        if (!review) errors.review = "Review text is required"
-        if (rating > 5 || rating < 1) errors.stars = "Stars must be an integer from 1 to 5"
-        if (errors.review || errors.stars) {
-            res.status(400).json({
-                message: "Bad Request",
-                errors
-            })
         }
     }
 })

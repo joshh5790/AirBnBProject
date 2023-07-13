@@ -2,7 +2,19 @@ const express = require('express')
 const router = express.Router()
 const { Spot, Review, ReviewImage, User, Sequelize } = require('../../db/models')
 const { ValidationError } = require('sequelize')
+const { check } = require('express-validator')
+const { handleValidationErrors } = require('../../utils/validation')
 
+const validateReview = [
+    check('review')
+        .exists({ checkFalsy: true })
+        .withMessage('Review text is required'),
+    check('stars')
+        .exists({ checkFalsy: true })
+        .isIn([1,2,3,4,5])
+        .withMessage('Stars must be an integer from 1 to 5'),
+    handleValidationErrors
+]
 
 // Retrieves all current user's reviews
 router.get('/current', async (req, res) => {
@@ -39,7 +51,7 @@ router.post('/:reviewId/images', async (req, res) => {
 })
 
 // Edit a review
-router.put('/:reviewId', async (req, res) => {
+router.put('/:reviewId', validateReview, async (req, res) => {
     const { review, stars } = req.body
     const currReview = await Review.findByPk(req.params.reviewId)
     try {
@@ -48,17 +60,10 @@ router.put('/:reviewId', async (req, res) => {
         })
     } catch {
         if (!currReview) res.status(404).json({ message: "Review couldn't be found" })
-        const errors = {}
-        const rating = parseInt(stars)
-        if (!review) errors.review = "Review text is required"
-        if (rating > 5 || rating < 1) errors.stars = "Stars must be an integer from 1 to 5"
-        if (errors.review || errors.stars) {
-            res.status(400).json({
-                message: "Bad Request",
-                errors
-            })
-        }
     }
 })
 
-module.exports = router
+module.exports = {
+    router,
+    validateReview
+}
