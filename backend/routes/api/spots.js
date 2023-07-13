@@ -1,20 +1,44 @@
 const express = require('express')
 const router = express.Router()
 const { Spot, SpotImage, User, Review, ReviewImage, Sequelize } = require('../../db/models')
+const { check } = require('express-validator')
+const { handleValidationErrors } = require('../../utils/validation')
 
-const checkSpotAttributes = (address, city, state, country, lat, lng, name, description, price) => {
-    const errors = {}
-    if (!address) errors.address = 'Street address is required'
-    if (!city) errors.city = 'City is required'
-    if (!state) errors.state = 'State is required'
-    if (!country) errors.country = 'Country is required'
-    if (isNaN(parseFloat(lat))) errors.lat = "Latitude is not valid"
-    if (isNaN(parseFloat(lng))) errors.lng = "Longitude is not valid"
-    if (name.length > 50) errors.name = 'Name must be less than 50 characters'
-    if (!description) errors.description = 'Description is required'
-    if (!price) errors.price = 'Price per day is required'
-    return errors
-}
+
+const validateSpot = [
+    check('address')
+        .exists({ checkFalsy: true})
+        .withMessage('Street address is required'),
+    check('city')
+        .exists({ checkFalsy: true})
+        .withMessage('City is required'),
+    check('state')
+        .exists({ checkFalsy: true})
+        .withMessage('State is required'),
+    check('country')
+        .exists({ checkFalsy: true})
+        .withMessage('Country is required'),
+    check('lat')
+        .exists({ checkFalsy: true})
+        .isNumeric()
+        .withMessage('Latitude is not valid'),
+        check('lng')
+        .exists({ checkFalsy: true})
+        .isNumeric()
+        .withMessage('Longitude is not valid'),
+    check('name')
+        .exists({ checkFalsy: true})
+        .isLength({ max: 49 })
+        .withMessage('Name must be less than 50 characters'),
+    check('description')
+        .exists({ checkFalsy: true})
+        .withMessage('Description is required'),
+    check('price')
+        .exists({ checkFalsy: true})
+        .isNumeric()
+        .withMessage('Price per day is required'),
+    handleValidationErrors
+]
 
 // retrieves all reviews for a spot
 router.get('/:spotId/reviews', async (req, res) => {
@@ -58,7 +82,7 @@ router.get('/:spotId', async (req, res) => {
 })
 
 // edit a spot
-router.put('/:spotId', async (req, res) => {
+router.put('/:spotId', validateSpot, async (req, res, next) => {
     const {
         address, city, state,
         country, lat, lng,
@@ -74,11 +98,6 @@ router.put('/:spotId', async (req, res) => {
         res.json(currSpot)
     } catch {
         if (!currSpot) res.status(404).json({ message: "Spot couldn't be found"})
-        const errors = checkSpotAttributes(address, city, state, country, lat, lng, name, description, price)
-        res.status(400).json({
-            message: "Bad Request",
-            errors
-        })
     }
 })
 
@@ -149,29 +168,20 @@ router.post('/:spotId/images', async (req, res) => {
 })
 
 // create a new spot
-router.post('/', async (req, res) => {
-    const { ownerId, address, city, state,
+router.post('/', validateSpot, async (req, res, next) => {
+    const { address, city, state,
         country, lat, lng,
         name, description, price } = req.body
+    const { user } = req
+    const currUser = await User.findByPk(user.dataValues.id)
 
-    const owner = await User.findByPk(ownerId)
-    try {
-
-        const newSpot = await Spot.create({
-            ownerId: owner.id,
-            address, city, state,
-            country, lat, lng,
-            name, description, price
-        })
-        res.status(201).json(newSpot)
-    } catch {
-        const errors = checkSpotAttributes(address, city, state, country, lat, lng, name, description, price)
-        res.status(400)
-        .json({
-            message: "Bad Request",
-            errors
-        })
-    }
+    const newSpot = await Spot.create({
+        ownerId: currUser.id,
+        address, city, state,
+        country, lat, lng,
+        name, description, price
+    })
+    res.status(201).json(newSpot)
 })
 
 // deletes a spot

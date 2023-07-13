@@ -28,7 +28,17 @@ module.exports = (sequelize, DataTypes) => {
     preview: DataTypes.BOOLEAN,
     reviewId: {
       type: DataTypes.INTEGER,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        maxImgsPerReview() {
+          const currVal = this.reviewId
+          return ReviewImage.count({
+            where: { reviewId: currVal }
+          }).then((count) => {
+            if (count > 9) throw new Error("Maximum number of images for this resource")
+          })
+        }
+      }
     },
   }, {
     sequelize,
