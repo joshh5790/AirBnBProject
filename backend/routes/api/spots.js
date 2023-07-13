@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const { Spot, SpotImage, User } = require('../../db/models')
+const { Spot, SpotImage, User, Review, ReviewImage, Sequelize } = require('../../db/models')
 
 const checkSpotAttributes = (address, city, state, country, lat, lng, name, description, price) => {
     const errors = {}
@@ -16,11 +16,24 @@ const checkSpotAttributes = (address, city, state, country, lat, lng, name, desc
     return errors
 }
 
+// retrieves all reviews for a spot
 router.get('/:spotId/reviews', async (req, res) => {
-
+    try {
+        const currSpot = await Spot.findByPk(req.params.spotId)
+        const spotReviews = await Review.findAll({
+            where: { spotId: currSpot.id },
+            include: [
+                { model: User },
+                { model: ReviewImage }
+            ]
+        })
+        res.json(spotReviews)
+    } catch {
+        res.status(404).json({ message: "Spot couldn't be found" })
+    }
 })
 
-// question for tomorrow: how do I add user id into user.datavalues?
+// retrieves all spots owned by current user
 router.get('/current', async (req, res) => {
     const { user } = req
     const userSpots = await Spot.findAll({
@@ -73,6 +86,37 @@ router.put('/:spotId', async (req, res) => {
 router.get('/', async (req, res) => {
     const allSpots = await Spot.findAll()
     res.json(allSpots)
+})
+
+// Create a review for a spot
+router.post('/:spotId/reviews', async (req, res) => {
+    const { review, stars } = req.body
+    const { user } = req
+    const currSpot = await Spot.findByPk(req.params.spotId)
+    try {
+        const currUser = await User.findByPk(user.dataValues.id)
+        const newReview = await Review.create({
+            userId: currUser.id,
+            spotId: currSpot.id,
+            review, stars
+        })
+        res.json(newReview)
+    } catch(error) {
+        if (!currSpot) res.status(404).json({ message: "Spot couldn't be found"})
+        if (error instanceof Sequelize.UniqueConstraintError) {
+            res.status(500).json({ message: "User already has a review for this spot" })
+        }
+        const errors = {}
+        const rating = parseInt(stars)
+        if (!review) errors.review = "Review text is required"
+        if (rating > 5 || rating < 1) errors.stars = "Stars must be an integer from 1 to 5"
+        if (errors.review || errors.stars) {
+            res.status(400).json({
+                message: "Bad Request",
+                errors
+            })
+        }
+    }
 })
 
 // create a new image for a spot

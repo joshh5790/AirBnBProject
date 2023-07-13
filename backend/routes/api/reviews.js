@@ -1,8 +1,19 @@
 const express = require('express')
 const router = express.Router()
-const { Spot, ReviewImage, User } = require('../../db/models')
+const { Spot, Review, ReviewImage, User } = require('../../db/models')
 
 // Retrieves all current user's reviews
 router.get('/current', async (req, res) => {
-    res.json()
+    const { user } = req
+    const userReviews = await Review.findAll({
+        where: { userId: user.dataValues.id },
+        include: [
+            { model: User },
+            { model: Spot },
+            { model: ReviewImage }
+        ]
+    })
+    res.json(userReviews)
 })
+
+module.exports = router

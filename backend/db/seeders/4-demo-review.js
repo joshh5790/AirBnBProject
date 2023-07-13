@@ -17,6 +17,12 @@ const reviews = [
     spotId: 2,
     review: "kchow",
     stars: 4
+  },
+  {
+    userId: 1,
+    spotId: 2,
+    review: "speed",
+    stars: 4
   }
 ]
 
