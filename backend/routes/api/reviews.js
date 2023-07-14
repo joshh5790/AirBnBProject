@@ -20,7 +20,7 @@ const validateReview = [
 router.get('/current', async (req, res) => {
     const { user } = req
     const userReviews = await Review.findAll({
-        where: { userId: user.dataValues.id },
+        where: { userId: user.id },
         include: [
             { model: User },
             { model: Spot },

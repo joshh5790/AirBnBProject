@@ -1,9 +1,10 @@
 const express = require('express')
 const router = express.Router()
-const { Spot, SpotImage, User, Review, ReviewImage, Sequelize } = require('../../db/models')
+const { Spot, SpotImage, User, Booking, Review, ReviewImage, Sequelize } = require('../../db/models')
 const { check } = require('express-validator')
 const { handleValidationErrors } = require('../../utils/validation')
 const reviews = require('./reviews')
+const { Op } = require('sequelize')
 
 
 const validateSpot = [
@@ -58,11 +59,34 @@ router.get('/:spotId/reviews', async (req, res) => {
     }
 })
 
+// retrives all bookings for a spot
+router.get('/:spotId/bookings', async (req, res) => {
+    const { user } = req
+
+    try {
+        const currSpot = await Spot.findByPk(req.params.spotId)
+        let spotBookings
+        if (currSpot.ownerId === user.id) {
+            spotBookings = await Booking.findAll({
+                where: { spotId: currSpot.id },
+                include: { model: User }
+            })
+        } else {
+            spotBookings = await Booking.findAll({
+                where: { spotId: currSpot.id }
+            })
+        }
+        res.json(spotBookings)
+    } catch {
+        res.status(404).json({ message: "Spot couldn't be found" })
+    }
+})
+
 // retrieves all spots owned by current user
 router.get('/current', async (req, res) => {
     const { user } = req
     const userSpots = await Spot.findAll({
-        where: { ownerId: user.dataValues.id }
+        where: { ownerId: user.id }
     })
     res.json(userSpots)
 })
@@ -108,13 +132,58 @@ router.get('/', async (req, res) => {
     res.json(allSpots)
 })
 
+// Creates a booking for a spot
+router.post('/:spotId/bookings', async (req, res) => {
+    const { startDate, endDate } = req.body
+
+    // check if startDate is after endDate
+    if (startDate >= endDate) res.status(400).json({
+        message: "Bad Request",
+        errors: {
+            endDate: "endDate cannot be on or before startDate"
+        }
+    })
+    const { user } = req
+
+    // checks for valid spot
+    const currSpot = await Spot.findByPk(req.params.spotId)
+    if (!currSpot) res.status(404).json({ message: "Spot couldn't be found"})
+
+    // check for date conflicts
+    const checkDateConflict = await Booking.findOne({
+        where: {
+            spotId: currSpot.id,
+            [Op.or]: [
+                { startDate: { [Op.between]: [startDate, endDate] } },
+                { endDate: { [Op.between]: [startDate, endDate] } }
+            ]
+        }
+    })
+    if (checkDateConflict) res.status(403).json({
+        message: "Sorry, this spot is already booked for the specified dates",
+        errors: {
+            startDate: "Start date conflicts with an existing booking",
+            endDate: "End date conflicts with an existing booking"
+          }
+    })
+
+    const currUser = await User.findByPk(user.id)
+    const newBooking = await Booking.create({
+        spotId: currSpot.id,
+        userId: currUser.id,
+        startDate, endDate
+    })
+    res.json(newBooking)
+
+})
+
 // Create a review for a spot
 router.post('/:spotId/reviews', reviews.validateReview, async (req, res) => {
     const { review, stars } = req.body
     const { user } = req
     const currSpot = await Spot.findByPk(req.params.spotId)
     try {
-        const currUser = await User.findByPk(user.dataValues.id)
+        const currUser = await User.findByPk(user.id)
         const newReview = await Review.create({
             userId: currUser.id,
             spotId: currSpot.id,
@@ -164,7 +233,7 @@ router.post('/', validateSpot, async (req, res, next) => {
         country, lat, lng,
         name, description, price } = req.body
     const { user } = req
-    const currUser = await User.findByPk(user.dataValues.id)
+    const currUser = await User.findByPk(user.id)
 
     const newSpot = await Spot.create({
         ownerId: currUser.id,
