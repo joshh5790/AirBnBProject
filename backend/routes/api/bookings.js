@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const { Spot, Booking, User, Sequelize } = require('../../db/models')
+const { Spot, Booking } = require('../../db/models')
 const { Op } = require('sequelize')
 
 // gets all of current user's bookings
