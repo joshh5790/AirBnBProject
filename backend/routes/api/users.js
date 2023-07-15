@@ -7,6 +7,12 @@ const { check } = require('express-validator')
 const { handleValidationErrors } = require('../../utils/validation')
 
 const validateSignup = [
+    check('firstName')
+        .exists()
+        .withMessage('First Name is required'),
+    check('lastName')
+        .exists()
+        .withMessage('Last Name is required'),
     check('email')
         .exists({ checkFalsy: true})
         .isEmail()

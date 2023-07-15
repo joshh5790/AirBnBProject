@@ -45,11 +45,11 @@ module.exports = {
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
       }
     });
-    await queryInterface.addConstraint('Reviews', {
-      fields: ['userId', 'spotId'],
-      type: 'unique',
-      name: 'unique_user_review'
-    })
+    // await queryInterface.addConstraint('Reviews', {
+    //   fields: ['userId', 'spotId'],
+    //   type: 'unique',
+    //   name: 'unique_user_review'
+    // })
   },
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable('Reviews');
