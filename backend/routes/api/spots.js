@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const { Spot, SpotImage, User, Booking, Review, ReviewImage, Sequelize } = require('../../db/models')
-const { check } = require('express-validator')
+const { check, query } = require('express-validator')
 const { handleValidationErrors } = require('../../utils/validation')
 const reviews = require('./reviews')
 const { Op } = require('sequelize')
@@ -39,6 +39,56 @@ const validateSpot = [
         .exists({ checkFalsy: true})
         .isNumeric()
         .withMessage('Price per day is required'),
+    handleValidationErrors
+]
+
+const validateQuery = [
+
+    // why is my query not registering distinct queries?
+    // for example, if I have ?page=2,size:10 page will equal '2,size=10'
+    (req, res, next) => {
+        console.log("!!!!!!!", req.query.page)
+        console.log("!!!!!!!", req.query.size)
+        console.log("!!!!!!!", req.query.minLat)
+        console.log("!!!!!!!", req.query.maxLat)
+        console.log("!!!!!!!", req.query.minLng)
+        console.log("!!!!!!!", req.query.maxLng)
+        console.log("!!!!!!!", req.query.minPrice)
+        console.log("!!!!!!!", req.query.maxPrice)
+        next()
+    },
+
+    // why are my queries firing even though I didn't pass anything in to them?
+    query('page')
+        .isInt({ min: 1, max: 10})
+        .withMessage("Page must be greater than or equal to 1"),
+    query('size')
+        .isInt({ min: 1, max: 20})
+        .withMessage("Size must be greater than or equal to 1"),
+    query('maxLat')
+        .optional()
+        .isFloat({ min: -90, max: 90 })
+        .withMessage("Maximum latitude is invalid"),
+    query('minLat')
+        .optional()
+        .isFloat({ min: -90, max: 90 })
+        .withMessage("Minimum latitude is invalid"),
+    query('minLng')
+        .optional()
+        .isFloat({ min: -180, max: 180 })
+        .withMessage("Maximum longitude is invalid"),
+    query('maxLng')
+        .optional()
+        .isFloat({ min: -180, max: 180 })
+        .withMessage("Minimum longitude is invalid"),
+    query('minPrice')
+        .optional()
+        .isFloat({ min: 0 })
+        .withMessage("Minimum price must be greater than or equal to 0"),
+    query('maxPrice')
+        .optional()
+        .isFloat({ min: 0 })
+        .withMessage("Maximum price must be greater than or equal to 0"),
     handleValidationErrors
 ]
 
@@ -127,8 +177,29 @@ router.put('/:spotId', validateSpot, async (req, res, next) => {
 })
 
 // get all spots
-router.get('/', async (req, res) => {
-    const allSpots = await Spot.findAll()
+router.get('/', validateQuery, async (req, res) => {
+    let { page, size, minLat, maxLat,
+        minLng, maxLng, minPrice, maxPrice } = req.query
+    page = page || 1
+    size = size || 20
+    minLat = minLat || -90
+    maxLat = maxLat || 90
+    minLng = minLng || -180
+    maxLng = maxLng || 180
+    minPrice = minPrice || 0
+    maxPrice = maxPrice || 99999
+
+    
+    // how do I do a conditional Op.between only if the two things are defined?
+    const allSpots = await Spot.findAll({
+        where: {
+            lat: { [Op.between]: [minLat, maxLat] },
+            lng: { [Op.between]: [minLng, maxLng] },
+            price: { [Op.between]: [minPrice, maxPrice] }
+        },
+        offset: size * (page - 1),
+        limit: size
+    })
     res.json(allSpots)
 })
 

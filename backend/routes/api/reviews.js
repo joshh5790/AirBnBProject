@@ -11,7 +11,7 @@ const validateReview = [
         .withMessage('Review text is required'),
     check('stars')
         .exists({ checkFalsy: true })
-        .isIn([1,2,3,4,5])
+        .isInt({ min: 1, max: 5 })
         .withMessage('Stars must be an integer from 1 to 5'),
     handleValidationErrors
 ]
@@ -58,6 +58,7 @@ router.put('/:reviewId', validateReview, async (req, res) => {
         currReview.update({
             review, stars
         })
+        res.json(currReview)
     } catch {
         if (!currReview) res.status(404).json({ message: "Review couldn't be found" })
     }
