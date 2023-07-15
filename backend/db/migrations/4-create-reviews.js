@@ -58,7 +58,7 @@ module.exports = {
       fields: ['userId', 'spotId'],
       type: 'unique',
       name: 'unique_user_review'
-    })
+    }, options)
   },
   async down(queryInterface, Sequelize) {
     options.tableName = "Reviews"
