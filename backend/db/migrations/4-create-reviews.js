@@ -1,4 +1,13 @@
 'use strict';
+
+const { defaultConfiguration } = require('../../app');
+const { sequelize } = require('../models');
+
+let options = {}
+if (process.env.NODE_ENV === 'production') {
+  options.schema = process.env.SCHEMA
+}
+
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
@@ -49,9 +58,10 @@ module.exports = {
       fields: ['userId', 'spotId'],
       type: 'unique',
       name: 'unique_user_review'
-    })
+    }, options)
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Reviews');
+    options.tableName = "Reviews"
+    await queryInterface.dropTable(options);
   }
 };
