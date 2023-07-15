@@ -43,22 +43,6 @@ const validateSpot = [
 ]
 
 const validateQuery = [
-
-    // why is my query not registering distinct queries?
-    // for example, if I have ?page=2,size:10 page will equal '2,size=10'
-    (req, res, next) => {
-        console.log("!!!!!!!", req.query.page)
-        console.log("!!!!!!!", req.query.size)
-        console.log("!!!!!!!", req.query.minLat)
-        console.log("!!!!!!!", req.query.maxLat)
-        console.log("!!!!!!!", req.query.minLng)
-        console.log("!!!!!!!", req.query.maxLng)
-        console.log("!!!!!!!", req.query.minPrice)
-        console.log("!!!!!!!", req.query.maxPrice)
-        next()
-    },
-
-    // why are my queries firing even though I didn't pass anything in to them?
     query('page')
         .isInt({ min: 1, max: 10})
         .withMessage("Page must be greater than or equal to 1"),
