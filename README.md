@@ -1,5 +1,9 @@
 # `AirBnB Project`
 
+## Live Site
+
+https://air-bee-n-bee.onrender.com/api
+
 ## Database Schema Design
 
 ![Database schema](images/image.png)
