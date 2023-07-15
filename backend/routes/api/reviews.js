@@ -58,6 +58,14 @@ router.put('/:reviewId', validateReview, async (req, res) => {
         currReview.update({
             review, stars
         })
+
+        // update star rating for spot
+        const currSpot = await Spot.findByPk(currReview.spotId)
+        const sum = await Review.sum('stars', { where: { spotId: currSpot.id } })
+        const count = await Review.count({ where: { spotId: currSpot.id } })
+        const avgRating = Math.round(sum * 10 / count) / 10
+        await currSpot.update({ avgRating })
+
         res.json(currReview)
     } catch {
         if (!currReview) res.status(404).json({ message: "Review couldn't be found" })
@@ -67,7 +75,16 @@ router.put('/:reviewId', validateReview, async (req, res) => {
 router.delete('/:reviewId', async (req, res) => {
     try {
         const currReview = await Review.findByPk(req.params.reviewId)
+        const currSpot = await Spot.findByPk(currReview.spotId)
+
         await currReview.destroy()
+
+        // update star rating for spot
+        const sum = await Review.sum('stars', { where: { spotId: currSpot.id } })
+        const count = await Review.count({ where: { spotId: currSpot.id } })
+        const avgRating = Math.round(sum * 10 / count) / 10
+        await currSpot.update({ avgRating })
+
         res.json({
             message: "Successfully deleted"
         })

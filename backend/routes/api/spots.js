@@ -244,6 +244,13 @@ router.post('/:spotId/reviews', reviews.validateReview, async (req, res) => {
             spotId: currSpot.id,
             review, stars
         })
+
+        // update star rating for spot
+        const sum = await Review.sum('stars', { where: { spotId: currSpot.id } })
+        const count = await Review.count({ where: { spotId: currSpot.id } })
+        const avgRating = Math.round(sum * 10 / count) / 10
+        await currSpot.update({ avgRating })
+
         res.json(newReview)
     } catch(error) {
         if (!currSpot) res.status(404).json({ message: "Spot couldn't be found"})
