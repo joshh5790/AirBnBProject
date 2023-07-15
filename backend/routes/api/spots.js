@@ -24,7 +24,7 @@ const validateSpot = [
         .exists({ checkFalsy: true})
         .isNumeric()
         .withMessage('Latitude is not valid'),
-        check('lng')
+    check('lng')
         .exists({ checkFalsy: true})
         .isNumeric()
         .withMessage('Longitude is not valid'),
@@ -189,7 +189,7 @@ router.get('/', validateQuery, async (req, res) => {
     minPrice = minPrice || 0
     maxPrice = maxPrice || 99999
 
-    
+
     // how do I do a conditional Op.between only if the two things are defined?
     const allSpots = await Spot.findAll({
         where: {
