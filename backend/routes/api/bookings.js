@@ -6,6 +6,7 @@ const { Op } = require('sequelize')
 // gets all of current user's bookings
 router.get('/current', async (req, res) => {
     const { user } = req
+    if (!user) res.status(403).json({ message: "Forbidden" })
     const userBookings = await Booking.findAll({
         where: { userId: user.id },
         include: { model: Spot }
@@ -14,6 +15,12 @@ router.get('/current', async (req, res) => {
 })
 
 router.put('/:bookingId', async (req, res) => {
+    // checks for valid booking
+    const currBooking = await Booking.findByPk(req.params.bookingId)
+    const { user } = req
+    if (user.id !== currBooking.userId) res.status(403).json({ message: "Forbidden" })
+    if (!currBooking) res.status(404).json({ message: "Booking couldn't be found" })
+
     // check if startDate is after endDate
     const { startDate, endDate } = req.body
     if (startDate >= endDate) res.status(400).json({
@@ -22,10 +29,6 @@ router.put('/:bookingId', async (req, res) => {
             endDate: "endDate cannot be on or before startDate"
         }
     })
-
-    // checks for valid booking
-    const currBooking = await Booking.findByPk(req.params.bookingId)
-    if (!currBooking) res.status(404).json({ message: "Booking couldn't be found" })
 
     // checks if booking is past end date
     const current = new Date()
@@ -54,17 +57,14 @@ router.put('/:bookingId', async (req, res) => {
 })
 
 router.delete('/:bookingId', async (req, res) => {
-    try {
-        const currBooking = await Booking.findByPk(req.params.bookingId)
-        await currBooking.destroy()
-        res.json({
-            message: "Successfully deleted"
-        })
-    } catch {
-        res.status(404).json({
-            message: "Booking couldn't be found"
-        })
-    }
+    const { user } = req
+    if (!user) res.status(403).json({ message: "Forbidden" })
+    const currBooking = await Booking.findByPk(req.params.bookingId)
+    if (user.id !== currBooking.userId) res.status(403).json({ message: "Forbidden" })
+    if (!currBooking) res.status(404).json({ message: "Booking couldn't be found" })
+
+    await currBooking.destroy()
+    res.json({ message: "Successfully deleted" })
 })
 
 module.exports = router

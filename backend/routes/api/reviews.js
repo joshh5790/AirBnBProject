@@ -19,6 +19,7 @@ const validateReview = [
 // Retrieves all current user's reviews
 router.get('/current', async (req, res) => {
     const { user } = req
+    if (!user) res.status(403).json({ message: "Forbidden" })
     const userReviews = await Review.findAll({
         where: { userId: user.id },
         include: [
@@ -32,8 +33,12 @@ router.get('/current', async (req, res) => {
 
 // Add image to review
 router.post('/:reviewId/images', async (req, res) => {
-    const { url } = req.body
+    const { user } = req
+    if (!user) res.status(403).json({ message: "Forbidden" })
     const currReview = await Review.findByPk(req.params.reviewId)
+    if (user.id !== currReview.userId) res.status(403).json({ message: "Forbidden" })
+
+    const { url } = req.body
     try {
         const newImage = await ReviewImage.create({
             url, reviewId: currReview.id
@@ -52,8 +57,12 @@ router.post('/:reviewId/images', async (req, res) => {
 
 // Edit a review
 router.put('/:reviewId', validateReview, async (req, res) => {
-    const { review, stars } = req.body
+    const { user } = req
+    if (!user) res.status(403).json({ message: "Forbidden" })
     const currReview = await Review.findByPk(req.params.reviewId)
+    if (user.id !== currReview.userId) res.status(403).json({ message: "Forbidden" })
+
+    const { review, stars } = req.body
     try {
         currReview.update({
             review, stars
@@ -73,26 +82,14 @@ router.put('/:reviewId', validateReview, async (req, res) => {
 })
 
 router.delete('/:reviewId', async (req, res) => {
-    try {
-        const currReview = await Review.findByPk(req.params.reviewId)
-        const currSpot = await Spot.findByPk(currReview.spotId)
+    const { user } = req
+    if (!user) res.status(403).json({ message: "Forbidden" })
+    const currReview = await Review.findByPk(req.params.reviewId)
+    if (user.id !== currReview.userId) res.status(403).json({ message: "Forbidden" })
+    if (!currReview) res.status(404).json({ message: "Review couldn't be found" })
 
-        await currReview.destroy()
-
-        // update star rating for spot
-        const sum = await Review.sum('stars', { where: { spotId: currSpot.id } })
-        const count = await Review.count({ where: { spotId: currSpot.id } })
-        const avgRating = Math.round(sum * 10 / count) / 10
-        await currSpot.update({ avgRating })
-
-        res.json({
-            message: "Successfully deleted"
-        })
-    } catch {
-        res.status(404).json({
-            message: "Review couldn't be found"
-        })
-    }
+    await currReview.destroy()
+    res.json({ message: "Successfully deleted" })
 })
 
 module.exports = {
