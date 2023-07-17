@@ -11,11 +11,11 @@ const validateLogin = [
     check('credential')
         .exists({ checkFalsy: true })
         .notEmpty()
-        .withMessage('Please provide a valid email or username.'),
+        .withMessage('Email or username is required'),
     check('password')
         .exists({ checkFalsy: true})
         .notEmpty()
-        .withMessage('Please provide a password.'),
+        .withMessage('Password is required'),
     handleValidationErrors
 ]
 
@@ -34,10 +34,8 @@ router.post('/', validateLogin, async (req, res, next) => {
 
     if (!user ||
         !bcrypt.compareSync(password, user.hashedPassword.toString())) {
-        const err = new Error('Login failed!')
+        const err = new Error('Invald credentials')
         err.status = 401
-        err.title = 'Login failed'
-        err.errors = { credential: 'The provided credentials were invalid.' }
         return next(err)
     }
 
