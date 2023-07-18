@@ -101,7 +101,7 @@ router.get('/:spotId/reviews', async (req, res) => {
         })
         res.json(spotReviews)
     } catch {
-        res.status(404).json({ message: "Spot couldn't be found" })
+        return res.status(404).json({ message: "Spot couldn't be found" })
     }
 })
 
@@ -115,23 +115,26 @@ router.get('/:spotId/bookings', async (req, res) => {
         if (currSpot.ownerId === user.id) {
             spotBookings = await Booking.findAll({
                 where: { spotId: currSpot.id },
-                include: { model: User }
+                include: { model: User,
+                    attributes: { exclude: ['username','email', 'hashedPassword', 'createdAt', 'updatedAt'] }
+                }
             })
         } else {
             spotBookings = await Booking.findAll({
-                where: { spotId: currSpot.id }
+                where: { spotId: currSpot.id },
+                attributes: { exclude: ['id', 'userId', 'createdAt', 'updatedAt'] }
             })
         }
-        res.json(spotBookings)
+        res.json({ Bookings: spotBookings })
     } catch {
-        res.status(404).json({ message: "Spot couldn't be found" })
+        return res.status(404).json({ message: "Spot couldn't be found" })
     }
 })
 
 // retrieves all spots owned by current user
 router.get('/current', async (req, res) => {
     const { user } = req
-    if (!user) res.status(403).json({ message: "Forbidden" })
+    if (!user) return res.status(403).json({ message: "Forbidden" })
     const userSpots = await Spot.findAll({
         where: { ownerId: user.id },
         attributes: { exclude: ['numReviews'] }
@@ -236,8 +239,10 @@ router.get('/', validateQuery, async (req, res) => {
 // Creates a booking for a spot
 router.post('/:spotId/bookings', async (req, res) => {
     const { user } = req
-    if (!user) res.status(403).json({ message: "Forbidden" })
-    const { startDate, endDate } = req.body
+    if (!user) return res.status(403).json({ message: "Forbidden" })
+    let { startDate, endDate } = req.body
+    startDate = new Date(startDate)
+    endDate = new Date(endDate)
 
     // check if startDate is after endDate
     if (startDate >= endDate) res.status(400).json({
@@ -249,7 +254,7 @@ router.post('/:spotId/bookings', async (req, res) => {
 
     // checks for valid spot
     const currSpot = await Spot.findByPk(req.params.spotId)
-    if (!currSpot) res.status(404).json({ message: "Spot couldn't be found"})
+    if (!currSpot) return res.status(404).json({ message: "Spot couldn't be found"})
 
     // check for date conflicts
     const checkDateConflict = await Booking.findOne({
@@ -261,13 +266,15 @@ router.post('/:spotId/bookings', async (req, res) => {
             ]
         }
     })
-    if (checkDateConflict) res.status(403).json({
-        message: "Sorry, this spot is already booked for the specified dates",
-        errors: {
-            startDate: "Start date conflicts with an existing booking",
-            endDate: "End date conflicts with an existing booking"
-          }
-    })
+    if (checkDateConflict) {
+        return res.status(403).json({
+            message: "Sorry, this spot is already booked for the specified dates",
+            errors: {
+                startDate: "Start date conflicts with an existing booking",
+                endDate: "End date conflicts with an existing booking"
+              }
+        })
+    }
 
     const currUser = await User.findByPk(user.id)
     const newBooking = await Booking.create({
@@ -283,10 +290,10 @@ router.post('/:spotId/bookings', async (req, res) => {
 router.post('/:spotId/reviews', reviews.validateReview, async (req, res) => {
     const { review, stars } = req.body
     const { user } = req
-    if (!user) res.status(403).json({ message: "Forbidden" })
+    if (!user) return res.status(403).json({ message: "Forbidden" })
     const currSpot = await Spot.findByPk(req.params.spotId)
-    if (!currSpot) res.status(404).json({ message: "Spot couldn't be found"})
-    if (user.id === currSpot.ownerId) res.status(400).json({ message: "Can't create a review for your own property!" })
+    if (!currSpot) return res.status(404).json({ message: "Spot couldn't be found"})
+    if (user.id === currSpot.ownerId) return res.status(400).json({ message: "Can't create a review for your own property!" })
     try {
         const currUser = await User.findByPk(user.id)
         const newReview = await Review.create({
@@ -305,7 +312,7 @@ router.post('/:spotId/reviews', reviews.validateReview, async (req, res) => {
         res.json(newReview)
     } catch(error) {
         if (error instanceof Sequelize.UniqueConstraintError) {
-            res.status(500).json({ message: "User already has a review for this spot" })
+            return res.status(500).json({ message: "User already has a review for this spot" })
         }
     }
 })
@@ -313,10 +320,10 @@ router.post('/:spotId/reviews', reviews.validateReview, async (req, res) => {
 // create a new image for a spot
 router.post('/:spotId/images', async (req, res) => {
     const { user } = req
-    if (!user) res.status(403).json({ message: "Forbidden" })
+    if (!user) return res.status(403).json({ message: "Forbidden" })
     const currSpot = await Spot.findByPk(req.params.spotId)
-    if (!currSpot) res.status(404).json({ message: "Spot couldn't be found" })
-    if (user.id !== currSpot.ownerId) res.status(403).json({ message: "Forbidden" })
+    if (!currSpot) return res.status(404).json({ message: "Spot couldn't be found" })
+    if (user.id !== currSpot.ownerId) return res.status(403).json({ message: "Forbidden" })
     const { url, preview } = req.body
 
     try {
@@ -329,14 +336,14 @@ router.post('/:spotId/images', async (req, res) => {
             preview: spotImg.preview
         })
     } catch {
-        res.status(404).json({ message: "Invalid image url" })
+        return res.status(404).json({ message: "Invalid image url" })
     }
 })
 
 // create a new spot
 router.post('/', validateSpot, async (req, res, next) => {
     const { user } = req
-    if (!user) res.status(403).json({ message: "Forbidden" })
+    if (!user) return res.status(403).json({ message: "Forbidden" })
 
     const { address, city, state,
         country, lat, lng,
@@ -349,16 +356,16 @@ router.post('/', validateSpot, async (req, res, next) => {
         country, lat, lng,
         name, description, price
     })
-    res.status(201).json(newSpot)
+    return res.status(201).json(newSpot)
 })
 
 // deletes a spot
 router.delete('/:spotId', async (req, res) => {
     const { user } = req
-    if (!user) res.status(403).json({ message: "Forbidden" })
+    if (!user) return res.status(403).json({ message: "Forbidden" })
     const currSpot = await Spot.findByPk(req.params.spotId)
-    if (!currSpot) res.status(404).json({ message: "Spot couldn't be found" })
-    if (user.id !== currSpot.ownerId) res.status(403).json({ message: "Forbidden" })
+    if (!currSpot) return res.status(404).json({ message: "Spot couldn't be found" })
+    if (user.id !== currSpot.ownerId) return res.status(403).json({ message: "Forbidden" })
 
     await currSpot.destroy()
     res.json({

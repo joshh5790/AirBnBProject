@@ -19,7 +19,7 @@ const validateReview = [
 // Retrieves all current user's reviews
 router.get('/current', async (req, res) => {
     const { user } = req
-    if (!user) res.status(403).json({ message: "Forbidden" })
+    if (!user) return res.status(403).json({ message: "Forbidden" })
     const userReviews = await Review.findAll({
         where: { userId: user.id },
         include: [
@@ -46,10 +46,10 @@ router.get('/current', async (req, res) => {
 // Add image to review
 router.post('/:reviewId/images', async (req, res) => {
     const { user } = req
-    if (!user) res.status(403).json({ message: "Forbidden" })
+    if (!user) return res.status(403).json({ message: "Forbidden" })
     const currReview = await Review.findByPk(req.params.reviewId)
-    if (!currReview) res.status(404).json({ message: "Review couldn't be found" })
-    if (user.id !== currReview.userId) res.status(403).json({ message: "Forbidden" })
+    if (!currReview) return res.status(404).json({ message: "Review couldn't be found" })
+    if (user.id !== currReview.userId) return res.status(403).json({ message: "Forbidden" })
 
     const { url } = req.body
     try {
@@ -70,10 +70,10 @@ router.post('/:reviewId/images', async (req, res) => {
 // Edit a review
 router.put('/:reviewId', validateReview, async (req, res) => {
     const { user } = req
-    if (!user) res.status(403).json({ message: "Forbidden" })
+    if (!user) return res.status(403).json({ message: "Forbidden" })
     const currReview = await Review.findByPk(req.params.reviewId)
-    if (!currReview) res.status(404).json({ message: "Review couldn't be found" })
-    if (user.id !== currReview.userId) res.status(403).json({ message: "Forbidden" })
+    if (!currReview) return res.status(404).json({ message: "Review couldn't be found" })
+    if (user.id !== currReview.userId) return res.status(403).json({ message: "Forbidden" })
 
     const { review, stars } = req.body
     currReview.update({
@@ -90,18 +90,19 @@ router.put('/:reviewId', validateReview, async (req, res) => {
     res.json(currReview)
 })
 
+// delete a review
 router.delete('/:reviewId', async (req, res) => {
     const { user } = req
-    if (!user) res.status(403).json({ message: "Forbidden" })
+    if (!user) return res.status(403).json({ message: "Forbidden" })
     const currReview = await Review.findByPk(req.params.reviewId)
-    if (!currReview) res.status(404).json({ message: "Review couldn't be found" })
+    if (!currReview) return res.status(404).json({ message: "Review couldn't be found" })
     const currSpot = await Spot.findByPk(currReview.spotId)
     const sum = await Review.sum('stars', { where: { spotId: currSpot.id } })
     const count = await Review.count({ where: { spotId: currSpot.id } })
     const avgRating = Math.round(sum * 10 / count) / 10
     const numReviews = currSpot.numReviews - 1
     await currSpot.update({ avgRating, numReviews })
-    if (user.id !== currReview.userId) res.status(403).json({ message: "Forbidden" })
+    if (user.id !== currReview.userId) return res.status(403).json({ message: "Forbidden" })
 
     await currReview.destroy()
     res.json({ message: "Successfully deleted" })
