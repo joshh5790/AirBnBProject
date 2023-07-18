@@ -29,29 +29,29 @@ const reviews = [
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
-    try {
-      for (const reviewInfo of reviews) {
-        const { review, stars } = reviewInfo
-        const user = await User.findByPk(reviewInfo.userId)
-        const spot = await Spot.findByPk(reviewInfo.spotId)
-        await Review.create({
-          spotId: spot.id,
-          userId: user.id,
-          review, stars
-        })
-      }
-    } catch(err) {
-      console.error(err)
-      throw err
-    }
+    // try {
+    //   for (const reviewInfo of reviews) {
+    //     const { review, stars } = reviewInfo
+    //     const user = await User.findByPk(reviewInfo.userId)
+    //     const spot = await Spot.findByPk(reviewInfo.spotId)
+    //     await Review.create({
+    //       spotId: spot.id,
+    //       userId: user.id,
+    //       review, stars
+    //     })
+    //   }
+    // } catch(err) {
+    //   console.error(err)
+    //   throw err
+    // }
   },
 
   async down (queryInterface, Sequelize) {
-    options.tableName = 'Reviews'
-    await queryInterface.bulkDelete(options, {
-      id: {
-        [Sequelize.Op.in]: [2,3]
-      }
-    })
+    // options.tableName = 'Reviews'
+    // await queryInterface.bulkDelete(options, {
+    //   id: {
+    //     [Sequelize.Op.in]: [2,3]
+    //   }
+    // })
   }
 };

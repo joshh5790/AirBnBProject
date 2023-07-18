@@ -23,9 +23,21 @@ router.get('/current', async (req, res) => {
     const userReviews = await Review.findAll({
         where: { userId: user.id },
         include: [
-            { model: User },
-            { model: Spot },
-            { model: ReviewImage }
+            { model: User,
+                attributes: {
+                    exclude: ['username', 'email', 'hashedPassword', 'createdAt', 'updatedAt']
+                }
+            },
+            { model: Spot,
+                attributes: {
+                    exclude: ['description', 'avgRating', 'createdAt', 'updatedAt']
+                }
+            },
+            { model: ReviewImage,
+                attributes: {
+                    exclude: ['preview', 'reviewId', 'createdAt', 'updatedAt']
+                }
+            }
         ]
     })
     res.json(userReviews)
@@ -88,7 +100,8 @@ router.delete('/:reviewId', async (req, res) => {
     const sum = await Review.sum('stars', { where: { spotId: currSpot.id } })
     const count = await Review.count({ where: { spotId: currSpot.id } })
     const avgRating = Math.round(sum * 10 / count) / 10
-    await currSpot.update({ avgRating })
+    const numReviews = currSpot.numReviews - 1
+    await currSpot.update({ avgRating, numReviews })
     if (user.id !== currReview.userId) res.status(403).json({ message: "Forbidden" })
     if (!currReview) res.status(404).json({ message: "Review couldn't be found" })
 

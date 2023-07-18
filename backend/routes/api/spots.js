@@ -125,9 +125,10 @@ router.get('/current', async (req, res) => {
     const { user } = req
     if (!user) res.status(403).json({ message: "Forbidden" })
     const userSpots = await Spot.findAll({
-        where: { ownerId: user.id }
+        where: { ownerId: user.id },
+        attributes: { exclude: ['numReviews'] }
     })
-    res.json(userSpots)
+    res.json({ Spots: userSpots })
 })
 
 // get details of a spot
@@ -135,9 +136,17 @@ router.get('/:spotId', async (req, res) => {
     const currSpot = await Spot.findOne({
         where: { id: req.params.spotId },
         include: [
-            { model: SpotImage },
-            { model: User, as: "Owner" }
-        ]
+            { model: SpotImage,
+                attributes: {
+                    exclude: ['spotId', 'createdAt', 'updatedAt']
+                }},
+            { model: User, as: "Owner",
+                attributes: {
+                    exclude: ['username', 'email', 'hashedPassword', 'createdAt', 'updatedAt']
+                },
+            }
+        ],
+        attributes: { exclude: ['previewImage', 'createdAt', 'updatedAt'] }
     })
     if (currSpot) res.json(currSpot)
     else {
@@ -151,7 +160,11 @@ router.put('/:spotId', validateSpot, async (req, res, next) => {
     // checks if owner is logged in
     const { user } = req
     if (!user) res.status(403).json({ message: "Forbidden" })
-    const currSpot = await Spot.findByPk(req.params.spotId)
+    const currSpot = await Spot.findOne({
+        where:{ id: req.params.spotId },
+        attributes: { exclude: ['previewImage', 'avgRating', 'numReviews'] }
+    })
+    if (!currSpot) res.status(404).json({ message: "Spot couldn't be found"})
     if (user.id !== currSpot.ownerId) res.status(403).json({ message: "Forbidden" })
 
     const {
@@ -159,16 +172,12 @@ router.put('/:spotId', validateSpot, async (req, res, next) => {
         country, lat, lng,
         name, description, price
     } = req.body
-    try {
-        await currSpot.update({
-            address, city, state,
-            country, lat, lng,
-            name, description, price
-        })
-        res.json(currSpot)
-    } catch {
-        if (!currSpot) res.status(404).json({ message: "Spot couldn't be found"})
-    }
+    await currSpot.update({
+        address, city, state,
+        country, lat, lng,
+        name, description, price
+    })
+    res.json(currSpot)
 })
 
 // get all spots
@@ -192,6 +201,7 @@ router.get('/', validateQuery, async (req, res) => {
             lng: { [Op.between]: [minLng, maxLng] },
             price: { [Op.between]: [minPrice, maxPrice] }
         },
+        attributes: { exclude: ['numReviews'] },
         offset: size * (page - 1),
         limit: size
     })
@@ -281,7 +291,8 @@ router.post('/:spotId/reviews', reviews.validateReview, async (req, res) => {
         const sum = await Review.sum('stars', { where: { spotId: currSpot.id } })
         const count = await Review.count({ where: { spotId: currSpot.id } })
         const avgRating = Math.round(sum * 10 / count) / 10
-        await currSpot.update({ avgRating })
+        const numReviews = currSpot.numReviews + 1
+        await currSpot.update({ avgRating, numReviews })
 
         res.json(newReview)
     } catch(error) {
@@ -296,8 +307,8 @@ router.post('/:spotId/images', async (req, res) => {
     const { user } = req
     if (!user) res.status(403).json({ message: "Forbidden" })
     const currSpot = await Spot.findByPk(req.params.spotId)
-    if (user.id !== currSpot.ownerId) res.status(403).json({ message: "Forbidden" })
     if (!currSpot) res.status(404).json({ message: "Spot couldn't be found" })
+    if (user.id !== currSpot.ownerId) res.status(403).json({ message: "Forbidden" })
     const { url, preview } = req.body
 
     try {
@@ -338,8 +349,8 @@ router.delete('/:spotId', async (req, res) => {
     const { user } = req
     if (!user) res.status(403).json({ message: "Forbidden" })
     const currSpot = await Spot.findByPk(req.params.spotId)
-    if (user.id !== currSpot.ownerId) res.status(403).json({ message: "Forbidden" })
     if (!currSpot) res.status(404).json({ message: "Spot couldn't be found" })
+    if (user.id !== currSpot.ownerId) res.status(403).json({ message: "Forbidden" })
 
     await currSpot.destroy()
     res.json({

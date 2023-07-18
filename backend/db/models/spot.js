@@ -27,7 +27,7 @@ module.exports = (sequelize, DataTypes) => {
           otherKey: 'userId'
         }
       ),
-      Spot.hasOne(
+      Spot.hasMany(
         models.SpotImage,
         { foreignKey: 'spotId', onDelete: 'Cascade', hooks: true }
       )
@@ -82,6 +82,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     },
     previewImage: DataTypes.STRING,
+    numReviews: DataTypes.INTEGER,
     avgRating: DataTypes.DECIMAL,
   }, {
     sequelize,
