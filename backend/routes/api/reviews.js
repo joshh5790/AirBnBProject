@@ -48,6 +48,7 @@ router.post('/:reviewId/images', async (req, res) => {
     const { user } = req
     if (!user) res.status(403).json({ message: "Forbidden" })
     const currReview = await Review.findByPk(req.params.reviewId)
+    if (!currReview) res.status(404).json({ message: "Review couldn't be found" })
     if (user.id !== currReview.userId) res.status(403).json({ message: "Forbidden" })
 
     const { url } = req.body
@@ -60,7 +61,6 @@ router.post('/:reviewId/images', async (req, res) => {
             url
         })
     } catch(error) {
-        if (!currReview) res.status(404).json({ message: "Review couldn't be found" })
         if (error instanceof ValidationError) {
             res.json({ message: "Maximum number of images for this resource was reached"})
         }
@@ -72,38 +72,36 @@ router.put('/:reviewId', validateReview, async (req, res) => {
     const { user } = req
     if (!user) res.status(403).json({ message: "Forbidden" })
     const currReview = await Review.findByPk(req.params.reviewId)
+    if (!currReview) res.status(404).json({ message: "Review couldn't be found" })
     if (user.id !== currReview.userId) res.status(403).json({ message: "Forbidden" })
 
     const { review, stars } = req.body
-    try {
-        currReview.update({
-            review, stars
-        })
+    currReview.update({
+        review, stars
+    })
 
-        // update star rating for spot
-        const currSpot = await Spot.findByPk(currReview.spotId)
-        const sum = await Review.sum('stars', { where: { spotId: currSpot.id } })
-        const count = await Review.count({ where: { spotId: currSpot.id } })
-        const avgRating = Math.round(sum * 10 / count) / 10
-        await currSpot.update({ avgRating })
+    // update star rating for spot
+    const currSpot = await Spot.findByPk(currReview.spotId)
+    const sum = await Review.sum('stars', { where: { spotId: currSpot.id } })
+    const count = await Review.count({ where: { spotId: currSpot.id } })
+    const avgRating = Math.round(sum * 10 / count) / 10
+    await currSpot.update({ avgRating })
 
-        res.json(currReview)
-    } catch {
-        if (!currReview) res.status(404).json({ message: "Review couldn't be found" })
-    }
+    res.json(currReview)
 })
 
 router.delete('/:reviewId', async (req, res) => {
     const { user } = req
     if (!user) res.status(403).json({ message: "Forbidden" })
     const currReview = await Review.findByPk(req.params.reviewId)
+    if (!currReview) res.status(404).json({ message: "Review couldn't be found" })
+    const currSpot = await Spot.findByPk(currReview.spotId)
     const sum = await Review.sum('stars', { where: { spotId: currSpot.id } })
     const count = await Review.count({ where: { spotId: currSpot.id } })
     const avgRating = Math.round(sum * 10 / count) / 10
     const numReviews = currSpot.numReviews - 1
     await currSpot.update({ avgRating, numReviews })
     if (user.id !== currReview.userId) res.status(403).json({ message: "Forbidden" })
-    if (!currReview) res.status(404).json({ message: "Review couldn't be found" })
 
     await currReview.destroy()
     res.json({ message: "Successfully deleted" })
