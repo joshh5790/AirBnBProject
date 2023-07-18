@@ -23,10 +23,12 @@ const validateSpot = [
     check('lat')
         .exists({ checkFalsy: true})
         .isNumeric()
+        .isFloat({ min: -90, max: 90 })
         .withMessage('Latitude is not valid'),
     check('lng')
         .exists({ checkFalsy: true})
         .isNumeric()
+        .isFloat({ min: -180, max: 180 })
         .withMessage('Longitude is not valid'),
     check('name')
         .exists({ checkFalsy: true})
@@ -191,7 +193,24 @@ router.get('/', validateQuery, async (req, res) => {
         offset: size * (page - 1),
         limit: size
     })
-    res.json(allSpots)
+    // console.log(allSpots[0].createdAt)
+    // for (const spot of allSpots) {
+    //     const currCreate = spot.createdAt.slice(0,19).replace('T', ' ')
+    //     const currUpdate = spot.updatedAt.slice(0,19).replace('T', ' ')
+    //     await spot.update({
+    //         createdAt: currCreate,
+    //         updatedAt: currUpdate
+    //     })
+    // }
+    // // for (let i = 0; i < allSpots.length; i++) {
+    // //     const currCreate = allSpots[i].createdAt.slice(0,19)
+    // //     const currUpdate = allSpots[i].updatedAt.slice(0,19)
+    // //     console.log(currCreate)
+    // //     allSpots[i].createdAt = currCreate
+    // //     allSpots[i].updatedAt = currUpdate
+    // // }
+    // console.log(allSpots[0].createdAt)
+    res.json({ Spots: allSpots })
 })
 
 // Creates a booking for a spot
@@ -246,6 +265,7 @@ router.post('/:spotId/reviews', reviews.validateReview, async (req, res) => {
     const { user } = req
     if (!user) res.status(403).json({ message: "Forbidden" })
     const currSpot = await Spot.findByPk(req.params.spotId)
+    if (!currSpot) res.status(404).json({ message: "Spot couldn't be found"})
     if (user.id === currSpot.ownerId) res.status(400).json({ message: "Can't create a review for your own property!" })
     try {
         const currUser = await User.findByPk(user.id)
@@ -256,7 +276,6 @@ router.post('/:spotId/reviews', reviews.validateReview, async (req, res) => {
         })
         res.json(newReview)
     } catch(error) {
-        if (!currSpot) res.status(404).json({ message: "Spot couldn't be found"})
         if (error instanceof Sequelize.UniqueConstraintError) {
             res.status(500).json({ message: "User already has a review for this spot" })
         }
