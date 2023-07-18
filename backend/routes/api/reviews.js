@@ -85,6 +85,10 @@ router.delete('/:reviewId', async (req, res) => {
     const { user } = req
     if (!user) res.status(403).json({ message: "Forbidden" })
     const currReview = await Review.findByPk(req.params.reviewId)
+    const sum = await Review.sum('stars', { where: { spotId: currSpot.id } })
+    const count = await Review.count({ where: { spotId: currSpot.id } })
+    const avgRating = Math.round(sum * 10 / count) / 10
+    await currSpot.update({ avgRating })
     if (user.id !== currReview.userId) res.status(403).json({ message: "Forbidden" })
     if (!currReview) res.status(404).json({ message: "Review couldn't be found" })
 
