@@ -30,7 +30,7 @@ router.get('/current', async (req, res) => {
             },
             { model: Spot,
                 attributes: {
-                    exclude: ['description', 'avgRating', 'createdAt', 'updatedAt']
+                    exclude: ['description', 'avgRating', 'createdAt', 'updatedAt', 'numReviews']
                 }
             },
             { model: ReviewImage,
@@ -40,7 +40,7 @@ router.get('/current', async (req, res) => {
             }
         ]
     })
-    res.json(userReviews)
+    res.json({ Reviews: userReviews })
 })
 
 // Add image to review
