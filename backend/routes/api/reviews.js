@@ -61,7 +61,10 @@ router.post('/:reviewId/images', async (req, res) => {
             url
         })
     } catch(error) {
-        if (error instanceof ValidationError) {
+        if (error.errors[0].path === 'url') {
+            res.json({ message: "Invalid image url"})
+        }
+        if (error.errors[0].path === 'reviewId') {
             res.json({ message: "Maximum number of images for this resource was reached"})
         }
     }
