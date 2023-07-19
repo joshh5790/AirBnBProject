@@ -173,7 +173,7 @@ router.put('/:spotId', validateSpot, async (req, res, next) => {
     if (!user) res.status(403).json({ message: "Forbidden" })
     const currSpot = await Spot.findOne({
         where:{ id: req.params.spotId },
-        attributes: { exclude: ['previewImage', 'avgRating', 'numReviews'] }
+        attributes: { exclude: ['previewImage', 'avgStarRating', 'numReviews'] }
     })
     if (!currSpot) res.status(404).json({ message: "Spot couldn't be found"})
     if (user.id !== currSpot.ownerId) res.status(403).json({ message: "Forbidden" })
@@ -305,9 +305,9 @@ router.post('/:spotId/reviews', reviews.validateReview, async (req, res) => {
         // update star rating for spot
         const sum = await Review.sum('stars', { where: { spotId: currSpot.id } })
         const count = await Review.count({ where: { spotId: currSpot.id } })
-        const avgRating = Math.round(sum * 10 / count) / 10
+        const avgStarRating = Math.round(sum * 10 / count) / 10
         const numReviews = currSpot.numReviews++
-        await currSpot.update({ avgRating, numReviews })
+        await currSpot.update({ avgStarRating, numReviews })
 
         res.json(newReview)
     } catch(error) {

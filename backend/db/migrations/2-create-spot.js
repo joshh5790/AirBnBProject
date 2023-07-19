@@ -68,7 +68,7 @@ module.exports = {
         type: Sequelize.INTEGER,
         defaultValue: 0
       },
-      avgRating: {
+      avgStarRating: {
         type: Sequelize.DECIMAL
       },
       createdAt: {

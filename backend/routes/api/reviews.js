@@ -30,7 +30,7 @@ router.get('/current', async (req, res) => {
             },
             { model: Spot,
                 attributes: {
-                    exclude: ['description', 'avgRating', 'createdAt', 'updatedAt', 'numReviews']
+                    exclude: ['description', 'avgStarRating', 'createdAt', 'updatedAt', 'numReviews']
                 }
             },
             { model: ReviewImage,
@@ -87,8 +87,8 @@ router.put('/:reviewId', validateReview, async (req, res) => {
     const currSpot = await Spot.findByPk(currReview.spotId)
     const sum = await Review.sum('stars', { where: { spotId: currSpot.id } })
     const count = await Review.count({ where: { spotId: currSpot.id } })
-    const avgRating = Math.round(sum * 10 / count) / 10
-    await currSpot.update({ avgRating })
+    const avgStarRating = Math.round(sum * 10 / count) / 10
+    await currSpot.update({ avgStarRating })
 
     res.json(currReview)
 })
@@ -102,9 +102,9 @@ router.delete('/:reviewId', async (req, res) => {
     const currSpot = await Spot.findByPk(currReview.spotId)
     const sum = await Review.sum('stars', { where: { spotId: currSpot.id } })
     const count = await Review.count({ where: { spotId: currSpot.id } })
-    const avgRating = Math.round(sum * 10 / count) / 10
+    const avgStarRating = Math.round(sum * 10 / count) / 10
     const numReviews = currSpot.numReviews - 1
-    await currSpot.update({ avgRating, numReviews })
+    await currSpot.update({ avgStarRating, numReviews })
     if (user.id !== currReview.userId) return res.status(403).json({ message: "Forbidden" })
 
     await currReview.destroy()
