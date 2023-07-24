@@ -76,7 +76,7 @@ router.post('/', validateSignup, async (req, res) => {
 })
 
 router.get('/', async (req, res) => {
-    const allUsers = User.findAll()
+    const allUsers = await User.findAll()
     res.json(allUsers)
 })
 
