@@ -306,7 +306,7 @@ router.post('/:spotId/reviews', reviews.validateReview, async (req, res) => {
         const sum = await Review.sum('stars', { where: { spotId: currSpot.id } })
         const count = await Review.count({ where: { spotId: currSpot.id } })
         const avgStarRating = Math.round(sum * 10 / count) / 10
-        const numReviews = currSpot.numReviews++
+        const numReviews = currSpot.numReviews + 1
         await currSpot.update({ avgStarRating, numReviews })
 
         res.json(newReview)
