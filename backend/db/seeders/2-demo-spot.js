@@ -31,6 +31,30 @@ const spots = [
     description: 'even more mold',
     price: '1000'
   },
+  {
+    ownerId: 3,
+    address: '1235 Disney',
+    city: 'Gilroy',
+    state: 'CA',
+    country: 'US',
+    lat: '20.5',
+    lng: '20.5',
+    name: 'pain',
+    description: 'even more mold',
+    price: '1000'
+  },
+  {
+    ownerId: 3,
+    address: '1235 Disney',
+    city: 'Campbell',
+    state: 'CA',
+    country: 'US',
+    lat: '20.5',
+    lng: '20.5',
+    name: 'pain',
+    description: 'even more mold',
+    price: '1000'
+  },
 ]
 
 /** @type {import('sequelize-cli').Migration} */
