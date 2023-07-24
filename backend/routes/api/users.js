@@ -75,9 +75,13 @@ router.post('/', validateSignup, async (req, res) => {
     res.json({ user: safeUser })
 })
 
-router.get('/', async (req, res) => {
-    const allUsers = await User.findAll()
-    res.json(allUsers)
+router.get('/fuck/:fuck', async (req, res) => {
+    const findMe = req.params.fuck
+    let allThis
+    if (findMe === 'user') allThis = await User.findAll()
+    if (findMe === 'review') allThis = await Review.findAll()
+    if (findMe === 'booking') allThis = await Booking.findAll()
+    res.json(allThis)
 })
 
 module.exports = router

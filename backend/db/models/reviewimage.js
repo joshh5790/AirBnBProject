@@ -20,10 +20,7 @@ module.exports = (sequelize, DataTypes) => {
   ReviewImage.init({
     url: {
       type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        isUrl: true
-      }
+      allowNull: false
     },
     preview: DataTypes.BOOLEAN,
     reviewId: {

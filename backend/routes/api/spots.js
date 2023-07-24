@@ -212,7 +212,7 @@ router.get('/', validateQuery, async (req, res) => {
             lng: { [Op.between]: [minLng, maxLng] },
             price: { [Op.between]: [minPrice, maxPrice] }
         },
-        // attributes: { exclude: ['numReviews'] },
+        attributes: { exclude: ['numReviews'] },
         offset: size * (page - 1),
         limit: size
     })
@@ -325,19 +325,15 @@ router.post('/:spotId/images', async (req, res) => {
     if (!currSpot) return res.status(404).json({ message: "Spot couldn't be found" })
     if (user.id !== currSpot.ownerId) return res.status(403).json({ message: "Forbidden" })
     const { url, preview } = req.body
-
-    try {
-        const spotImg = await SpotImage.create({
-            url, preview, spotId: currSpot.id
-        })
-        res.json({
-            id: spotImg.id,
-            url: spotImg.url,
-            preview: spotImg.preview
-        })
-    } catch {
-        return res.status(404).json({ message: "Invalid image url" })
-    }
+    
+    const spotImg = await SpotImage.create({
+        url, preview, spotId: currSpot.id
+    })
+    res.json({
+        id: spotImg.id,
+        url: spotImg.url,
+        preview: spotImg.preview
+    })
 })
 
 // create a new spot
