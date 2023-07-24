@@ -202,10 +202,8 @@ router.get('/', validateQuery, async (req, res) => {
     minLng = minLng || -180
     maxLng = maxLng || 180
     minPrice = minPrice || 0
-    maxPrice = maxPrice || 99999
+    maxPrice = maxPrice || 9999999
 
-
-    // how do I do a conditional Op.between only if the two things are defined?
     const allSpots = await Spot.findAll({
         where: {
             lat: { [Op.between]: [minLat, maxLat] },
@@ -216,6 +214,8 @@ router.get('/', validateQuery, async (req, res) => {
         offset: size * (page - 1),
         limit: size
     })
+    res.json({ Spots: allSpots })
+})
     // console.log(allSpots[0].createdAt)
     // for (const spot of allSpots) {
     //     const currCreate = spot.createdAt.slice(0,19).replace('T', ' ')
@@ -233,8 +233,6 @@ router.get('/', validateQuery, async (req, res) => {
     // //     allSpots[i].updatedAt = currUpdate
     // // }
     // console.log(allSpots[0].createdAt)
-    res.json({ Spots: allSpots })
-})
 
 // Creates a booking for a spot
 router.post('/:spotId/bookings', async (req, res) => {
