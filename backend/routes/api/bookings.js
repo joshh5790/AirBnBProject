@@ -70,6 +70,9 @@ router.delete('/:bookingId', async (req, res) => {
     const currBooking = await Booking.findByPk(req.params.bookingId)
     if (!currBooking) return res.status(404).json({ message: "Booking couldn't be found" })
     if (user.id !== currBooking.userId) return res.status(403).json({ message: "Forbidden" })
+    const current = new Date()
+    if (new Date(currBooking.endDate) < current) return res.status(403).json({ message: "Past bookings can't be deleted" })
+
 
     await currBooking.destroy()
     res.json({ message: "Successfully deleted" })

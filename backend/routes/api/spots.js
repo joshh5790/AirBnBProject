@@ -212,7 +212,7 @@ router.get('/', validateQuery, async (req, res) => {
             lng: { [Op.between]: [minLng, maxLng] },
             price: { [Op.between]: [minPrice, maxPrice] }
         },
-        attributes: { exclude: ['numReviews'] },
+        // attributes: { exclude: ['numReviews'] },
         offset: size * (page - 1),
         limit: size
     })
