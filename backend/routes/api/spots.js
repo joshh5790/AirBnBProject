@@ -325,7 +325,7 @@ router.post('/:spotId/images', async (req, res) => {
     if (!currSpot) return res.status(404).json({ message: "Spot couldn't be found" })
     if (user.id !== currSpot.ownerId) return res.status(403).json({ message: "Forbidden" })
     const { url, preview } = req.body
-    
+
     const spotImg = await SpotImage.create({
         url, preview, spotId: currSpot.id
     })
