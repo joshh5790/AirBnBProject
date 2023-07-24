@@ -75,4 +75,9 @@ router.post('/', validateSignup, async (req, res) => {
     res.json({ user: safeUser })
 })
 
+router.get('/', async (req, res) => {
+    const allUsers = User.findAll()
+    res.json(allUsers)
+})
+
 module.exports = router

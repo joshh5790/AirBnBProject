@@ -99,13 +99,13 @@ router.delete('/:reviewId', async (req, res) => {
     if (!user) return res.status(403).json({ message: "Forbidden" })
     const currReview = await Review.findByPk(req.params.reviewId)
     if (!currReview) return res.status(404).json({ message: "Review couldn't be found" })
+    if (user.id !== currReview.userId) return res.status(403).json({ message: "Forbidden" })
     const currSpot = await Spot.findByPk(currReview.spotId)
     const sum = await Review.sum('stars', { where: { spotId: currSpot.id } })
     const count = await Review.count({ where: { spotId: currSpot.id } })
     const avgStarRating = Math.round(sum * 10 / count) / 10
     const numReviews = currSpot.numReviews - 1
     await currSpot.update({ avgStarRating, numReviews })
-    if (user.id !== currReview.userId) return res.status(403).json({ message: "Forbidden" })
 
     await currReview.destroy()
     res.json({ message: "Successfully deleted" })
