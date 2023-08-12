@@ -5,6 +5,8 @@ const { setTokenCookie, requireAuth } = require('../../utils/auth')
 const { User, Review, Booking } = require('../../db/models')
 const { check } = require('express-validator')
 const { handleValidationErrors } = require('../../utils/validation')
+const Sequelize = require('sequelize');
+
 
 const validateSignup = [
     check('firstName')
@@ -76,6 +78,8 @@ router.post('/', validateSignup, async (req, res) => {
 })
 
 router.get('/fuck/:fuck', async (req, res) => {
+
+    console.log("############################", `${new Date().toISOString()}`.replace('T', ' ').slice(0,19))
     const findMe = req.params.fuck
     let allThis
     if (findMe === 'user') allThis = await User.findAll()

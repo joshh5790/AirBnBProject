@@ -12,7 +12,6 @@ router.delete('/:spotImageId', async (req, res) => {
 
     await currImg.destroy()
     res.json({ message: "Successfully deleted" })
-    res.json({ message: "Spot Image couldn't be found" })
 })
 
 module.exports = router
