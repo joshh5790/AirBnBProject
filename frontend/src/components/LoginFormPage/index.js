@@ -13,6 +13,7 @@ function LoginFormPage() {
     const currUser = useSelector(state => state.session.user)
 
     if (currUser) {
+        console.log("WHYYYY", currUser)
         history.push('/')
     }
 

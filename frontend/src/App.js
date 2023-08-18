@@ -17,7 +17,15 @@ function App() {
   return (
     <div>
       <h1>Hello from App</h1>
-      <NavLink exact to='/login'>Login</NavLink>
+      <div>
+        <NavLink exact to='/login'>Login</NavLink>
+      </div>
+      <div>
+        <NavLink exact to='/'>Home</NavLink>
+      </div>
+      <div>
+        <NavLink exact to='/signup'>Signup</NavLink>
+      </div>
       <Switch>
         <Route exact path='/login'>
           {isLoaded && <LoginFormPage />}
