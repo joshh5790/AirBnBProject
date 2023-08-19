@@ -1,4 +1,3 @@
-import SignupFormPage from "./components/SignupFormPage";
 import Navigation from "./components/Navigation";
 import { Route, Switch } from 'react-router-dom'
 import { useState, useEffect } from "react";
@@ -17,9 +16,7 @@ function App() {
     <div>
       <Navigation isLoaded={isLoaded}/>
       <Switch>
-        <Route path="/signup">
-          {isLoaded && <SignupFormPage />}
-        </Route>
+
       </Switch>
     </div>
   );
