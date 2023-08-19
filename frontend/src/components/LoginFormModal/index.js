@@ -15,7 +15,6 @@ function LoginFormModal() {
     const { closeModal } = useModal()
 
     if (currUser) {
-        console.log("WHYYYY", currUser)
         history.push('/')
     }
 
