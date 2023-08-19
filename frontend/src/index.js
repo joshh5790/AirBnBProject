@@ -7,7 +7,7 @@ import App from './App';
 import configureStore from './store';
 import { restoreCSRF, csrfFetch } from './store/csrf';
 import * as sessionActions from './store/session'
-import { ModalProvider } from './context/Modal';
+import { ModalProvider, Modal } from './context/Modal';
 
 const store = configureStore();
 
@@ -29,6 +29,7 @@ function Root() {
       <ReduxProvider store={store}>
         <BrowserRouter>
           <App />
+          <Modal />
         </BrowserRouter>
       </ReduxProvider>
     </ModalProvider>

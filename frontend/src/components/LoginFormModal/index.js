@@ -2,15 +2,17 @@ import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import { login } from '../../store/session'
+import { useModal } from '../../context/Modal'
 import './LoginForm.css'
 
-function LoginFormPage() {
+function LoginFormModal() {
     const dispatch = useDispatch()
     const history = useHistory()
     const [credential, setCredential] = useState('')
     const [password, setPassword] = useState('')
     const [errors, setErrors] = useState({})
     const currUser = useSelector(state => state.session.user)
+    const { closeModal } = useModal()
 
     if (currUser) {
         console.log("WHYYYY", currUser)
@@ -21,6 +23,7 @@ function LoginFormPage() {
         setErrors({})
         e.preventDefault()
         dispatch(login({ credential, password }))
+        .then(closeModal)
         .catch(
             async res => {
                 const data = await res.json()
@@ -57,4 +60,4 @@ function LoginFormPage() {
     )
 }
 
-export default LoginFormPage
+export default LoginFormModal
