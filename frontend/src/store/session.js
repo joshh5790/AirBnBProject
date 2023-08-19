@@ -6,7 +6,6 @@ const REMOVE_USER = 'session/removeUser'
 // action creators
 
 export function setUser(user) {
-    console.log("SETUSER", user)
     return {
         type: SET_USER,
         payload: user
@@ -58,6 +57,14 @@ export const signup = user => async dispatch => {
     return response
 }
 
+export const logout = () => async dispatch => {
+    const response = await csrfFetch('/api/session', {
+        method: 'DELETE',
+      });
+      dispatch(removeUser());
+      return response;
+}
+
 // reducer
 
 const initialState = { user: null }
@@ -65,7 +72,6 @@ const initialState = { user: null }
 export default function sessionReducer(state = initialState, action) {
     switch(action.type) {
         case SET_USER:
-            console.log(state)
             return { ...state, user: action.payload }
         case REMOVE_USER:
             return initialState

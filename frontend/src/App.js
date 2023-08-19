@@ -1,31 +1,23 @@
 import LoginFormPage from "./components/LoginFormPage";
 import SignupFormPage from "./components/SignupFormPage";
+import Navigation from "./components/Navigation";
 import { Route, Switch } from 'react-router-dom'
-import { NavLink } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import * as sessionActions from "./store/session";
 
 function App() {
   const dispatch = useDispatch()
   const [isLoaded, setIsLoaded] = useState(false)
+  const sessionUser = useSelector(state => state.session.user)
+  
   useEffect(() => {
-    dispatch(sessionActions.restoreUser())
-    .then(() => setIsLoaded(true))
-  })
+    if (sessionUser) setIsLoaded(true)
+  }, [])
 
   return (
     <div>
-      <h1>Hello from App</h1>
-      <div>
-        <NavLink exact to='/login'>Login</NavLink>
-      </div>
-      <div>
-        <NavLink exact to='/'>Home</NavLink>
-      </div>
-      <div>
-        <NavLink exact to='/signup'>Signup</NavLink>
-      </div>
+      <Navigation />
       <Switch>
         <Route exact path='/login'>
           {isLoaded && <LoginFormPage />}
