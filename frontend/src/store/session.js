@@ -18,6 +18,20 @@ export function removeUser() { // needs to remove the cookie too
 
 // thunks
 
+export const demoLogin = () => async dispatch => {
+    const response = await csrfFetch('/api/session', {
+        method: 'POST',
+        body: JSON.stringify({
+            credential: 'Demo',
+            password: 'password'
+        })
+    })
+
+    const data = await response.json()
+    dispatch(setUser(data.user))
+    return response
+}
+
 export const login = user => async dispatch => {
     const { credential, password } = user
     const response = await csrfFetch('/api/session', {

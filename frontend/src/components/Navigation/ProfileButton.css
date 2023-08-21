@@ -1,0 +1,32 @@
+.profile-dropdown {
+    list-style: none;
+    padding: 0;
+    margin: 0.5rem 0;
+    box-sizing: content-box;
+}
+
+.profile-button {
+    all: unset;
+    margin: 0 2rem 0 0;
+    width: 5rem;
+    height: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    border: 1px solid rgb(167, 167, 167);
+    border-radius: 2rem;
+}
+
+.profile-button:hover {
+    box-shadow: 0.12rem 0.25rem rgb(237, 237, 237), -0.12rem 0rem rgb(237, 237, 237)
+}
+
+.fa-user-circle {
+    font-size: 2rem;
+    padding-right: 0.5rem;
+}
+
+.fa-bars {
+    font-size: 1.5rem;
+    padding-right: 0.5rem;
+}

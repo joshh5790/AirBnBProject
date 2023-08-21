@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import { login } from '../../store/session'
@@ -11,8 +11,16 @@ function LoginFormModal() {
     const [credential, setCredential] = useState('')
     const [password, setPassword] = useState('')
     const [errors, setErrors] = useState({})
+    const [disableButton, setDisableButton] = useState(true)
     const currUser = useSelector(state => state.session.user)
     const { closeModal } = useModal()
+
+    useEffect(() => {
+        console.log(disableButton)
+        if (credential.length > 3 && password.length > 5) {
+            setDisableButton(false)
+        } else setDisableButton(true)
+    }, [credential, password])
 
     if (currUser) {
         history.push('/')
@@ -53,7 +61,7 @@ function LoginFormModal() {
                         required />
                 </label>
                 {errors.message && <p>{errors.message}</p>}
-                <button>Log In</button>
+                <button disabled={disableButton}>Log In</button>
             </form>
         </div>
     )
