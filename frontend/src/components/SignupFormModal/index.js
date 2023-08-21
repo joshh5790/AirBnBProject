@@ -1,6 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Redirect } from "react-router-dom";
 import * as sessionActions from "../../store/session";
 import { useModal } from "../../context/Modal";
 import './SignupForm.css'
@@ -15,9 +14,19 @@ function SignupFormModal() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errors, setErrors] = useState({});
+  const [disableButton, setDisableButton] = useState(true)
   const { closeModal } = useModal()
 
-  if (sessionUser) return <Redirect to="/" />;
+  useEffect(() => {
+    if (
+        firstName && lastName && email &&
+        username && password && confirmPassword &&
+        username.length > 3 &&
+        password.length > 5 &&
+        password === confirmPassword) {
+          setDisableButton(false)
+    } else setDisableButton(true)
+}, [firstName, lastName, email, username, password, confirmPassword])
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -35,6 +44,7 @@ function SignupFormModal() {
         .catch(async (res) => {
             const data = await res.json();
             if (data && data.errors) {
+              console.log(data)
             setErrors(data.errors);
             }
         });
@@ -108,7 +118,7 @@ function SignupFormModal() {
           />
         </label>
         {errors.confirmPassword && <p>{errors.confirmPassword}</p>}
-        <button type="submit">Sign Up</button>
+        <button type="submit" disabled={disableButton}>Sign Up</button>
       </form>
     </>
   );

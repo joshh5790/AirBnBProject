@@ -1,3 +1,6 @@
-/* button {
-    all: unset;
-} */
+.login-button,
+.signup-button {
+        all: unset;
+        font: 1.2em "Fira Sans", sans-serif;
+        margin-top: 0.5rem;
+}

@@ -16,7 +16,6 @@ function LoginFormModal() {
     const { closeModal } = useModal()
 
     useEffect(() => {
-        console.log(disableButton)
         if (credential.length > 3 && password.length > 5) {
             setDisableButton(false)
         } else setDisableButton(true)

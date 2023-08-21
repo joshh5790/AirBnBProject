@@ -53,7 +53,12 @@ function ProfileButton({ user }) {
             <li>Hello, {user.firstName}</li>
             <li>{user.email}</li>
             <li>
-              <button onClick={logout}>Log Out</button>
+              <button
+                onClick={logout}
+                className='logout-button'
+                >
+                Log Out
+                </button>
             </li>
           </>
           ) : (
@@ -63,6 +68,7 @@ function ProfileButton({ user }) {
                 buttonText="Log In"
                 modalComponent={<LoginFormModal />}
                 onButtonClick={closeMenu}
+                className='login-button'
                 />
             </li>
             <li>
@@ -70,6 +76,7 @@ function ProfileButton({ user }) {
                 buttonText="Sign Up"
                 modalComponent={<SignupFormModal />}
                 onButtonClick={closeMenu}
+                className='signup-button'
               />
             </li>
           </>

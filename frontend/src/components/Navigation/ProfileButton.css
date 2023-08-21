@@ -1,13 +1,16 @@
 .profile-dropdown {
     list-style: none;
+    width: 9rem;
     padding: 0;
     margin: 0.5rem 0;
-    box-sizing: content-box;
+    background-color: white;
+    border-radius: 10%;
+    padding: 0.5rem;
+    box-shadow: 0.25rem 0.15rem rgb(237, 237, 237), -0.25rem -0.15rem rgb(237, 237, 237);
 }
 
 .profile-button {
     all: unset;
-    margin: 0 2rem 0 0;
     width: 5rem;
     height: 3rem;
     display: flex;
@@ -29,4 +32,10 @@
 .fa-bars {
     font-size: 1.5rem;
     padding-right: 0.5rem;
+}
+
+.logout-button {
+    all: unset;
+    font: 1.2em "Fira Sans", sans-serif;
+    margin-top: 0.5rem;
 }

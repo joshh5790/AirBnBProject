@@ -11,7 +11,7 @@ function Navigation({ isLoaded }){
   const dispatch = useDispatch() // demo
 
   const handleDemo = () => { // demo
-    dispatch(demoLogin())
+    if (!sessionUser) dispatch(demoLogin())
   }
 
   return (
@@ -26,13 +26,15 @@ function Navigation({ isLoaded }){
         </NavLink>
       </li>
       {/* demo */}
-      <li> 
+      <li>
         <button onClick={handleDemo}>
           Demo account
         </button>
       </li>
       {isLoaded && <li>
+        <div className='nav-right'>
           <ProfileButton user={sessionUser} />
+        </div>
       </li>}
     </ul>
   );
