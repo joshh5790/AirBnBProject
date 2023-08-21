@@ -13,3 +13,9 @@ form {
     background-color: #E8F0FE;
     margin-bottom: 0.5rem;
 }
+
+.form-submit:enabled {
+    background-color: #FF5A5F;
+    color: white;
+    filter: drop-shadow(0 0 1px black)
+}
