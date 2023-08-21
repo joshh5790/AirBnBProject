@@ -1,3 +1,9 @@
+.signup-modal {
+    border: 1px solid black;
+    border-radius: 20%;
+    padding: 1rem;
+}
+
 form {
     display: flex;
     flex-direction: column;

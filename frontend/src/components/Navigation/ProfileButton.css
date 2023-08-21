@@ -5,8 +5,7 @@
     margin: 0.5rem 0;
     background-color: white;
     border-radius: 10%;
-    padding: 0.5rem;
-    box-shadow: 0.25rem 0.15rem rgb(237, 237, 237), -0.25rem -0.15rem rgb(237, 237, 237);
+    box-shadow: 0.25rem 0.15rem 0.25rem rgb(237, 237, 237), -0.25rem -0.15rem 0.25rem rgb(237, 237, 237);
 }
 
 .profile-button {
@@ -21,7 +20,8 @@
 }
 
 .profile-button:hover {
-    box-shadow: 0.12rem 0.25rem rgb(237, 237, 237), -0.12rem 0rem rgb(237, 237, 237)
+    box-shadow: 0.12rem 0.25rem 0.25rem rgb(237, 237, 237), -0.12rem 0rem 0.25rem rgb(237, 237, 237);
+    cursor: pointer;
 }
 
 .fa-user-circle {
@@ -38,4 +38,10 @@
     all: unset;
     font: 1.2em "Fira Sans", sans-serif;
     margin-top: 0.5rem;
+    cursor: pointer;
+    padding: 0.3rem 1rem;
+}
+
+.dropdown-button:hover {
+    background-color: rgb(231, 231, 231);
 }
