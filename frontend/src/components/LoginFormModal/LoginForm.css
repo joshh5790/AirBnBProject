@@ -2,3 +2,17 @@ form {
     display: flex;
     flex-direction: column;
 }
+
+.login-input {
+    background-color: #E8F0FE;
+    margin-bottom: 0.5rem;
+}
+
+.demo-user {
+    color: blue;
+    text-decoration: underline;
+}
+
+.form-submit {
+    
+}

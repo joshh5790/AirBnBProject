@@ -20,8 +20,12 @@
 
   #modal-content {
     position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     background-color: white;
-    padding: 2rem;
+    top: 100px;
+    padding: 1.5rem;
     border-radius: 1rem;
-    box-shadow: 0.2rem 0.2rem 0.2px gray, -0.2rem -0.2rem -0.2rem gray;
+    box-shadow: 0.2rem 0.2rem 0.2px #CCCCCC, -0.2rem -0.2rem -0.2rem #CCCCCC;
   }

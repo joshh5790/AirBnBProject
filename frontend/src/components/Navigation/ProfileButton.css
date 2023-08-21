@@ -1,11 +1,17 @@
 .profile-dropdown {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     list-style: none;
-    width: 9rem;
+    width: fit-content;
     padding: 0;
     margin: 0.5rem 0;
     background-color: white;
-    border-radius: 10%;
-    box-shadow: 0.25rem 0.15rem 0.25rem rgb(237, 237, 237), -0.25rem -0.15rem 0.25rem rgb(237, 237, 237);
+    /* border-radius: 10%; */
+    top: 3.3rem;
+    filter: drop-shadow(0 0 1px #CCCCCC);
 }
 
 .profile-button {
@@ -20,7 +26,7 @@
 }
 
 .profile-button:hover {
-    box-shadow: 0.12rem 0.25rem 0.25rem rgb(237, 237, 237), -0.12rem 0rem 0.25rem rgb(237, 237, 237);
+    box-shadow: 0.12rem 0.25rem 0.25rem #CCCCCC, -0.12rem 0rem 0.25rem #CCCCCC;
     cursor: pointer;
 }
 
@@ -43,5 +49,9 @@
 }
 
 .dropdown-button:hover {
-    background-color: rgb(231, 231, 231);
+    background-color: rgb(235, 235, 235);
+}
+
+.user-info {
+    padding: 0.5rem;
 }

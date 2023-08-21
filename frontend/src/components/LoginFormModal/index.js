@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import { login } from '../../store/session'
 import { useModal } from '../../context/Modal'
+import { demoLogin } from '../../store/session'
 import './LoginForm.css'
 
 function LoginFormModal() {
@@ -38,31 +39,40 @@ function LoginFormModal() {
         )
     }
 
+    const handleDemo = () => { // demo
+        dispatch(demoLogin())
+        closeModal()
+    }
+
     return (
-        <div>
+        <>
+            <h1>Log In</h1>
             <form onSubmit={handleSubmit}>
-                <label name='credential'>Credential:
-                    <input
-                        name='credential'
-                        placeholder='Username or Email'
-                        type='text'
-                        value={credential}
-                        onChange={e => setCredential(e.target.value)}
-                        required />
-                </label>
-                <label name='password'>Password:
-                    <input
-                        name='password'
-                        placeholder='Password'
-                        type='password'
-                        value={password}
-                        onChange={e => setPassword(e.target.value)}
-                        required />
-                </label>
+                <input
+                    className='login-input'
+                    name='credential'
+                    placeholder='Username or Email'
+                    type='text'
+                    value={credential}
+                    onChange={e => setCredential(e.target.value)}
+                    required />
+                <input
+                    className='login-input'
+                    name='password'
+                    placeholder='Password'
+                    type='password'
+                    value={password}
+                    onChange={e => setPassword(e.target.value)}
+                    required />
                 {errors.message && <p>{errors.message}</p>}
-                <button disabled={disableButton}>Log In</button>
+                <button
+                    className='form-submit'
+                    disabled={disableButton}>Log In</button>
             </form>
-        </div>
+            <p
+                className='demo-user'
+                onClick={handleDemo}>Demo User</p>
+        </>
     )
 }
 

@@ -8,3 +8,8 @@ form {
     display: flex;
     flex-direction: column;
 }
+
+.signup-input {
+    background-color: #E8F0FE;
+    margin-bottom: 0.5rem;
+}
