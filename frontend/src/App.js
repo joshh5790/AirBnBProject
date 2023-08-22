@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import * as sessionActions from "./store/session";
 import { retrieveAllSpots } from "./store/spots";
+import HomePage from "./components/HomePage";
 
 function App() {
   const dispatch = useDispatch()
@@ -21,7 +22,9 @@ function App() {
     <div>
       <Navigation isLoaded={isLoaded}/>
       <Switch>
-
+        <Route exact path='/'>
+          <HomePage />
+        </Route>
       </Switch>
     </div>
   );

@@ -7,7 +7,7 @@ import logo from '../../images/air-bee-n-bee_logo.png'
 
 function Navigation({ isLoaded }){
   const sessionUser = useSelector(state => state.session.user);
-
+  console.log(logo)
 
   return (
     <ul className='nav'>

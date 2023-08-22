@@ -1,0 +1,23 @@
+.spot-card {
+    color:black;
+}
+
+.previewImage {
+    height: 15rem;
+    width: 15rem;
+    border-radius: 1rem;
+}
+
+.loc-rating {
+    display: flex;
+    justify-content: space-between;
+}
+
+.loc,
+.rating {
+    margin: 0.5rem 0;
+}
+
+.price-num {
+    font-weight: bold;
+}

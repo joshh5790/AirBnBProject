@@ -1,6 +1,15 @@
 /* TODO Add site wide styles */
 h1 {
-    font: 1.2em "Fira Sans", sans-serif;
+    font-family: "Fira Sans", sans-serif;
     font-size: 24px;
     font-weight: bold;
+}
+
+p,
+li {
+    font-family: "Fira Sans", sans-serif;
+}
+
+a {
+    text-decoration: none;
 }
