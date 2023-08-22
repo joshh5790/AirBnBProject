@@ -1,7 +1,7 @@
 .home-page {
     position: relative;
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: 1fr;
     grid-auto-flow: row;
     justify-items: center;
     top: 4.375rem;
@@ -12,5 +12,22 @@
     padding: 2rem;
 }
 
-/* 2-3 columns 950px 3-4 columns- 1128px, 4-5 columns- 1640px*/
 /* image takes up 100% of grid width, set to variable and set as height too */
+
+@media screen and (min-width: 550px) {
+    .home-page {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media screen and (min-width: 950px) {
+    .home-page {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media screen and (min-width: 1128px) {
+    .home-page {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}

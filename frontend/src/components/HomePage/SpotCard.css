@@ -1,6 +1,10 @@
 .spot-card {
     color:black;
-    
+    position: relative;
+}
+
+.spot-card:hover + .tooltip {
+    display: block;
 }
 
 .previewImage {
@@ -21,4 +25,15 @@
 
 .price-num {
     font-weight: bold;
+}
+
+.tooltip {
+    position: absolute;
+    background-color: #333;
+    color: #fff;
+    padding: 5px;
+    border-radius: 4px;
+    font-size: 12px;
+    white-space: nowrap;
+    z-index: 1;
 }
