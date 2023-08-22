@@ -1,12 +1,3 @@
-.hidden {
-    display: none
-}
-
-.logo {
-    height: 2.5rem;
-    cursor: pointer;
-}
-
 .nav {
     position: fixed;
     width: 100%;
@@ -21,6 +12,27 @@
     padding-bottom: 0.5rem;
     z-index: 1;
     border-bottom: 1px solid #CCCCCC;
+}
+
+.hidden {
+    display: none
+}
+
+.logo-link {
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    height: 2.5rem;
+    cursor: pointer;
+}
+
+.logo-text {
+    color: #FF3257;
+    font-weight: bold;
+    font-size: 20px;
+    margin-left: 0.3rem;
 }
 
 .nav-right {

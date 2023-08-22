@@ -12,12 +12,13 @@ function Navigation({ isLoaded }){
   return (
     <ul className='nav'>
       <li>
-        <NavLink exact to="/">
+        <NavLink exact to="/" className='logo-link'>
           <img
             src={logo}
             alt='logo'
             className='logo'
           />
+          <p className='logo-text'>airbee-n-bee</p>
         </NavLink>
       </li>
       {isLoaded && <li>
