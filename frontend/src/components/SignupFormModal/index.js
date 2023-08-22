@@ -65,7 +65,7 @@ function SignupFormModal() {
           onChange={(e) => setEmail(e.target.value)}
           required
         />
-        {errors.email && <p>{errors.email}</p>}
+        {errors.email && <p className="error-msg">{errors.email}</p>}
         <input
           className='signup-input'
           type="text"
@@ -74,7 +74,7 @@ function SignupFormModal() {
           onChange={(e) => setUsername(e.target.value)}
           required
         />
-        {errors.username && <p>{errors.username}</p>}
+        {errors.username && <p className="error-msg">{errors.username}</p>}
         <input
           className='signup-input'
           type="text"
@@ -83,7 +83,7 @@ function SignupFormModal() {
           onChange={(e) => setFirstName(e.target.value)}
           required
         />
-        {errors.firstName && <p>{errors.firstName}</p>}
+        {errors.firstName && <p className="error-msg">{errors.firstName}</p>}
         <input
           className='signup-input'
           type="text"
@@ -92,7 +92,7 @@ function SignupFormModal() {
           onChange={(e) => setLastName(e.target.value)}
           required
         />
-        {errors.lastName && <p>{errors.lastName}</p>}
+        {errors.lastName && <p className="error-msg">{errors.lastName}</p>}
         <input
           className='signup-input'
           type="password"
@@ -101,7 +101,7 @@ function SignupFormModal() {
           onChange={(e) => setPassword(e.target.value)}
           required
         />
-        {errors.password && <p>{errors.password}</p>}
+        {errors.password && <p className="error-msg">{errors.password}</p>}
         <input
           className='signup-input'
           type="password"
@@ -110,7 +110,7 @@ function SignupFormModal() {
           onChange={(e) => setConfirmPassword(e.target.value)}
           required
         />
-        {errors.confirmPassword && <p>{errors.confirmPassword}</p>}
+        {errors.confirmPassword && <p className="error-msg">{errors.confirmPassword}</p>}
         <button className="form-submit" type="submit" disabled={disableButton}>Sign Up</button>
       </form>
     </>

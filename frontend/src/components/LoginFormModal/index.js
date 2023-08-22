@@ -64,7 +64,7 @@ function LoginFormModal() {
                     value={password}
                     onChange={e => setPassword(e.target.value)}
                     required />
-                {errors.message && <p>{errors.message}</p>}
+                {errors.message && <p className='error-msg'>{errors.message}</p>}
                 <button
                     className='form-submit'
                     disabled={disableButton}>Log In</button>
