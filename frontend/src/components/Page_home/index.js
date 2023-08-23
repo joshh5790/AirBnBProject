@@ -1,10 +1,16 @@
-import { useSelector } from 'react-redux'
+import { useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
 import SpotCard from './SpotCard'
+import { retrieveAllSpots } from '../../store/spots'
 import './HomePage.css'
 
 const HomePage = () => {
+    const dispatch = useDispatch()
     const allSpots = useSelector(state => Object.values(state.spots))
 
+    useEffect(() => {
+        dispatch(retrieveAllSpots())
+    }, [dispatch])
 
     return (
         <>

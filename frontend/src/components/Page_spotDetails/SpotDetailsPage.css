@@ -1,0 +1,99 @@
+.spot-details-page {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    top: 4.375rem;
+    list-style: none;
+    margin: 0 auto;
+    padding: 2rem;
+    max-width: 62.5rem;
+    align-items: start;
+    height: 100%;
+}
+
+.spot-details-loc {
+    margin-bottom: 1rem;
+}
+
+.spot-details-images {
+    display: grid;
+    grid-template-areas:
+        "one one two three"
+        "one one four five";
+    grid-column-gap: 0.5rem;
+    grid-row-gap: 0.5rem;
+    align-items: center;
+    justify-content: center;
+}
+
+.spot-details-image-1 {
+    grid-area: one;
+    height: 100%;
+    width: 100%;
+    border-radius: 30px 0 0 30px;
+}
+
+.spot-details-image-2 {
+    grid-area: two;
+    height: 100%;
+    width: 100%;
+}
+
+.spot-details-image-3 {
+    grid-area: three;
+    height: 100%;
+    width: 100%;
+    border-radius: 0 30px 0 0;
+}
+
+.spot-details-image-4 {
+    grid-area: four;
+    height: 100%;
+    width: 100%;
+}
+
+.spot-details-image-5 {
+    grid-area: five;
+    height: 100%;
+    width: 100%;
+    border-radius: 0 0 30px 0;
+}
+
+.spot-details-description {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding: 1rem 0;
+    border-bottom: 1px solid gray;
+}
+
+.spot-details-reserve {
+    border: 2px solid black;
+    padding: 1rem;
+    border-radius: 15px;
+    width: 18rem;
+}
+
+.spot-details-reserve-top {
+    display: flex;
+    justify-content: space-between;
+}
+
+.reserve-button {
+    width: 100%;
+    background-color: #e41d56;
+    border: none;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    height: 3rem;
+    border-radius: 10px;
+}
+
+.spot-details-review-list {
+    margin: 2rem 0;
+}
+
+.review-date {
+    color: gray;
+}

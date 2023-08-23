@@ -6,7 +6,8 @@ h1 {
 }
 
 p,
-li {
+li,
+div {
     font-family: "Fira Sans", sans-serif;
 }
 
