@@ -20,7 +20,7 @@ const SpotDetails = () => {
     }, [dispatch, spotId])
 
     const handleReserve = () => {
-
+        alert("Feature coming soon!")
     }
 
     return (

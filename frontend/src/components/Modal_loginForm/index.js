@@ -37,11 +37,13 @@ function LoginFormModal() {
                 if (data && data.message) setErrors(data)
             }
         )
+        history.push('/')
     }
 
     const handleDemo = () => { // demo
         dispatch(demoLogin())
         closeModal()
+        history.push('/')
     }
 
     return (

@@ -20,3 +20,7 @@ a {
     font-size: 12px;
     margin: 0 0 5px 0;
 }
+
+button:hover {
+    cursor: pointer;
+}
