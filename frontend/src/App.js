@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import * as sessionActions from "./store/session";
 import HomePage from "./components/Page_home";
 import SpotDetails from "./components/Page_spotDetails";
+import NewSpot from "./components/Page_newSpot";
 
 function App() {
   const dispatch = useDispatch()
@@ -22,6 +23,9 @@ function App() {
       <Switch>
         <Route exact path='/'>
           <HomePage />
+        </Route>
+        <Route exact path='/spots/new'>
+          <NewSpot />
         </Route>
         <Route exact path='/spots/:id'>
           <SpotDetails />

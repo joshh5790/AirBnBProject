@@ -4,7 +4,6 @@ form {
 }
 
 .login-input {
-    background-color: #E8F0FE;
     margin-bottom: 0.5rem;
 }
 
@@ -12,4 +11,3 @@ form {
     color: blue;
     text-decoration: underline;
 }
-

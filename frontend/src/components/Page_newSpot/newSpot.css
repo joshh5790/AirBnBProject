@@ -1,0 +1,36 @@
+.new-spot-page {
+    position: relative;
+    top: 4.375rem;
+    width: 30rem;
+    margin: auto;
+}
+
+label {
+    margin-top: 1rem;
+}
+
+.input-div {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: space-between;
+}
+
+.new-spot-input.price {
+    flex-grow: 1;
+}
+
+.city-div {
+    width: 60%;
+}
+
+.state-div {
+    width: 30%;
+}
+
+.new-spot-input-city {
+    width: 90%;
+}
+
+.new-spot-input-state {
+    width: 95.5%;
+}

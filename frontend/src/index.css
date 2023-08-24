@@ -25,3 +25,8 @@ a {
 button:hover {
     cursor: pointer;
 }
+
+input,
+textarea {
+    background-color: #E8F0FE;
+}
