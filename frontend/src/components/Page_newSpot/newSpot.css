@@ -20,17 +20,61 @@ label {
 }
 
 .city-div {
-    width: 60%;
+    width: 65%;
+}
+
+.comma {
+    font-size: 16px;
+    overflow: hidden;
+    height: 0.5rem;
 }
 
 .state-div {
-    width: 30%;
+    width: 35%;
 }
 
-.new-spot-input-city {
+.new-spot-input-city,
+.new-spot-input-lat {
     width: 90%;
 }
 
 .new-spot-input-state {
-    width: 95.5%;
+    position: relative;
+    right: 3px;
+}
+
+.new-spot-input-lng {
+    position: relative;
+    width: 96%;
+}
+
+.lng-div {
+    width: 50%;
+    margin-left: 0.4rem;
+}
+
+.subheader {
+    margin-bottom: 0;
+    padding-top: 1rem;
+}
+
+.new-spot.subheader {
+    border-top: 2px solid black;
+}
+
+.new-spot-subdesc {
+    margin-top: 0.5rem;
+}
+
+.new-spot-input.img {
+    margin-bottom: 1rem;
+}
+
+.new-spot-button-div {
+    border-top: 2px solid black;
+    width: 100%;
+    margin-bottom: 2rem;
+    padding-top: 1rem;
+    display: flex;
+    justify-content: center;
 }

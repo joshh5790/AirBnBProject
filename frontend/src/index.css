@@ -22,7 +22,7 @@ a {
     margin: 0 0 5px 0;
 }
 
-button:hover {
+button:hover:enabled {
     cursor: pointer;
 }
 
