@@ -7,7 +7,6 @@ import logo from '../../images/air-bee-n-bee_logo.png'
 
 function Navigation({ isLoaded }){
   const sessionUser = useSelector(state => state.session.user);
-  console.log(logo)
 
   return (
     <ul className='nav'>
@@ -21,8 +20,13 @@ function Navigation({ isLoaded }){
           <p className='logo-text'>airbee-n-bee</p>
         </NavLink>
       </li>
-      {isLoaded && <li>
-        <div className='nav-right'>
+      {isLoaded && <li className='nav-right'>
+        {sessionUser && <NavLink
+          className='new-spot-button'
+          to='/spots/new'>
+            Create a New Spot
+        </NavLink>}
+        <div className='nav-right-profile'>
           <ProfileButton user={sessionUser} />
         </div>
       </li>}

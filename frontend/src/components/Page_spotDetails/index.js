@@ -12,7 +12,6 @@ const SpotDetails = () => {
     const spot = useSelector(state => state.spots[spotId])
     const reviews = useSelector(state => Object.values(state.reviews))
     const sessionUser = useSelector(state => state.session.user)
-    console.log(reviews, 'Reviews LIST')
 
     useEffect(() => {
         dispatch(retrieveSpotDetails(spotId))

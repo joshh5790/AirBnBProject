@@ -37,10 +37,24 @@
 }
 
 .nav-right {
+    display: flex;
+    align-items: center;
+}
+
+.new-spot-button {
+    padding: 1rem;
+    border-radius: 30px;
+}
+
+.new-spot-button:hover {
+    background-color: rgb(245, 245, 245);
+}
+
+.nav-right-profile {
     position: relative;
     display: flex;
     flex-direction: column;
     align-items: flex-end;
-    width: 9rem;
+    width: 7rem;
     margin-right: 2rem;
 }

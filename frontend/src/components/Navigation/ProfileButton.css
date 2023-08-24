@@ -48,8 +48,14 @@
     padding: 0.3rem 1rem;
 }
 
+.dropdown-button {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
 .dropdown-button:hover {
-    background-color: rgb(235, 235, 235);
+    background-color: rgb(245, 245, 245);
 }
 
 .user-info {

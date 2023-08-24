@@ -50,7 +50,6 @@ export default function spotReducer(state = initialState, action) {
             return { ...action.payload.Spots }
             case GET_SPOT_DETAILS:
                 const currSpot = action.payload
-                console.log(currSpot, "#########################")
                 return { ...state, [currSpot.id]: currSpot}
         default: return state
     }
