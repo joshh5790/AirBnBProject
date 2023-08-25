@@ -4,9 +4,11 @@ import * as sessionActions from '../../store/session';
 import OpenModalButton from "../OpenModalButton";
 import LoginFormModal from "../Modal_loginForm";
 import SignupFormModal from "../Modal_signupForm";
+import { useHistory } from "react-router-dom";
 import './ProfileButton.css'
 
 function ProfileButton({ user }) {
+  const history = useHistory()
   const dispatch = useDispatch();
   const [showMenu, setShowMenu] = useState(false);
   const ulRef = useRef();
@@ -35,6 +37,7 @@ function ProfileButton({ user }) {
   const logout = (e) => {
     e.preventDefault();
     dispatch(sessionActions.logout());
+    history.push('/')
     closeMenu()
   };
 

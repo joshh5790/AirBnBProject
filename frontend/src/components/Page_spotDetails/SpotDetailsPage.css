@@ -67,6 +67,11 @@
     border-bottom: 1px solid gray;
 }
 
+.spot-details-text {
+    width: 60%;
+    overflow-wrap: break-word;
+}
+
 .spot-details-reserve {
     border: 2px solid black;
     padding: 1rem;

@@ -60,7 +60,7 @@ const SpotDetails = () => {
                         <p>${spot?.price} night</p>
                         <p>
                             <i className="fa-solid fa-star"></i>
-                            {(spot?.rating && `  ${spot?.rating}  `) || ' New '}
+                            {(spot?.avgStarRating && `  ${spot?.avgStarRating}  `) || ' New '}
                             &nbsp;·&nbsp;
                             {reviews.length} review{reviews.length!==1 && 's'}
                         </p>
@@ -75,7 +75,7 @@ const SpotDetails = () => {
             <div className="spot-details-reviews">
                 <h1>
                     <i className="fa-solid fa-star"></i>
-                    {(spot?.rating && `  ${spot?.rating}  `) || ' New '}
+                    {(spot?.avgStarRating && `  ${spot?.avgStarRating}  `) || ' New '}
                     &nbsp;·&nbsp;
                     {reviews.length} review{reviews.length!==1 && 's'}
                 </h1>

@@ -6,41 +6,63 @@ const { handleValidationErrors } = require('../../utils/validation')
 const reviews = require('./reviews')
 const { Op } = require('sequelize')
 
+const validateSpotImage = [
+    check('url')
+        .custom((value, { req }) => {
+            if (value.endsWith('.png') ||
+                value.endsWith('.jpg') ||
+                value.endsWith('.jpeg')) {
+                return true
+            }
+        })
+        .withMessage('Image URL must end in .png, .jpg, or .jpeg'),
+    handleValidationErrors
+]
 
 const validateSpot = [
     check('address')
-        .exists({ checkFalsy: true})
+        .exists({ checkFalsy: true })
         .withMessage('Street address is required'),
     check('city')
-        .exists({ checkFalsy: true})
+        .exists({ checkFalsy: true })
         .withMessage('City is required'),
     check('state')
-        .exists({ checkFalsy: true})
+        .exists({ checkFalsy: true })
         .withMessage('State is required'),
     check('country')
-        .exists({ checkFalsy: true})
+        .exists({ checkFalsy: true })
         .withMessage('Country is required'),
     check('lat')
-        .exists({ checkFalsy: true})
         .isNumeric()
         .isFloat({ min: -90, max: 90 })
         .withMessage('Latitude is not valid'),
+    check('lat')
+        .exists({ checkFalsy: true })
+        .withMessage('Latitude is required'),
     check('lng')
-        .exists({ checkFalsy: true})
         .isNumeric()
         .isFloat({ min: -180, max: 180 })
         .withMessage('Longitude is not valid'),
+    check('lng')
+        .exists({ checkFalsy: true })
+        .withMessage('Longitude is required'),
     check('name')
-        .exists({ checkFalsy: true})
         .isLength({ max: 49 })
         .withMessage('Name must be less than 50 characters'),
+    check('name')
+        .exists({ checkFalsy: true })
+        .withMessage('Name is required'),
     check('description')
-        .exists({ checkFalsy: true})
-        .withMessage('Description is required'),
+        .exists({ checkFalsy: true })
+        .isLength({ min: 30 })
+        .withMessage('Description needs a minimum of 30 characters'),
     check('price')
-        .exists({ checkFalsy: true})
+        .exists({ checkFalsy: true })
         .isNumeric()
-        .withMessage('Price per day is required'),
+        .withMessage('Price is required'),
+    check('previewImage')
+        .exists({ checkFalsy: true })
+        .withMessage('Preview image is required'),
     handleValidationErrors
 ]
 
@@ -316,7 +338,8 @@ router.post('/:spotId/reviews', reviews.validateReview, async (req, res) => {
 })
 
 // create a new image for a spot
-router.post('/:spotId/images', async (req, res) => {
+router.post('/:spotId/images', validateSpotImage, async (req, res) => {
+    console.log(req, "HITSSSSSSSSSSSSSS")
     const { user } = req
     if (!user) return res.status(403).json({ message: "Forbidden" })
     const currSpot = await Spot.findByPk(req.params.spotId)
@@ -338,7 +361,6 @@ router.post('/:spotId/images', async (req, res) => {
 router.post('/', validateSpot, async (req, res, next) => {
     const { user } = req
     if (!user) return res.status(403).json({ message: "Forbidden" })
-
     const { address, city, state,
         country, lat, lng,
         name, description, price } = req.body

@@ -2,6 +2,7 @@ import { csrfFetch } from "./csrf"
 
 const GET_SPOTS = 'spots/GET_SPOTS'
 const GET_SPOT_DETAILS = 'spots/GET_SPOT_DETAILS'
+const CREATE_SPOT = 'spots/CREATE_SPOT'
 
 // selectors
 
@@ -17,9 +18,15 @@ export function getSpots(spots) {
 }
 
 export function getSpotDetails(spot) {
-
     return {
         type: GET_SPOT_DETAILS,
+        payload: spot
+    }
+}
+
+export function createSpot(spot) {
+    return {
+        type: CREATE_SPOT,
         payload: spot
     }
 }
@@ -40,6 +47,17 @@ export const retrieveSpotDetails = spotId => async dispatch => {
     const data = await response.json()
     dispatch(getSpotDetails(data))
     return response
+}
+
+export const createNewSpot = spot => async dispatch => {
+    const response = await csrfFetch('/api/spots', {
+        method: 'POST',
+        body: JSON.stringify(spot)
+    })
+
+    const data = await response.json()
+    dispatch(createSpot(data))
+    return data
 }
 
 const initialState = {}

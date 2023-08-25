@@ -40,22 +40,23 @@ label {
 
 .new-spot-input-state {
     position: relative;
-    right: 3px;
+    right: 1px;
 }
 
 .new-spot-input-lng {
     position: relative;
-    width: 96%;
+    width: 97%;
 }
 
 .lng-div {
     width: 50%;
-    margin-left: 0.4rem;
+    margin-left: 0.5rem;
 }
 
 .subheader {
     margin-bottom: 0;
     padding-top: 1rem;
+    font-size: 18px;
 }
 
 .new-spot.subheader {
@@ -66,8 +67,8 @@ label {
     margin-top: 0.5rem;
 }
 
-.new-spot-input.img {
-    margin-bottom: 1rem;
+.gap {
+    margin: 0.5rem;
 }
 
 .new-spot-button-div {
@@ -77,4 +78,8 @@ label {
     padding-top: 1rem;
     display: flex;
     justify-content: center;
+}
+
+.new-spot-input.desc {
+    height: 5rem;
 }

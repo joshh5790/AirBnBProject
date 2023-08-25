@@ -26,17 +26,17 @@ function LoginFormModal() {
         history.push('/')
     }
 
-    const handleSubmit = e => {
+    const onSubmit = e => {
         setErrors({})
         e.preventDefault()
         dispatch(login({ credential, password }))
-        .then(closeModal)
-        .catch(
-            async res => {
-                const data = await res.json()
-                if (data && data.message) setErrors(data)
-            }
-        )
+            .then(closeModal)
+            .catch(
+                async res => {
+                    const data = await res.json()
+                    if (data && data.message) setErrors(data)
+                }
+            )
         history.push('/')
     }
 
@@ -49,7 +49,7 @@ function LoginFormModal() {
     return (
         <>
             <h1>Log In</h1>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={onSubmit}>
                 <input
                     className='login-input'
                     name='credential'
