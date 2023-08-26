@@ -18,8 +18,7 @@ function App() {
 
 
   return (
-    <div>
-      <Navigation isLoaded={isLoaded}/>
+    <>
       <Switch>
         <Route exact path='/'>
           <HomePage />
@@ -31,7 +30,8 @@ function App() {
           <SpotDetails />
         </Route>
       </Switch>
-    </div>
+      <Navigation isLoaded={isLoaded}/>
+    </>
   );
 }
 

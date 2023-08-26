@@ -79,6 +79,7 @@ const SpotDetails = () => {
                     &nbsp;·&nbsp;
                     {reviews.length} review{reviews.length!==1 && 's'}
                 </h1>
+                {sessionUser && <button>Post Your Review</button>}
                 {reviews.map(review => {
                     return (
                         <div
