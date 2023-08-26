@@ -4,6 +4,8 @@ import { useSelector, useDispatch } from "react-redux"
 import { retrieveSpotDetails } from "../../store/spots"
 import { retrieveReviews } from "../../store/reviews"
 import { month } from "../../utils/utils"
+import OpenModalButton from "../OpenModalButton"
+import ReviewFormModal from "../Modal_reviewForm"
 import './SpotDetailsPage.css'
 
 const SpotDetails = () => {
@@ -12,6 +14,7 @@ const SpotDetails = () => {
     const spot = useSelector(state => state.spots[spotId])
     const reviews = useSelector(state => Object.values(state.reviews))
     const sessionUser = useSelector(state => state.session.user)
+    const hasReview = reviews.find(review => review.userId === sessionUser.id)
 
     useEffect(() => {
         dispatch(retrieveSpotDetails(spotId))
@@ -79,14 +82,19 @@ const SpotDetails = () => {
                     &nbsp;·&nbsp;
                     {reviews.length} review{reviews.length!==1 && 's'}
                 </h1>
-                {sessionUser && <button>Post Your Review</button>}
+                {sessionUser && sessionUser?.id !==spot?.Owner?.id && !hasReview &&
+                <OpenModalButton
+                    buttonText="Post Your Review"
+                    modalComponent={<ReviewFormModal />}
+                    className='create-review-button'
+                />}
                 {reviews.map(review => {
                     return (
                         <div
                             className="spot-details-review-list"
                             key={review?.id}>
                             <h2>
-                                {review?.User.firstName}
+                                {review?.User?.firstName}
                             </h2>
                             <h3 className="review-date">
                                 {month[review?.createdAt.slice(5,7)]}&nbsp;

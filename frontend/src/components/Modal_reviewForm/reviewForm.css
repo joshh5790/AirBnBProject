@@ -1,0 +1,24 @@
+.review-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.review-text {
+    width: 20rem;
+    height: 6rem;
+    margin-bottom: 1rem;
+}
+
+.rating-div {
+    margin-bottom: 1rem;
+    font-size: 18px;
+}
+
+.submit-review-button {
+    width: 20rem;
+    height: 2rem;
+}
+
+

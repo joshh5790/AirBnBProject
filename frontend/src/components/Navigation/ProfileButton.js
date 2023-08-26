@@ -56,6 +56,12 @@ function ProfileButton({ user }) {
             <li className="user-info">{user.email}</li>
             <li className="dropdown-button">
               <button
+                className="manage-spots-button">
+                Manage Spots
+              </button>
+            </li>
+            <li>
+              <button
                 onClick={logout}
                 className='logout-button'
                 >

@@ -35,3 +35,8 @@ textarea {
     background-color: #E8F0FE;
 }
 
+.red-button:enabled {
+    background-color: #FF5A5F;
+    color: white;
+    filter: drop-shadow(0 0 1px black)
+}

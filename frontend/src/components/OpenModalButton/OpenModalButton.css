@@ -2,7 +2,10 @@
 .signup-button {
         all: unset;
         font: 1.2em "Fira Sans", sans-serif;
-        margin-top: 0.5rem;
         cursor: pointer;
-        padding: 0.3rem 1rem;
+        padding: 0.5rem 1rem;
+}
+
+.login-button {
+        border-bottom: 1px solid #CCCCCC;
 }

@@ -5,10 +5,10 @@
     justify-content: center;
     align-items: center;
     list-style: none;
-    width: fit-content;
     padding: 0;
     margin: 0.5rem 0;
     background-color: white;
+    width: 10rem;
     /* border-radius: 10%; */
     top: 3.3rem;
     filter: drop-shadow(0 0 1px #CCCCCC);
@@ -16,7 +16,7 @@
 
 .profile-button {
     all: unset;
-    width: 5rem;
+    width: 5.5rem;
     height: 3rem;
     display: flex;
     align-items: center;
@@ -26,7 +26,7 @@
 }
 
 .profile-button:hover {
-    box-shadow: 0.12rem 0.25rem 0.25rem #CCCCCC, -0.12rem 0rem 0.25rem #CCCCCC;
+    box-shadow: 0.12rem 0.25rem 0.25rem #CCCCCC, -0.12rem 0 0.25rem #CCCCCC;
     cursor: pointer;
 }
 
@@ -37,15 +37,21 @@
 
 .fa-bars {
     font-size: 1.5rem;
-    padding-right: 0.5rem;
+    padding-right: 1rem;
 }
 
-.logout-button {
+.manage-spots-button {
     all: unset;
+    border-top: 1px solid #CCCCCC;
+    border-bottom: 1px solid #CCCCCC;
+}
+
+.logout-button,
+.manage-spots-button {
+
     font: 1.2em "Fira Sans", sans-serif;
-    margin-top: 0.5rem;
     cursor: pointer;
-    padding: 0.3rem 1rem;
+    padding: 0.5rem 1rem;
 }
 
 .dropdown-button {
@@ -54,10 +60,22 @@
     width: 100%;
 }
 
+.logout-button {
+    margin: 0.5rem;
+    border-radius: 30px;
+    border: none;
+    font-size: 1rem;
+}
+
+.logout-button:hover {
+    box-shadow: 0.2rem 0.2rem 0.2rem #CCCCCC, -0.2rem 0 0.2rem #CCCCCC;
+}
+
 .dropdown-button:hover {
     background-color: rgb(245, 245, 245);
 }
 
 .user-info {
     padding: 0.5rem;
+    width: fit-content;
 }

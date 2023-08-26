@@ -68,7 +68,7 @@ function LoginFormModal() {
                     required />
                 {errors.message && <p className='error-msg'>{errors.message}</p>}
                 <button
-                    className='form-submit'
+                    className='red-button'
                     disabled={disableButton}>Log In</button>
             </form>
             <p
