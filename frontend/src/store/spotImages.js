@@ -29,6 +29,7 @@ const initialState = {}
 export default function spotImageReducer(state = initialState, action) {
     switch(action.type) {
         case CREATE_SPOT_IMAGE:
+            console.log(action.payload, "SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS")
             const newSpotImage = action.payload
             return { ...state, [newSpotImage.id]: newSpotImage }
         default: return state

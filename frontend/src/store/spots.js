@@ -4,6 +4,8 @@ const GET_SPOTS = 'spots/GET_SPOTS'
 const GET_SPOT_DETAILS = 'spots/GET_SPOT_DETAILS'
 const CREATE_SPOT = 'spots/CREATE_SPOT'
 
+
+
 // selectors
 
 
@@ -53,10 +55,12 @@ export const createNewSpot = spot => async dispatch => {
     const response = await csrfFetch('/api/spots', {
         method: 'POST',
         body: JSON.stringify(spot)
-    })
+    }) // promise all? Would still need to retrieve spot id tho
+    // or have my errors separate from my fetches
 
     const data = await response.json()
     dispatch(createSpot(data))
+
     return data
 }
 

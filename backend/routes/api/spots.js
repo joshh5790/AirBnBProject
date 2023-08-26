@@ -6,19 +6,6 @@ const { handleValidationErrors } = require('../../utils/validation')
 const reviews = require('./reviews')
 const { Op } = require('sequelize')
 
-const validateSpotImage = [
-    check('url')
-        .custom((value, { req }) => {
-            if (value.endsWith('.png') ||
-                value.endsWith('.jpg') ||
-                value.endsWith('.jpeg')) {
-                return true
-            }
-        })
-        .withMessage('Image URL must end in .png, .jpg, or .jpeg'),
-    handleValidationErrors
-]
-
 const validateSpot = [
     check('address')
         .exists({ checkFalsy: true })
@@ -338,8 +325,7 @@ router.post('/:spotId/reviews', reviews.validateReview, async (req, res) => {
 })
 
 // create a new image for a spot
-router.post('/:spotId/images', validateSpotImage, async (req, res) => {
-    console.log(req, "HITSSSSSSSSSSSSSS")
+router.post('/:spotId/images', async (req, res) => {
     const { user } = req
     if (!user) return res.status(403).json({ message: "Forbidden" })
     const currSpot = await Spot.findByPk(req.params.spotId)

@@ -3,13 +3,13 @@ import { useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import './newSpot.css'
 import { createNewSpot } from '../../store/spots'
-import { createSpotImage } from '../../store/spotImages'
+import { generateSpotImage } from '../../store/spotImages'
 
 const NewSpot = () => {
     const history = useHistory()
     const dispatch = useDispatch()
     const [country, setCountry] = useState('')
-    const [streetAddress, setStreetAddress] = useState('');
+    const [address, setAddress] = useState('');
     const [city, setCity] = useState('');
     const [state, setState] = useState('');
     const [latitude, setLatitude] = useState('');
@@ -18,24 +18,62 @@ const NewSpot = () => {
     const [title, setTitle] = useState('');
     const [price, setPrice] = useState('');
     const [previewImage, setPreviewImage] = useState('');
-    const [image2, setImage2] = useState();
-    const [image3, setImage3] = useState();
-    const [image4, setImage4] = useState();
-    const [image5, setImage5] = useState();
+    const [image2, setImage2] = useState('');
+    const [image3, setImage3] = useState('');
+    const [image4, setImage4] = useState('');
+    const [image5, setImage5] = useState('');
+    const [submitStatus, setSubmitStatus] = useState(false)
     const [errors, setErrors] = useState({})
 
-    useEffect(() => {
-        if (Object.keys(errors).length) {
-
+    const validateImg = (image, name, errors) => {
+        if (!image.length) return true
+        const validEnds = ['.png', '.jpg', '.jpeg']
+        for (const end of validEnds) {
+            if (image.endsWith(end)) return true
         }
-    })
+        errors[name] = 'Image URL must end in .png, .jpg, or .jpeg'
+    }
 
-    const onSubmit = async e => {
-        setErrors({})
+    const validateSpot = () => {
+        const spotErrors = {}
+        if (!country) spotErrors.country = 'Country is required'
+        if (!address) spotErrors.address = 'Address is required'
+        if (!city) spotErrors.city = 'City is required';
+        if (!state) spotErrors.state = 'State is required';
+        if (!latitude) spotErrors.lat = 'Latitude is required';
+        if (!longitude) spotErrors.lng = 'Longitude is required';
+        if (!description || description.length < 30) {
+            spotErrors.description = 'Description needs a minimum of 30 characters';
+        }
+        if (!title) spotErrors.name = 'Name is required';
+        if (!price) spotErrors.price = 'Price is required';
+        validateImg(previewImage, 'previewImage', spotErrors)
+        if (!previewImage) spotErrors.previewImage = 'Preview Image is required';
+        validateImg(image2, 'image2', spotErrors)
+        validateImg(image3, 'image3', spotErrors)
+        validateImg(image4, 'image4', spotErrors)
+        validateImg(image5, 'image5', spotErrors)
+        return spotErrors
+    }
+
+    useEffect(() => {
+        if (submitStatus) setErrors(validateSpot())
+    }, [country, address, city,
+        state, latitude, longitude,
+        description, title, price,
+        previewImage, image2, image3,
+        image4, image5])
+
+    const onSubmit = async e => { // still going through when there are errors on the images
         e.preventDefault()
+        setSubmitStatus(true)
+        setErrors({})
+        const spotErrors = validateSpot()
+
+        if (Object.keys(spotErrors).length) return setErrors({...spotErrors})
         const newSpot = await dispatch(createNewSpot({
             country,
-            address: streetAddress,
+            address,
             city,
             state,
             lat: parseFloat(latitude),
@@ -48,18 +86,18 @@ const NewSpot = () => {
             .catch(
                 async res => {
                     const data = await res.json()
-                    if (data && data.errors) setErrors(data.errors)
-                    console.log(data.errors)
+                    if (data && data.errors) {
+                        console.log(data.errors)
+                        setErrors(data.errors)
+                    }
                 }
             )
-        if (image2) {
-            dispatch(createSpotImage(image2, newSpot.id))
-                // .catch(async res => {
-                //     const data = await res.json()
-                //     if (data && data.errors) setErrors(data.errors)
-                //     console.log(data.errors)
-                // })
-        }
+
+
+        dispatch(generateSpotImage(image2, newSpot.id))
+        dispatch(generateSpotImage(image3, newSpot.id))
+        dispatch(generateSpotImage(image4, newSpot.id))
+        dispatch(generateSpotImage(image5, newSpot.id))
 
         history.push(`/spots/${newSpot.id}`)
 
@@ -73,7 +111,9 @@ const NewSpot = () => {
             <form
                 className='new-spot-form'
                 onSubmit={onSubmit}>
-                <label name='country'>Country <span className='error-msg new-spot'>{errors.country && `${errors.country}`}</span></label>
+                <label name='country'>Country&nbsp;&nbsp;
+                    <span className='error-msg new-spot'>{errors.country && `${errors.country}`}</span>
+                </label>
 
                 <input
                     className='new-spot-input'
@@ -82,17 +122,21 @@ const NewSpot = () => {
                     onChange={e => {setCountry(e.target.value)}}
                     type='text'
                     placeholder='Country' />
-                <label name='streetAddress'>Street Address<span className='error-msg new-spot'>{errors.address && `${errors.address}`}</span></label>
+                <label name='address'>Street Address&nbsp;&nbsp;
+                    <span className='error-msg new-spot'>{errors.address && `${errors.address}`}</span>
+                </label>
                 <input
                     className='new-spot-input'
-                    name='streetAddress'
-                    value={streetAddress}
-                    onChange={e => {setStreetAddress(e.target.value)}}
+                    name='address'
+                    value={address}
+                    onChange={e => {setAddress(e.target.value)}}
                     type='text'
                     placeholder='Street Address' />
                 <div className='input-div'>
                     <div className='city-div'>
-                        <label name='city'>City<span className='error-msg new-spot'>{errors.city && `${errors.city}`}</span></label>
+                        <label name='city'>City&nbsp;&nbsp;
+                            <span className='error-msg new-spot'>{errors.city && `${errors.city}`}</span>
+                        </label>
                         <input
                             className='new-spot-input-city'
                             name='city'
@@ -103,7 +147,9 @@ const NewSpot = () => {
                     <span className='comma'>&nbsp;&nbsp;,</span>
                     </div>
                     <div className='state-div'>
-                        <label name='state'>State<span className='error-msg new-spot'>{errors.state && `${errors.state}`}</span></label>
+                        <label name='state'>State&nbsp;&nbsp;
+                            <span className='error-msg new-spot'>{errors.state && `${errors.state}`}</span>
+                        </label>
                         <input
                             className='new-spot-input-state'
                             name='state'
@@ -115,7 +161,9 @@ const NewSpot = () => {
                 </div>
                 <div className='input-div'>
                     <div className='lat-div'>
-                        <label name='latitude'>Latitude<span className='error-msg new-spot'>{errors.lat && `${errors.lat}`}</span></label>
+                        <label name='latitude'>Latitude&nbsp;&nbsp;
+                            <span className='error-msg new-spot'>{errors.lat && `${errors.lat}`}</span>
+                        </label>
                         <input
                             className='new-spot-input-lat'
                             name='latitude'
@@ -126,7 +174,9 @@ const NewSpot = () => {
                         <span className='comma'>&nbsp;&nbsp;,</span>
                     </div>
                     <div className='lng-div'>
-                        <label name='longitude'>Longitude<span className='error-msg new-spot'>{errors.lng && `${errors.lng}`}</span></label>
+                        <label name='longitude'>Longitude&nbsp;&nbsp;
+                            <span className='error-msg new-spot'>{errors.lng && `${errors.lng}`}</span>
+                        </label>
                         <input
                             className='new-spot-input-lng'
                             name='longitude'
@@ -174,7 +224,7 @@ const NewSpot = () => {
                     type='text'
                     placeholder='Preview Image URL' />
                 <span className='error-msg new-spot'>
-                    {(errors.previewImage && `${errors.previewImage}` || <div className='gap'/>)}
+                    {(errors.previewImage && `${errors.previewImage}`) || <div className='gap'/>}
                 </span>
                 <input
                     className='new-spot-input img'
@@ -183,7 +233,7 @@ const NewSpot = () => {
                     type='text'
                     placeholder='Image URL' />
                 <span className='error-msg new-spot'>
-                    {(errors.previewImage && `${errors.previewImage}` || <div className='gap'/>)}
+                    {(errors.image2 && `${errors.image2}`) || <div className='gap'/>}
                 </span>
                 <input
                     className='new-spot-input img'
@@ -192,7 +242,7 @@ const NewSpot = () => {
                     type='text'
                     placeholder='Image URL' />
                 <span className='error-msg new-spot'>
-                    {(errors.previewImage && `${errors.previewImage}` || <div className='gap'/>)}
+                    {(errors.image3 && `${errors.image3}`) || <div className='gap'/>}
                 </span>
                 <input
                     className='new-spot-input img'
@@ -201,7 +251,7 @@ const NewSpot = () => {
                     type='text'
                     placeholder='Image URL' />
                 <span className='error-msg new-spot'>
-                    {(errors.previewImage && `${errors.previewImage}` || <div className='gap'/>)}
+                    {(errors.image4 && `${errors.image4}`) || <div className='gap'/>}
                 </span>
                 <input
                     className='new-spot-input img'
@@ -210,7 +260,7 @@ const NewSpot = () => {
                     type='text'
                     placeholder='Image URL' />
                 <span className='error-msg new-spot'>
-                    {(errors.previewImage && `${errors.previewImage}` || <div className='gap'/>)}
+                    {(errors.image5 && `${errors.image5}`) || <div className='gap'/>}
                 </span>
                 <div className='new-spot-button-div'>
                     <button
