@@ -62,7 +62,7 @@ const NewSpot = () => {
         state, latitude, longitude,
         description, title, price,
         previewImage, image2, image3,
-        image4, image5])
+        image4, image5, submitStatus])
 
     const onSubmit = async e => { // still going through when there are errors on the images
         e.preventDefault()

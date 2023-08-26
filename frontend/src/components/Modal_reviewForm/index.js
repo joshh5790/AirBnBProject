@@ -1,25 +1,41 @@
 import { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 import { useModal } from "../../context/Modal";
+import { createNewReview } from "../../store/reviews";
 import './reviewForm.css'
 
-function ReviewFormModal() {
+function ReviewFormModal({ spotId }) {
+    const dispatch = useDispatch()
+    const history = useHistory()
     const [reviewText, setReviewText] = useState('')
     const [rating, setRating] = useState('')
     const [disableButton, setDisableButton] = useState(true)
+    const [errors, setErrors] = useState({})
+    const { closeModal } = useModal()
     const nums = [1,2,3,4,5]
 
     useEffect(() => {
         if (reviewText.length > 9 && rating > 0) setDisableButton(false)
         else setDisableButton(true)
-    }, [reviewText])
+    }, [reviewText, rating])
 
     const onSubmit = e => {
-        e.preventDefault()
+        setErrors({})
+        dispatch(createNewReview({ review: reviewText, stars: rating }, spotId))
+            .catch(
+                async res => {
+                    const data = await res.json()
+                    if (data && data.message) setErrors(data)
+                }
+            )
+        closeModal()
+        history.push(`/spots/${spotId}`)
     }
     return (
         <>
             <h1>How was your stay?</h1>
+            {errors.message && <div className="error-msg">{errors.message}</div>}
             <form
                 onSubmit={onSubmit}
                 className="review-form">

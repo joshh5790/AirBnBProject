@@ -14,7 +14,8 @@ const SpotDetails = () => {
     const spot = useSelector(state => state.spots[spotId])
     const reviews = useSelector(state => Object.values(state.reviews))
     const sessionUser = useSelector(state => state.session.user)
-    const hasReview = reviews.find(review => review.userId === sessionUser.id)
+    const hasReview = reviews.find(review => review.userId === sessionUser?.id)
+    console.log(reviews)
 
     useEffect(() => {
         dispatch(retrieveSpotDetails(spotId))
@@ -85,7 +86,7 @@ const SpotDetails = () => {
                 {sessionUser && sessionUser?.id !==spot?.Owner?.id && !hasReview &&
                 <OpenModalButton
                     buttonText="Post Your Review"
-                    modalComponent={<ReviewFormModal />}
+                    modalComponent={<ReviewFormModal spotId={spot?.id}/>}
                     className='create-review-button'
                 />}
                 {reviews.map(review => {
@@ -94,7 +95,7 @@ const SpotDetails = () => {
                             className="spot-details-review-list"
                             key={review?.id}>
                             <h2>
-                                {review?.User?.firstName}
+                                {review?.User?.firstName || sessionUser.firstName}
                             </h2>
                             <h3 className="review-date">
                                 {month[review?.createdAt.slice(5,7)]}&nbsp;
