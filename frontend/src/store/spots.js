@@ -43,6 +43,14 @@ export const retrieveAllSpots = () => async dispatch => {
     return response
 }
 
+export const retrieveCurrentSpots = () => async dispatch => {
+    const response = await csrfFetch('/api/spots/current')
+
+    const data = await response.json()
+    dispatch(getSpots(data))
+    return response
+}
+
 export const retrieveSpotDetails = spotId => async dispatch => {
     const response = await csrfFetch(`/api/spots/${spotId}`)
 

@@ -300,28 +300,23 @@ router.post('/:spotId/reviews', reviews.validateReview, async (req, res) => {
     if (!user) return res.status(403).json({ message: "Forbidden" })
     const currSpot = await Spot.findByPk(req.params.spotId)
     if (!currSpot) return res.status(404).json({ message: "Spot couldn't be found"})
+    const dupReview = await Review.findOne({ where: {userId: user.id, spotId: currSpot.id}})
+    if (dupReview) return res.status(500).json({ message: "User already has a review for this spot" })
     if (user.id === currSpot.ownerId) return res.status(400).json({ message: "Can't create a review for your own property!" })
-    try {
-        const currUser = await User.findByPk(user.id)
-        const newReview = await Review.create({
-            userId: currUser.id,
-            spotId: currSpot.id,
-            review, stars
-        })
+    const currUser = await User.findByPk(user.id)
+    const newReview = await Review.create({
+        userId: currUser.id,
+        spotId: currSpot.id,
+        review, stars
+    })
 
-        // update star rating for spot
-        const sum = await Review.sum('stars', { where: { spotId: currSpot.id } })
-        const count = await Review.count({ where: { spotId: currSpot.id } })
-        const avgStarRating = Math.round(sum * 10 / count) / 10
-        const numReviews = currSpot.numReviews + 1
-        await currSpot.update({ avgStarRating, numReviews })
+    // update star rating for spot
+    const sum = await Review.sum('stars', { where: { spotId: currSpot.id } })
+    const numReviews = currSpot.numReviews + 1
+    const avgStarRating = Math.round(sum * 10 / numReviews) / 10
+    await currSpot.update({ avgStarRating, numReviews })
 
-        res.json(newReview)
-    } catch(error) {
-        if (error instanceof Sequelize.UniqueConstraintError) {
-            return res.status(500).json({ message: "User already has a review for this spot" })
-        }
-    }
+    res.json(newReview)
 })
 
 // create a new image for a spot

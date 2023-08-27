@@ -86,8 +86,7 @@ router.put('/:reviewId', validateReview, async (req, res) => {
     // update star rating for spot
     const currSpot = await Spot.findByPk(currReview.spotId)
     const sum = await Review.sum('stars', { where: { spotId: currSpot.id } })
-    const count = await Review.count({ where: { spotId: currSpot.id } })
-    const avgStarRating = Math.round(sum * 10 / count) / 10
+    const avgStarRating = Math.round(sum * 10 / currSpot.numReviews) / 10
     await currSpot.update({ avgStarRating })
 
     res.json(currReview)
@@ -101,13 +100,14 @@ router.delete('/:reviewId', async (req, res) => {
     if (!currReview) return res.status(404).json({ message: "Review couldn't be found" })
     if (user.id !== currReview.userId) return res.status(403).json({ message: "Forbidden" })
     const currSpot = await Spot.findByPk(currReview.spotId)
-    const sum = await Review.sum('stars', { where: { spotId: currSpot.id } })
-    const count = await Review.count({ where: { spotId: currSpot.id } })
-    const avgStarRating = Math.round(sum * 10 / count) / 10
-    const numReviews = currSpot.numReviews - 1
-    await currSpot.update({ avgStarRating, numReviews })
 
     await currReview.destroy()
+    const sum = await Review.sum('stars', { where: { spotId: currSpot.id } })
+    const numReviews = currSpot.numReviews - 1
+    const avgStarRating = numReviews ?
+        Math.round(sum * 10 / numReviews) / 10 : 0
+    await currSpot.update({ avgStarRating, numReviews })
+
     res.json({ message: "Successfully deleted" })
 })
 

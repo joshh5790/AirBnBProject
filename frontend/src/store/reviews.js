@@ -2,10 +2,17 @@ import { csrfFetch } from "./csrf"
 
 const GET_REVIEWS = 'spots/GET_REVIEWS'
 const CREATE_REVIEW = 'reviews/CREATE_REVIEW'
+const DELETE_REVIEW = 'reviews/DELETE_REVIEW'
 
 // selectors
 
-
+export const allSpotReviews = state => {
+    const allReviews = Object.values(state.reviews)
+    allReviews.sort((a,b) => {
+        return new Date(b.createdAt) - new Date(a.createdAt)
+    })
+    return allReviews
+}
 
 // action creators
 
@@ -23,13 +30,25 @@ export function createReview(review) {
     }
 }
 
+export function removeReview(reviewId) {
+    return {
+        type: DELETE_REVIEW,
+        payload: reviewId
+    }
+}
+
+
 // thunks
 
 export const retrieveReviews = spotId => async dispatch => {
     const response = await csrfFetch(`/api/spots/${spotId}/reviews`)
 
     const data = await response.json()
-    dispatch(getReviews(data))
+    const dataID = {}
+    data.forEach(review => {
+        dataID[review.id] = review
+    })
+    dispatch(getReviews(dataID))
     return response
 }
 
@@ -44,6 +63,15 @@ export const createNewReview = (review, spotId) => async dispatch => {
     return response
 }
 
+export const deleteReview = (reviewId) => async dispatch => {
+    const response = await csrfFetch(`/api/reviews/${reviewId}`, {
+        method: 'DELETE'
+    })
+    console.log(response)
+
+    dispatch(removeReview(reviewId))
+}
+
 
 const initialState = {}
 
@@ -54,6 +82,10 @@ export default function reviewReducer(state = initialState, action) {
         case CREATE_REVIEW:
             const newReview = action.payload
             return { ...state, [newReview.id]: newReview }
+        case DELETE_REVIEW:
+            const newState = { ...state }
+            delete newState[action.payload]
+            return newState
         default: return state
     }
 }

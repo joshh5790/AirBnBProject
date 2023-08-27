@@ -8,6 +8,10 @@ const HomePage = () => {
     const dispatch = useDispatch()
     const allSpots = useSelector(state => Object.values(state.spots))
 
+
+    console.log(allSpots, 'catching error on componentDidMount when going to home page from spot details, will have duplicate spot for a split second')
+    // catching error on componentDidMount when going to home page
+    // from spot details, will have duplicate spot for a split second
     useEffect(() => {
         dispatch(retrieveAllSpots())
     }, [dispatch])
@@ -16,7 +20,9 @@ const HomePage = () => {
         <>
             <ul className='home-page'>
                 {allSpots.map(spot => (
-                    <li key={spot.id}>
+                    <li
+                        className='spot-li'
+                        key={spot.id}>
                         <SpotCard spot={spot} />
                     </li>
                 ))}

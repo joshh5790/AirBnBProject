@@ -40,3 +40,17 @@ textarea {
     color: white;
     filter: drop-shadow(0 0 1px black)
 }
+
+.gray-color-button {
+    background-color: #999999;
+    color: white;
+    font-weight: bold;
+    height: 1.5rem;
+    width: 9rem;
+    border-radius: 5px;
+    margin-bottom: 1rem;
+}
+
+.gray-color-button:hover {
+    box-shadow: 0.2rem 0.2rem 0.2rem #CCCCCC, -0.2rem 0 0.2rem #CCCCCC;
+}

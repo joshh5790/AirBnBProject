@@ -41,6 +41,12 @@ function ProfileButton({ user }) {
     closeMenu()
   };
 
+  const handleManageSpots = e => {
+    e.preventDefault()
+    history.push('/spots/current')
+    closeMenu()
+  }
+
   const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
 
   return (
@@ -56,6 +62,7 @@ function ProfileButton({ user }) {
             <li className="user-info">{user.email}</li>
             <li className="dropdown-button">
               <button
+                onClick={handleManageSpots}
                 className="manage-spots-button">
                 Manage Spots
               </button>

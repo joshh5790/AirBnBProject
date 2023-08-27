@@ -6,6 +6,7 @@ import * as sessionActions from "./store/session";
 import HomePage from "./components/Page_home";
 import SpotDetails from "./components/Page_spotDetails";
 import NewSpot from "./components/Page_newSpot";
+import ManageSpots from "./components/Page_manageSpots";
 
 function App() {
   const dispatch = useDispatch()
@@ -25,6 +26,9 @@ function App() {
         </Route>
         <Route exact path='/spots/new'>
           <NewSpot />
+        </Route>
+        <Route exact path='/spots/current'>
+          <ManageSpots />
         </Route>
         <Route exact path='/spots/:id'>
           <SpotDetails />

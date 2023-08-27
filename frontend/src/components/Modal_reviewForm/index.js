@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { useModal } from "../../context/Modal";
 import { createNewReview } from "../../store/reviews";
+import { retrieveSpotDetails } from "../../store/spots";
 import './reviewForm.css'
 
 function ReviewFormModal({ spotId }) {
@@ -21,8 +22,10 @@ function ReviewFormModal({ spotId }) {
     }, [reviewText, rating])
 
     const onSubmit = e => {
+        e.preventDefault()
         setErrors({})
         dispatch(createNewReview({ review: reviewText, stars: rating }, spotId))
+            .then(() => dispatch(retrieveSpotDetails(spotId)))
             .catch(
                 async res => {
                     const data = await res.json()
@@ -30,7 +33,6 @@ function ReviewFormModal({ spotId }) {
                 }
             )
         closeModal()
-        history.push(`/spots/${spotId}`)
     }
     return (
         <>
@@ -47,7 +49,9 @@ function ReviewFormModal({ spotId }) {
                 </textarea>
                 <div className="rating-div">
                     {nums.map(num =>
-                        (<span onClick={() => setRating(num)}>
+                        (<span
+                            key={num}
+                            onClick={() => setRating(num)}>
                             {rating >= num ? <i className="fa-solid fa-star"></i>
                             : <i className="fa-regular fa-star"></i>}
                         </span>)
