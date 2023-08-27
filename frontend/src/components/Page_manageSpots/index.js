@@ -1,27 +1,27 @@
-import { useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import SpotCard from '../Page_home/SpotCard'
-import { retrieveCurrentSpots } from '../../store/spots'
+import { retrieveCurrentSpots, removeSpot } from '../../store/spots'
 import './manageSpots.css'
 
 const ManageSpots = () => {
     const dispatch = useDispatch()
+    const [refresh, setRefresh] = useState(false)
     const allSpots = useSelector(state => Object.values(state.spots))
 
-
-    console.log(allSpots)
-    // catching error on componentDidMount when going to home page
-    // from spot details, will have duplicate spot for a split second
     useEffect(() => {
         dispatch(retrieveCurrentSpots())
     }, [dispatch])
 
-    const handleUpdate = e => {
-        e.preventDefault()
+    const handleUpdate = spotId => {
+
     }
-    const handleDelete = e => {
-        e.preventDefault()
+
+    const handleDelete = spotId => {
+        dispatch(removeSpot(spotId))
+        setRefresh(prev => !prev)
     }
+
 
     return (
         <div className='manage-spots'>
@@ -36,12 +36,12 @@ const ManageSpots = () => {
                         key={spot.id}>
                         <SpotCard spot={spot} />
                         <button
-                            onClick={handleUpdate}
+                            onClick={() => handleUpdate(spot.id)}
                             className='gray-color-button modify-spot-button'>
                             Update
                         </button>
                         <button
-                            onClick={handleDelete}
+                            onClick={() => handleDelete(spot.id)}
                             className='gray-color-button modify-spot-button'>
                             Delete
                         </button>

@@ -1,8 +1,10 @@
 import { csrfFetch } from "./csrf"
+import { deleteSpotImage } from "./spotImages"
 
 const GET_SPOTS = 'spots/GET_SPOTS'
 const GET_SPOT_DETAILS = 'spots/GET_SPOT_DETAILS'
 const CREATE_SPOT = 'spots/CREATE_SPOT'
+const DELETE_SPOT = 'spots/DELETE_SPOT'
 
 
 
@@ -33,13 +35,24 @@ export function createSpot(spot) {
     }
 }
 
+export function deleteSpot(spotId) {
+    return {
+        type: DELETE_SPOT,
+        payload: spotId
+    }
+}
+
 // thunks
 
 export const retrieveAllSpots = () => async dispatch => {
     const response = await csrfFetch('/api/spots')
 
     const data = await response.json()
-    dispatch(getSpots(data))
+    const dataID = {}
+    data.Spots.forEach(spot => {
+        dataID[spot.id] = spot
+    })
+    dispatch(getSpots(dataID))
     return response
 }
 
@@ -47,7 +60,11 @@ export const retrieveCurrentSpots = () => async dispatch => {
     const response = await csrfFetch('/api/spots/current')
 
     const data = await response.json()
-    dispatch(getSpots(data))
+    const dataID = {}
+    data.Spots.forEach(spot => {
+        dataID[spot.id] = spot
+    })
+    dispatch(getSpots(dataID))
     return response
 }
 
@@ -63,13 +80,19 @@ export const createNewSpot = spot => async dispatch => {
     const response = await csrfFetch('/api/spots', {
         method: 'POST',
         body: JSON.stringify(spot)
-    }) // promise all? Would still need to retrieve spot id tho
-    // or have my errors separate from my fetches
+    })
 
     const data = await response.json()
     dispatch(createSpot(data))
-
     return data
+}
+
+export const removeSpot = spotId => async dispatch => {
+    await csrfFetch(`/api/spots/${spotId}`, {
+        method: 'DELETE'
+    })
+
+    dispatch(deleteSpot(spotId))
 }
 
 const initialState = {}
@@ -77,10 +100,14 @@ const initialState = {}
 export default function spotReducer(state = initialState, action) {
     switch(action.type) {
         case GET_SPOTS:
-            return { ...action.payload.Spots }
+            return { ...action.payload }
             case GET_SPOT_DETAILS:
                 const currSpot = action.payload
-                return { ...state, [currSpot.id]: currSpot}
+                return { [currSpot.id]: currSpot }
+            case DELETE_SPOT:
+                const newState = { ...state }
+                delete newState[action.payload]
+                return newState
         default: return state
     }
 }

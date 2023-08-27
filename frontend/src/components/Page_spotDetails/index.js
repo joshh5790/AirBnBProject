@@ -16,7 +16,7 @@ const SpotDetails = () => {
     const reviews = useSelector(allSpotReviews)
     const sessionUser = useSelector(state => state.session.user)
     const hasReview = reviews.find(review => review.userId === sessionUser?.id)
-    console.log(spot.SpotImages, "SPOTTTTTTTTTTTTTTTTT")
+    console.log(spot?.SpotImages, "SPOTTTTTTTTTTTTTTTTT")
 
     useEffect(() => {
         dispatch(retrieveSpotDetails(spotId))
