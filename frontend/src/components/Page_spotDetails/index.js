@@ -118,7 +118,7 @@ const SpotDetails = () => {
                 }
                 {reviews.map(review => {
                     return (
-                        <>
+                        <div key={review.id}>
                             <div
                                 className="spot-details-review-list"
                                 key={review?.id}>
@@ -138,7 +138,7 @@ const SpotDetails = () => {
                                 className="delete-review-button gray-color-button">
                                 Delete
                             </button>}
-                        </>
+                        </div>
                     )
                 })}
             </div>

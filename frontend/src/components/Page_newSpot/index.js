@@ -1,13 +1,14 @@
 import { useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
-import { useHistory } from 'react-router-dom'
+import { useHistory, useParams } from 'react-router-dom'
 import './newSpot.css'
-import { createNewSpot } from '../../store/spots'
+import { createNewSpot, retrieveSpotDetails } from '../../store/spots'
 import { generateSpotImage } from '../../store/spotImages'
 
 const NewSpot = () => {
     const history = useHistory()
     const dispatch = useDispatch()
+    const { spotId } = useParams()
     const [country, setCountry] = useState('')
     const [address, setAddress] = useState('');
     const [city, setCity] = useState('');
@@ -24,6 +25,26 @@ const NewSpot = () => {
     const [image5, setImage5] = useState('');
     const [submitStatus, setSubmitStatus] = useState(false)
     const [errors, setErrors] = useState({})
+
+    useEffect(() => { // if the user is updating a spot
+        if (spotId) dispatch(retrieveSpotDetails(spotId))
+            .then((data) => {
+                setCountry(data.country);
+                setAddress(data.address);
+                setCity(data.city);
+                setState(data.state);
+                setLatitude(data.lat);
+                setLongitude(data.lng);
+                setDescription(data.description);
+                setTitle(data.name);
+                setPrice(data.price);
+                setPreviewImage(data.previewImage);
+                setImage2(data.image2 || '');
+                setImage3(data.image3 || '');
+                setImage4(data.image4 || '');
+                setImage5(data.image5 || '');
+        })
+    }, [])
 
     const validateImg = (image, name, errors) => {
         if (!image.length) return true
@@ -103,7 +124,7 @@ const NewSpot = () => {
 
     return (
         <div className='new-spot-page'>
-            <h1>Create a new Spot</h1>
+            <h1>{(spotId && 'Update your Spot') || 'Create a new Spot'}</h1>
             <h2 className='subheader'>Where's your place located?</h2>
             <p className='new-spot-subdesc'>Guests will only get your exact address once they booked a reservation.</p>
             <form
@@ -262,7 +283,7 @@ const NewSpot = () => {
                 </span>
                 <div className='new-spot-button-div'>
                     <button
-                        className='form-submit'>Create Spot</button>
+                        className='form-submit'>{(spotId && 'Save Spot') || 'Create New Spot'}</button>
                 </div>
             </form>
         </div>

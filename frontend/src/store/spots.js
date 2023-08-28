@@ -4,6 +4,7 @@ const GET_SPOTS = 'spots/GET_SPOTS'
 const GET_SPOT_DETAILS = 'spots/GET_SPOT_DETAILS'
 const CREATE_SPOT = 'spots/CREATE_SPOT'
 const DELETE_SPOT = 'spots/DELETE_SPOT'
+const EDIT_SPOT = '/spots/EDIT_SPOT'
 
 
 
@@ -41,6 +42,13 @@ export function deleteSpot(spotId) {
     }
 }
 
+export function editSpot(spot) {
+    return {
+        type: EDIT_SPOT,
+        payload: spot
+    }
+}
+
 // thunks
 
 export const retrieveAllSpots = () => async dispatch => {
@@ -72,7 +80,7 @@ export const retrieveSpotDetails = spotId => async dispatch => {
 
     const data = await response.json()
     dispatch(getSpotDetails(data))
-    return response
+    return data
 }
 
 export const createNewSpot = spot => async dispatch => {
@@ -94,6 +102,16 @@ export const removeSpot = spotId => async dispatch => {
     dispatch(deleteSpot(spotId))
 }
 
+export const modifySpot = spotId => async dispatch => {
+    const response = await csrfFetch(`/api/spots/${spotId}`, {
+        method: 'PUT'
+    })
+
+    const data = await response.json()
+    dispatch(editSpot(data))
+    return response
+}
+
 const initialState = {}
 
 export default function spotReducer(state = initialState, action) {
@@ -107,6 +125,9 @@ export default function spotReducer(state = initialState, action) {
                 const newState = { ...state }
                 delete newState[action.payload]
                 return newState
+            case EDIT_SPOT:
+                const editSpot = action.payload
+                return { ...state, [editSpot.id]: editSpot }
         default: return state
     }
 }
