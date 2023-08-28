@@ -11,17 +11,25 @@ import './SpotDetailsPage.css'
 const SpotDetails = () => {
     const dispatch = useDispatch()
     const [refresh, setRefresh] = useState(false)
+    const [previewImage, setPreviewImage] = useState('')
     const spotId = useParams().id
     const spot = useSelector(state => state.spots[spotId])
     const reviews = useSelector(allSpotReviews)
     const sessionUser = useSelector(state => state.session.user)
     const hasReview = reviews.find(review => review.userId === sessionUser?.id)
-    console.log(spot?.SpotImages, "SPOTTTTTTTTTTTTTTTTT")
+    console.log(spot, "SPOTTTTTTTTTTTTTTTTT")
 
     useEffect(() => {
         dispatch(retrieveSpotDetails(spotId))
         .then(() => dispatch(retrieveReviews(spotId)))
     }, [dispatch, spotId])
+
+    useEffect(() => { // only firing before spot.previewImage has loaded
+        (spot?.previewImage && spot.previewImage.length) ?
+        setPreviewImage(spot.previewImage) :
+        setPreviewImage('https://static.vecteezy.com/system/resources/previews/005/337/799/original/icon-image-not-found-free-vector.jpg')
+        console.log(previewImage, "PREVIEW STATE")
+    }, [refresh])
 
     const handleReserve = () => {
         alert("Feature coming soon!")
@@ -33,6 +41,8 @@ const SpotDetails = () => {
         setRefresh(prev => !prev)
     }
 
+    // spotImages are not loading, probably rendering and then populating the spot.previewImage
+
     return (
         <div className="spot-details-page">
             <h1>{spot?.name}</h1>
@@ -41,24 +51,29 @@ const SpotDetails = () => {
             </div>
             <div className="spot-details-images">
                 <img
-                    src={spot?.previewImage || 'https://static.vecteezy.com/system/resources/previews/005/337/799/original/icon-image-not-found-free-vector.jpg'}
-                    alt={spot?.previewImage || 'Image not found'}
+                    src={previewImage}
+                    alt={previewImage || 'Image not found'}
+                    onError={e => {e.target.error=null; e.target.src='https://static.vecteezy.com/system/resources/previews/005/337/799/original/icon-image-not-found-free-vector.jpg'}}
                     className="spot-details-image-1"/>
                 <img
                     src={(spot?.SpotImages && spot?.SpotImages[0]?.url) || 'https://static.vecteezy.com/system/resources/previews/005/337/799/original/icon-image-not-found-free-vector.jpg'}
                     alt={(spot?.SpotImages && spot?.SpotImages[0]?.url) || 'Image not found'}
+                    onError={e => {e.target.error=null; e.target.src='https://static.vecteezy.com/system/resources/previews/005/337/799/original/icon-image-not-found-free-vector.jpg'}}
                     className="spot-details-image-2"/>
                 <img
                     src={(spot?.SpotImages && spot?.SpotImages[1]?.url) || 'https://static.vecteezy.com/system/resources/previews/005/337/799/original/icon-image-not-found-free-vector.jpg'}
                     alt={(spot?.SpotImages && spot?.SpotImages[1]?.url) || 'Image not found'}
+                    onError={e => {e.target.error=null; e.target.src='https://static.vecteezy.com/system/resources/previews/005/337/799/original/icon-image-not-found-free-vector.jpg'}}
                     className="spot-details-image-3"/>
                 <img
                     src={(spot?.SpotImages && spot?.SpotImages[2]?.url) || 'https://static.vecteezy.com/system/resources/previews/005/337/799/original/icon-image-not-found-free-vector.jpg'}
                     alt={(spot?.SpotImages && spot?.SpotImages[2]?.url) || 'Image not found'}
+                    onError={e => {e.target.error=null; e.target.src='https://static.vecteezy.com/system/resources/previews/005/337/799/original/icon-image-not-found-free-vector.jpg'}}
                     className="spot-details-image-4"/>
                 <img
                     src={(spot?.SpotImages && spot?.SpotImages[3]?.url) || 'https://static.vecteezy.com/system/resources/previews/005/337/799/original/icon-image-not-found-free-vector.jpg'}
                     alt={(spot?.SpotImages && spot?.SpotImages[3]?.url) || 'Image not found'}
+                    onError={e => {e.target.error=null; e.target.src='https://static.vecteezy.com/system/resources/previews/005/337/799/original/icon-image-not-found-free-vector.jpg'}}
                     className="spot-details-image-5"/>
             </div>
             <div className="spot-details-description">

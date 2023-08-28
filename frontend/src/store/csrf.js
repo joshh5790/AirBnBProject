@@ -21,7 +21,7 @@ export async function csrfFetch(url, options = {}) {
 
     // if the response status code is 400 or above, then throw an error with the
       // error being the response
-    if (res.status >= 400) throw res;
+    if (res.status >= 400) throw res; // should implement a loading screen or smth instead
 
     // if the response status code is under 400, then return the response to the
       // next promise chain

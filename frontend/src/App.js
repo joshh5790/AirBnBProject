@@ -33,6 +33,9 @@ function App() {
         <Route exact path='/spots/:id'>
           <SpotDetails />
         </Route>
+        <Route exact path='/spots/:id/edit'>
+          <NewSpot />
+        </Route>
       </Switch>
       <Navigation isLoaded={isLoaded}/>
     </>

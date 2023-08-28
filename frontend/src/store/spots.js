@@ -1,5 +1,4 @@
 import { csrfFetch } from "./csrf"
-import { deleteSpotImage } from "./spotImages"
 
 const GET_SPOTS = 'spots/GET_SPOTS'
 const GET_SPOT_DETAILS = 'spots/GET_SPOT_DETAILS'

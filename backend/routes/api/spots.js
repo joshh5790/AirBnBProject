@@ -166,7 +166,7 @@ router.get('/:spotId', async (req, res) => {
                 },
             }
         ],
-        attributes: { exclude: ['previewImage', 'createdAt', 'updatedAt'] }
+        attributes: { exclude: ['createdAt', 'updatedAt'] }
     })
     if (currSpot) res.json(currSpot)
     else {
@@ -344,14 +344,14 @@ router.post('/', validateSpot, async (req, res, next) => {
     if (!user) return res.status(403).json({ message: "Forbidden" })
     const { address, city, state,
         country, lat, lng,
-        name, description, price } = req.body
+        name, description, price, previewImage } = req.body
     const currUser = await User.findByPk(user.id)
 
     const newSpot = await Spot.create({
         ownerId: currUser.id,
         address, city, state,
         country, lat, lng,
-        name, description, price
+        name, description, price, previewImage
     })
     return res.status(201).json(newSpot)
 })

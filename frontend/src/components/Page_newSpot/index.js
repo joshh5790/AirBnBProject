@@ -27,10 +27,7 @@ const NewSpot = () => {
 
     const validateImg = (image, name, errors) => {
         if (!image.length) return true
-        const validEnds = ['.png', '.jpg', '.jpeg']
-        for (const end of validEnds) {
-            if (image.endsWith(end)) return true
-        }
+        if (/\.(jpg|jpeg|png)$/.test(image)) return true
         errors[name] = 'Image URL must end in .png, .jpg, or .jpeg'
     }
 
@@ -46,6 +43,7 @@ const NewSpot = () => {
             spotErrors.description = 'Description needs a minimum of 30 characters';
         }
         if (!title) spotErrors.name = 'Name is required';
+        if (title.length > 50) spotErrors.name = 'Name must be less than 50 characters'
         if (!price) spotErrors.price = 'Price is required';
         validateImg(previewImage, 'previewImage', spotErrors)
         if (!previewImage) spotErrors.previewImage = 'Preview Image is required';

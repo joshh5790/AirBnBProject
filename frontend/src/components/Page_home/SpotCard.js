@@ -39,6 +39,7 @@ const SpotCard = ({ spot }) => {
                 <img
                     src={spot.previewImage || 'https://static.vecteezy.com/system/resources/previews/005/337/799/original/icon-image-not-found-free-vector.jpg'}
                     alt={spot.previewImage || 'Image not found'}
+                    onError={e => {e.target.error=null; e.target.src='https://static.vecteezy.com/system/resources/previews/005/337/799/original/icon-image-not-found-free-vector.jpg'}}
                     className='previewImage' />
                 <div className='loc-rating'>
                     <p className='loc'>{spot.city}, {spot.state}</p>
