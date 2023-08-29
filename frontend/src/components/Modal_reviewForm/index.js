@@ -1,20 +1,25 @@
 import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { useHistory } from "react-router-dom";
 import { useModal } from "../../context/Modal";
-import { createNewReview } from "../../store/reviews";
+import { createNewReview, editReview } from "../../store/reviews";
 import { retrieveSpotDetails } from "../../store/spots";
 import './reviewForm.css'
 
-function ReviewFormModal({ spotId }) {
+function ReviewFormModal({ spotId, review }) {
     const dispatch = useDispatch()
-    const history = useHistory()
     const [reviewText, setReviewText] = useState('')
     const [rating, setRating] = useState('')
     const [disableButton, setDisableButton] = useState(true)
     const [errors, setErrors] = useState({})
     const { closeModal } = useModal()
     const nums = [1,2,3,4,5]
+
+    useEffect(() => {
+        if (review) {
+            setReviewText(review.review)
+            setRating(review.stars)
+        }
+    }, [])
 
     useEffect(() => {
         if (reviewText.length > 9 && rating > 0) setDisableButton(false)
@@ -24,14 +29,28 @@ function ReviewFormModal({ spotId }) {
     const onSubmit = e => {
         e.preventDefault()
         setErrors({})
-        dispatch(createNewReview({ review: reviewText, stars: rating }, spotId))
-            .then(() => dispatch(retrieveSpotDetails(spotId)))
-            .catch(
-                async res => {
-                    const data = await res.json()
-                    if (data && data.message) setErrors(data)
-                }
-            )
+        if (review) {
+            dispatch(editReview({
+                id: review.id,
+                review: reviewText,
+                stars: rating }))
+                .then(() => dispatch(retrieveSpotDetails(spotId)))
+                .catch(
+                    async res => {
+                        const data = await res.json()
+                        if (data) setErrors(data)
+                })
+        } else {
+            dispatch(createNewReview({
+                review: reviewText,
+                stars: rating }, spotId))
+                .then(() => dispatch(retrieveSpotDetails(spotId)))
+                .catch(
+                    async res => {
+                        const data = await res.json()
+                        if (data) setErrors(data)
+                })
+        }
         closeModal()
     }
     return (
@@ -60,7 +79,8 @@ function ReviewFormModal({ spotId }) {
                 <button
                     className="submit-review-button red-button"
                     disabled={disableButton}>
-                    Submit Your Review
+                    {review && 'Update Your Review'}
+                    {!review && 'Submit Your Review'}
                 </button>
             </form>
         </>

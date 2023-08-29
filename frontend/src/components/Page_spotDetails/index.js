@@ -33,14 +33,9 @@ const SpotDetails = () => {
         alert("Feature coming soon!")
     }
 
-    const handleDelete = (reviewId) => {
+    const handleDelete = reviewId => {
         dispatch(deleteReview(reviewId))
             .then(() => dispatch(retrieveSpotDetails(spotId)))
-        setRefresh(prev => !prev)
-    }
-
-    const handleUpdate = (reviewId) => {
-        dispatch()
         setRefresh(prev => !prev)
     }
 
@@ -136,11 +131,11 @@ const SpotDetails = () => {
                             </div>
                             {review?.userId===sessionUser?.id &&
                             <div>
-                                <button
-                                    onClick={() => handleUpdate(review.id)}
-                                    className="manage-review-button gray-color-button">
-                                    Update
-                                </button>
+                                <OpenModalButton
+                                    buttonText="Update"
+                                    modalComponent={<ReviewFormModal spotId={spot?.id} review={review}/>}
+                                    className='manage-review-button gray-color-button'
+                                />
                                 <button
                                     onClick={() => handleDelete(review.id)}
                                     className="manage-review-button gray-color-button">
