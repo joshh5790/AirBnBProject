@@ -1,12 +1,12 @@
 import { csrfFetch } from "./csrf"
 
-const CREATE_SPOT_IMAGE = 'spotImages/CREATE_SPOT_IMAGE'
+const MODIFY_SPOT_IMAGE = 'spotImages/MODIFY_SPOT_IMAGE'
 
 // action creators
 
 export function createSpotImage(spotImage) {
     return {
-        type: CREATE_SPOT_IMAGE,
+        type: MODIFY_SPOT_IMAGE,
         payload: spotImage
     }
 }
@@ -24,11 +24,15 @@ export const generateSpotImage = (url, spotId) => async dispatch => {
     return data
 }
 
+export const modifySpotImage = (url, spotId) => async dispatch => {
+    
+}
+
 const initialState = {}
 
 export default function spotImageReducer(state = initialState, action) {
     switch(action.type) {
-        case CREATE_SPOT_IMAGE:
+        case MODIFY_SPOT_IMAGE:
             const newSpotImage = action.payload
             return { ...state, [newSpotImage.id]: newSpotImage }
         default: return state
