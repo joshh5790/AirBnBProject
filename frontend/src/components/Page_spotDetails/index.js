@@ -17,7 +17,6 @@ const SpotDetails = () => {
     const reviews = useSelector(allSpotReviews)
     const sessionUser = useSelector(state => state.session.user)
     const hasReview = reviews.find(review => review.userId === sessionUser?.id)
-    console.log(spot, "SPOTTTTTTTTTTTTTTTTT")
 
     useEffect(() => {
         dispatch(retrieveSpotDetails(spotId))
@@ -28,7 +27,6 @@ const SpotDetails = () => {
         (spot?.previewImage && spot.previewImage.length) ?
         setPreviewImage(spot.previewImage) :
         setPreviewImage('https://static.vecteezy.com/system/resources/previews/005/337/799/original/icon-image-not-found-free-vector.jpg')
-        console.log(previewImage, "PREVIEW STATE")
     }, [refresh])
 
     const handleReserve = () => {

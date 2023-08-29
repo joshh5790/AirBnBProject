@@ -26,7 +26,7 @@ const NewSpot = () => {
     const [submitStatus, setSubmitStatus] = useState(false)
     const [errors, setErrors] = useState({})
 
-    useEffect(() => { 
+    useEffect(() => {
         if (spotId) {
             dispatch(retrieveSpotDetails(spotId))
                 .then((data) => {
@@ -123,7 +123,6 @@ const NewSpot = () => {
                 async res => {
                     const data = await res.json()
                     if (data && data.errors) {
-                        console.log(data.errors)
                         setErrors(data.errors)
                     }
                 }

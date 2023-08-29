@@ -85,7 +85,6 @@ router.post('/', validateSignup, async (req, res) => {
 
 router.get('/fuck/:fuck', async (req, res) => {
 
-    console.log("############################", `${new Date().toISOString()}`.replace('T', ' ').slice(0,19))
     const findMe = req.params.fuck
     let allThis
     if (findMe === 'user') allThis = await User.findAll()
