@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux'
 import { useHistory, useParams } from 'react-router-dom'
 import './newSpot.css'
 import { createNewSpot, modifySpot, retrieveSpotDetails } from '../../store/spots'
-import { generateSpotImage, editSpotImage, removeSpotImage } from '../../store/spotImages'
+import { generateSpotImage, editSpotImage, removeSpotImage, deleteSpotImage } from '../../store/spotImages'
 
 const NewSpot = () => {
     const history = useHistory()
@@ -19,13 +19,10 @@ const NewSpot = () => {
     const [title, setTitle] = useState('');
     const [price, setPrice] = useState('');
     const [previewImage, setPreviewImage] = useState('');
-    const [image2, setImage2] = useState('');
-    const [image3, setImage3] = useState('');
-    const [image4, setImage4] = useState('');
-    const [image5, setImage5] = useState('');
+    const [images, setImages] = useState({ 0: '', 1: '', 2: '', 3: ''});
     const [submitStatus, setSubmitStatus] = useState(false)
     const [errors, setErrors] = useState({})
-    const imageIdArr = []
+    const [imageArr, setImageArr] = useState([])
 
     useEffect(() => {
         if (spotId) {
@@ -41,13 +38,13 @@ const NewSpot = () => {
                     setTitle(data.name);
                     setPrice(data.price);
                     setPreviewImage(data.previewImage);
-                    setImage2(data.SpotImages[0]?.url || '');
-                    setImage3(data.SpotImages[1]?.url || '');
-                    setImage4(data.SpotImages[2]?.url || '');
-                    setImage5(data.SpotImages[3]?.url || '');
-                    for (const image in data.SpotImages) {
-                        imageIdArr.push(image.id)
-                    }
+                    setImages({
+                        0: data.SpotImages[0]?.url || '',
+                        1: data.SpotImages[1]?.url || '',
+                        2: data.SpotImages[2]?.url || '',
+                        3: data.SpotImages[3]?.url || '',
+                    })
+                    setImageArr([...data.SpotImages])
                 })
         } else {
             setCountry('');
@@ -60,10 +57,7 @@ const NewSpot = () => {
             setTitle('');
             setPrice('');
             setPreviewImage('');
-            setImage2('');
-            setImage3('');
-            setImage4('');
-            setImage5('');
+            setImages({ 0: '', 1: '', 2: '', 3: ''})
         }
     }, [spotId])
 
@@ -89,10 +83,10 @@ const NewSpot = () => {
         if (!price) spotErrors.price = 'Price is required';
         validateImg(previewImage, 'previewImage', spotErrors)
         if (!previewImage) spotErrors.previewImage = 'Preview Image is required';
-        validateImg(image2, 'image2', spotErrors)
-        validateImg(image3, 'image3', spotErrors)
-        validateImg(image4, 'image4', spotErrors)
-        validateImg(image5, 'image5', spotErrors)
+        validateImg(images[0], 'image2', spotErrors)
+        validateImg(images[1], 'image3', spotErrors)
+        validateImg(images[2], 'image4', spotErrors)
+        validateImg(images[3], 'image5', spotErrors)
         return spotErrors
     }
 
@@ -101,10 +95,10 @@ const NewSpot = () => {
     }, [country, address, city,
         state, latitude, longitude,
         description, title, price,
-        previewImage, image2, image3,
-        image4, image5, submitStatus])
+        previewImage, images, submitStatus])
 
     const onSubmit = async e => { // still going through when there are errors on the images
+        console.log(imageArr)
         e.preventDefault()
         setSubmitStatus(true)
         setErrors({})
@@ -129,9 +123,22 @@ const NewSpot = () => {
             spotInfo.id = spotId
             await dispatch(modifySpot(spotInfo))
                 .then(() => {
-                    if (imageIdArr[0]) {
-                        if (!image2) return dispatch(removeSpotImage(imageIdArr[0]))
-                        else return dispatch(editSpotImage(image2, imageIdArr[0]))
+                    let count = 0
+                    console.log("THIS IS IMAGEARR", imageArr)
+                    console.log("THIS IS INPUT IMAGES", images)
+                    for (let i in images) {
+                        if (images[i].length) { // if text is in input
+                            console.log(imageArr, 'ADD ADD ADD')
+                            if (imageArr[count]) { // if old image data was passed in
+                                if (imageArr[count].url !== images[i]) dispatch(editSpotImage(images[i], imageArr[count].id))
+                                count++
+                            }
+                        }
+                        else if (imageArr[count]) { // if old data was passed in and no text in input
+                            console.log(imageArr, "DELETE DELETE DELETE")
+                            dispatch(removeSpotImage(imageArr[count].id)) // delete image from backend
+                            count++
+                        }
                     }
                 })
                 .then(() => history.push(`/spots/${spotId}`))
@@ -147,10 +154,10 @@ const NewSpot = () => {
                         if (data && data.errors) setErrors(data.errors)
                 })
 
-            if (image2) dispatch(generateSpotImage(image2, newSpot?.id))
-            if (image3) dispatch(generateSpotImage(image3, newSpot?.id))
-            if (image4) dispatch(generateSpotImage(image4, newSpot?.id))
-            if (image5) dispatch(generateSpotImage(image5, newSpot?.id))
+            for (const image in images) {
+                if (images[image].length) dispatch(generateSpotImage(image, newSpot?.id))
+            }
+
             history.push(`/spots/${newSpot.id}`)
         }
 
@@ -282,8 +289,10 @@ const NewSpot = () => {
                 </span>
                 <input
                     className='new-spot-input img'
-                    value={image2}
-                    onChange={e => {setImage2(e.target.value)}}
+                    value={images[0]}
+                    onChange={e => {setImages(prev => {
+                        return { ...prev, 0: e.target.value }
+                    })}}
                     type='text'
                     placeholder='Image URL' />
                 <span className='error-msg new-spot'>
@@ -291,8 +300,10 @@ const NewSpot = () => {
                 </span>
                 <input
                     className='new-spot-input img'
-                    value={image3}
-                    onChange={e => {setImage3(e.target.value)}}
+                    value={images[1]}
+                    onChange={e => {setImages(prev => {
+                        return { ...prev, 1: e.target.value }
+                    })}}
                     type='text'
                     placeholder='Image URL' />
                 <span className='error-msg new-spot'>
@@ -300,8 +311,10 @@ const NewSpot = () => {
                 </span>
                 <input
                     className='new-spot-input img'
-                    value={image4}
-                    onChange={e => {setImage4(e.target.value)}}
+                    value={images[2]}
+                    onChange={e => {setImages(prev => {
+                        return { ...prev, 2: e.target.value }
+                    })}}
                     type='text'
                     placeholder='Image URL' />
                 <span className='error-msg new-spot'>
@@ -309,8 +322,10 @@ const NewSpot = () => {
                 </span>
                 <input
                     className='new-spot-input img'
-                    value={image5}
-                    onChange={e => {setImage5(e.target.value)}}
+                    value={images[3]}
+                    onChange={e => {setImages(prev => {
+                        return { ...prev, 3: e.target.value }
+                    })}}
                     type='text'
                     placeholder='Image URL' />
                 <span className='error-msg new-spot'>

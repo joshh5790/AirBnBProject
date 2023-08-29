@@ -32,6 +32,7 @@
     width: 100%;
     border-radius: 30px 0 0 30px;
     object-fit: cover;
+    aspect-ratio: 1 / 1;
 }
 
 .spot-details-image-2 {
@@ -39,6 +40,7 @@
     height: 100%;
     width: 100%;
     object-fit: cover;
+    aspect-ratio: 1 / 1;
 }
 
 .spot-details-image-3 {
@@ -47,6 +49,7 @@
     width: 100%;
     border-radius: 0 30px 0 0;
     object-fit: cover;
+    aspect-ratio: 1 / 1;
 }
 
 .spot-details-image-4 {
@@ -54,6 +57,7 @@
     height: 100%;
     width: 100%;
     object-fit: cover;
+    aspect-ratio: 1 / 1;
 }
 
 .spot-details-image-5 {
@@ -62,6 +66,7 @@
     width: 100%;
     border-radius: 0 0 30px 0;
     object-fit: cover;
+    aspect-ratio: 1 / 1;
 }
 
 .spot-details-description {
