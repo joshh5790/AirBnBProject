@@ -27,6 +27,7 @@ function ReviewFormModal({ spotId, review }) {
         if (review) {
             setReviewText(review.review)
             setRating(review.stars)
+            setHoverRating(review.stars)
         }
     }, [])
 
