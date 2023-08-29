@@ -98,7 +98,6 @@ const NewSpot = () => {
         previewImage, images, submitStatus])
 
     const onSubmit = async e => { // still going through when there are errors on the images
-        console.log(imageArr)
         e.preventDefault()
         setSubmitStatus(true)
         setErrors({})
@@ -122,21 +121,18 @@ const NewSpot = () => {
         if (spotId) {
             spotInfo.id = spotId
             await dispatch(modifySpot(spotInfo))
-                .then(() => {
+                .then(async () => {
                     let count = 0
-                    console.log("THIS IS IMAGEARR", imageArr)
-                    console.log("THIS IS INPUT IMAGES", images)
                     for (let i in images) {
                         if (images[i].length) { // if text is in input
-                            console.log(imageArr, 'ADD ADD ADD')
                             if (imageArr[count]) { // if old image data was passed in
-                                if (imageArr[count].url !== images[i]) dispatch(editSpotImage(images[i], imageArr[count].id))
+                                if (imageArr[count].url !== images[i]) await dispatch(editSpotImage(images[i], imageArr[count].id))
                                 count++
                             }
+                            else await dispatch(generateSpotImage(images[i], spotId))
                         }
                         else if (imageArr[count]) { // if old data was passed in and no text in input
-                            console.log(imageArr, "DELETE DELETE DELETE")
-                            dispatch(removeSpotImage(imageArr[count].id)) // delete image from backend
+                            await dispatch(removeSpotImage(imageArr[count].id)) // delete image from backend
                             count++
                         }
                     }

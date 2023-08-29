@@ -1,17 +1,16 @@
-import { useState, useEffect } from "react"
+import { useEffect } from "react"
 import { useParams } from "react-router-dom"
 import { useSelector, useDispatch } from "react-redux"
 import { retrieveSpotDetails } from "../../store/spots"
-import { retrieveReviews, deleteReview, allSpotReviews } from "../../store/reviews"
+import { retrieveReviews, allSpotReviews } from "../../store/reviews"
 import { month } from "../../utils/utils"
 import OpenModalButton from "../OpenModalButton"
 import ReviewFormModal from "../Modal_reviewForm"
 import './SpotDetailsPage.css'
+import DeleteRecordModal from "../Modal_deleteRecord"
 
 const SpotDetails = () => {
     const dispatch = useDispatch()
-    const [refresh, setRefresh] = useState(false)
-    const [previewImage, setPreviewImage] = useState('')
     const spotId = useParams().id
     const spot = useSelector(state => state.spots[spotId])
     const reviews = useSelector(allSpotReviews)
@@ -23,22 +22,9 @@ const SpotDetails = () => {
         .then(() => dispatch(retrieveReviews(spotId)))
     }, [dispatch, spotId])
 
-    useEffect(() => { // only firing before spot.previewImage has loaded
-        (spot?.previewImage && spot.previewImage.length) ?
-        setPreviewImage(spot.previewImage) :
-        setPreviewImage('https://static.vecteezy.com/system/resources/previews/005/337/799/original/icon-image-not-found-free-vector.jpg')
-    }, [refresh])
-
     const handleReserve = () => {
         alert("Feature coming soon!")
     }
-
-    const handleDelete = reviewId => {
-        dispatch(deleteReview(reviewId))
-            .then(() => dispatch(retrieveSpotDetails(spotId)))
-        setRefresh(prev => !prev)
-    }
-
 
     return (
         <div className="spot-details-page">
@@ -48,8 +34,8 @@ const SpotDetails = () => {
             </div>
             <div className="spot-details-images">
                 <img
-                    src={previewImage}
-                    alt={previewImage || 'Image not found'}
+                    src={spot?.previewImage || 'https://static.vecteezy.com/system/resources/previews/005/337/799/original/icon-image-not-found-free-vector.jpg'}
+                    alt={spot?.previewImage || 'Image not found'}
                     onError={e => {e.target.error=null; e.target.src='https://static.vecteezy.com/system/resources/previews/005/337/799/original/icon-image-not-found-free-vector.jpg'}}
                     className="spot-details-image-1"/>
                 <img
@@ -136,11 +122,11 @@ const SpotDetails = () => {
                                     modalComponent={<ReviewFormModal spotId={spot?.id} review={review}/>}
                                     className='manage-review-button gray-color-button'
                                 />
-                                <button
-                                    onClick={() => handleDelete(review.id)}
-                                    className="manage-review-button gray-color-button">
-                                    Delete
-                                </button>
+                                <OpenModalButton
+                                    buttonText="Delete"
+                                    modalComponent={<DeleteRecordModal spotId={spot?.id} reviewId={review?.id} record='Review'/>}
+                                    className='manage-review-button gray-color-button'
+                                />
                             </div>
                             }
                         </div>

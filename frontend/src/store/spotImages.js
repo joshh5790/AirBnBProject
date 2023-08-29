@@ -33,7 +33,7 @@ export const generateSpotImage = (url, spotId) => async dispatch => {
 }
 
 export const editSpotImage = (url, spotImageId) => async dispatch => {
-    const response = await csrfFetch(`api/spot-images/${spotImageId}`, {
+    const response = await csrfFetch(`/api/spot-images/${spotImageId}`, {
         method: 'PUT',
         body: JSON.stringify({ url })
     })
@@ -44,7 +44,7 @@ export const editSpotImage = (url, spotImageId) => async dispatch => {
 }
 
 export const removeSpotImage = spotImageId => async dispatch => {
-    await csrfFetch(`api/spot-images/${spotImageId}`, {
+    await csrfFetch(`/api/spot-images/${spotImageId}`, {
         method: 'DELETE'
     })
 

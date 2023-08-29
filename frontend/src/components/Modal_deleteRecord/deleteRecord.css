@@ -1,0 +1,21 @@
+.delete-modal-container {
+    max-width: 25rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.delete-modal-text {
+    margin-top: 0;
+    font-size: 20px;
+    text-align: center;
+}
+
+.delete-modal-yes {
+    background-color: #FF5A5F;
+}
+
+.delete-modal-no {
+    margin-top: 1rem;
+    background-color: #999999;
+}

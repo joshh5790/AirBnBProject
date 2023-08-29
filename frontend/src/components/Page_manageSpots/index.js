@@ -4,6 +4,8 @@ import { useHistory } from 'react-router-dom'
 import SpotCard from '../Page_home/SpotCard'
 import { retrieveCurrentSpots, removeSpot } from '../../store/spots'
 import './manageSpots.css'
+import OpenModalButton from '../OpenModalButton'
+import DeleteRecordModal from '../Modal_deleteRecord'
 
 const ManageSpots = () => {
     const dispatch = useDispatch()
@@ -48,11 +50,11 @@ const ManageSpots = () => {
                             className='gray-color-button modify-spot-button'>
                             Update
                         </button>
-                        <button
-                            onClick={() => handleDelete(spot.id)}
-                            className='gray-color-button modify-spot-button'>
-                            Delete
-                        </button>
+                        <OpenModalButton
+                            buttonText="Delete"
+                            modalComponent={<DeleteRecordModal spotId={spot?.id} record='Spot'/>}
+                            className='gray-color-button modify-spot-button'
+                        />
                     </li>
                 ))}
             </ul>
