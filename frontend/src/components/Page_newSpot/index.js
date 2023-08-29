@@ -74,7 +74,9 @@ const NewSpot = () => {
         if (!city) spotErrors.city = 'City is required';
         if (!state) spotErrors.state = 'State is required';
         if (!latitude) spotErrors.lat = 'Latitude is required';
+        else if (latitude > 90 || latitude < -90) spotErrors.lat = 'Invalid latitude';
         if (!longitude) spotErrors.lng = 'Longitude is required';
+        else if (longitude > 180 || longitude < -180) spotErrors.lng = 'Invalid longitude';
         if (!description || description.length < 30) {
             spotErrors.description = 'Description needs a minimum of 30 characters';
         }
