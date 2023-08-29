@@ -125,6 +125,7 @@ const NewSpot = () => {
                     let count = 0
                     for (let i in images) {
                         if (images[i].length) { // if text is in input
+                            console.log(imageArr, 'ADD ADD ADD')
                             if (imageArr[count]) { // if old image data was passed in
                                 if (imageArr[count].url !== images[i]) await dispatch(editSpotImage(images[i], imageArr[count].id))
                                 count++

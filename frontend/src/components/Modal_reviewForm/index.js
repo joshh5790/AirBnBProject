@@ -9,10 +9,19 @@ function ReviewFormModal({ spotId, review }) {
     const dispatch = useDispatch()
     const [reviewText, setReviewText] = useState('')
     const [rating, setRating] = useState('')
+    const [hoverRating, setHoverRating] = useState('')
     const [disableButton, setDisableButton] = useState(true)
     const [errors, setErrors] = useState({})
     const { closeModal } = useModal()
     const nums = [1,2,3,4,5]
+
+    const handleMouseEnter = num => {
+        setHoverRating(num)
+    };
+
+    const handleMouseLeave = () => {
+        setHoverRating(rating)
+    };
 
     useEffect(() => {
         if (review) {
@@ -69,9 +78,13 @@ function ReviewFormModal({ spotId, review }) {
                 <div className="rating-div">
                     {nums.map(num =>
                         (<span
+                            onMouseEnter={() => handleMouseEnter(num)}
+                            onMouseLeave={handleMouseLeave}
+                            className="star-span"
                             key={num}
+
                             onClick={() => setRating(num)}>
-                            {rating >= num ? <i className="fa-solid fa-star"></i>
+                            {hoverRating >= num ? <i className="fa-solid fa-star"></i>
                             : <i className="fa-regular fa-star"></i>}
                         </span>)
                     )} Stars

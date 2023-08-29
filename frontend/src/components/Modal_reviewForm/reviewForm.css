@@ -20,3 +20,7 @@
     width: 20rem;
     height: 2rem;
 }
+
+.star-span:hover {
+    color: black;
+}
