@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux'
 import { useHistory, useParams } from 'react-router-dom'
 import './newSpot.css'
 import { createNewSpot, modifySpot, retrieveSpotDetails } from '../../store/spots'
-import { generateSpotImage } from '../../store/spotImages'
+import { generateSpotImage, editSpotImage, removeSpotImage } from '../../store/spotImages'
 
 const NewSpot = () => {
     const history = useHistory()
@@ -25,6 +25,7 @@ const NewSpot = () => {
     const [image5, setImage5] = useState('');
     const [submitStatus, setSubmitStatus] = useState(false)
     const [errors, setErrors] = useState({})
+    const imageIdArr = []
 
     useEffect(() => {
         if (spotId) {
@@ -40,11 +41,14 @@ const NewSpot = () => {
                     setTitle(data.name);
                     setPrice(data.price);
                     setPreviewImage(data.previewImage);
-                    setImage2(data.image2 || '');
-                    setImage3(data.image3 || '');
-                    setImage4(data.image4 || '');
-                    setImage5(data.image5 || '');
-            })
+                    setImage2(data.SpotImages[0]?.url || '');
+                    setImage3(data.SpotImages[1]?.url || '');
+                    setImage4(data.SpotImages[2]?.url || '');
+                    setImage5(data.SpotImages[3]?.url || '');
+                    for (const image in data.SpotImages) {
+                        imageIdArr.push(image.id)
+                    }
+                })
         } else {
             setCountry('');
             setAddress('');
@@ -106,6 +110,8 @@ const NewSpot = () => {
         setErrors({})
         const spotErrors = validateSpot()
 
+        if (Object.keys(spotErrors).length) return setErrors({...spotErrors})
+
         const spotInfo = {
             country,
             address,
@@ -119,11 +125,16 @@ const NewSpot = () => {
             previewImage
         }
 
-        if (Object.keys(spotErrors).length) return setErrors({...spotErrors})
         if (spotId) {
             spotInfo.id = spotId
             await dispatch(modifySpot(spotInfo))
-                .then(history.push(`/spots/${spotId}`))
+                .then(() => {
+                    if (imageIdArr[0]) {
+                        if (!image2) return dispatch(removeSpotImage(imageIdArr[0]))
+                        else return dispatch(editSpotImage(image2, imageIdArr[0]))
+                    }
+                })
+                .then(() => history.push(`/spots/${spotId}`))
                 .catch(async res => {
                         const data = await res.json()
                         if (data && data.errors) setErrors(data.errors)
@@ -136,10 +147,10 @@ const NewSpot = () => {
                         if (data && data.errors) setErrors(data.errors)
                 })
 
-            dispatch(generateSpotImage(image2, newSpot?.id))
-            dispatch(generateSpotImage(image3, newSpot?.id))
-            dispatch(generateSpotImage(image4, newSpot?.id))
-            dispatch(generateSpotImage(image5, newSpot?.id))
+            if (image2) dispatch(generateSpotImage(image2, newSpot?.id))
+            if (image3) dispatch(generateSpotImage(image3, newSpot?.id))
+            if (image4) dispatch(generateSpotImage(image4, newSpot?.id))
+            if (image5) dispatch(generateSpotImage(image5, newSpot?.id))
             history.push(`/spots/${newSpot.id}`)
         }
 
