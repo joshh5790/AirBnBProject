@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux'
 import { useHistory, useParams } from 'react-router-dom'
 import './newSpot.css'
 import { createNewSpot, modifySpot, retrieveSpotDetails } from '../../store/spots'
-import { generateSpotImage, editSpotImage, removeSpotImage, deleteSpotImage } from '../../store/spotImages'
+import { generateSpotImage, editSpotImage, removeSpotImage } from '../../store/spotImages'
 
 const NewSpot = () => {
     const history = useHistory()
@@ -81,7 +81,7 @@ const NewSpot = () => {
             spotErrors.description = 'Description needs a minimum of 30 characters';
         }
         if (!title) spotErrors.name = 'Name is required';
-        if (title.length > 50) spotErrors.name = 'Name must be less than 50 characters'
+        else if (title.length > 50) spotErrors.name = 'Name must be less than 50 characters'
         if (!price) spotErrors.price = 'Price is required';
         validateImg(previewImage, 'previewImage', spotErrors)
         if (!previewImage) spotErrors.previewImage = 'Preview Image is required';
