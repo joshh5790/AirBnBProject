@@ -41,7 +41,6 @@ const SpotDetails = () => {
         setRefresh(prev => !prev)
     }
 
-    // spotImages are not loading, probably rendering and then populating the spot.previewImage
 
     return (
         <div className="spot-details-page">

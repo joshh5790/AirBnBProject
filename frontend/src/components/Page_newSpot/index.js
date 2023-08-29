@@ -26,25 +26,42 @@ const NewSpot = () => {
     const [submitStatus, setSubmitStatus] = useState(false)
     const [errors, setErrors] = useState({})
 
-    useEffect(() => { // if the user is updating a spot
-        if (spotId) dispatch(retrieveSpotDetails(spotId))
-            .then((data) => {
-                setCountry(data.country);
-                setAddress(data.address);
-                setCity(data.city);
-                setState(data.state);
-                setLatitude(data.lat);
-                setLongitude(data.lng);
-                setDescription(data.description);
-                setTitle(data.name);
-                setPrice(data.price);
-                setPreviewImage(data.previewImage);
-                setImage2(data.image2 || '');
-                setImage3(data.image3 || '');
-                setImage4(data.image4 || '');
-                setImage5(data.image5 || '');
-        })
-    }, [])
+    useEffect(() => { 
+        if (spotId) {
+            dispatch(retrieveSpotDetails(spotId))
+                .then((data) => {
+                    setCountry(data.country);
+                    setAddress(data.address);
+                    setCity(data.city);
+                    setState(data.state);
+                    setLatitude(data.lat);
+                    setLongitude(data.lng);
+                    setDescription(data.description);
+                    setTitle(data.name);
+                    setPrice(data.price);
+                    setPreviewImage(data.previewImage);
+                    setImage2(data.image2 || '');
+                    setImage3(data.image3 || '');
+                    setImage4(data.image4 || '');
+                    setImage5(data.image5 || '');
+            })
+        } else {
+            setCountry('');
+            setAddress('');
+            setCity('');
+            setState('');
+            setLatitude('');
+            setLongitude('');
+            setDescription('');
+            setTitle('');
+            setPrice('');
+            setPreviewImage('');
+            setImage2('');
+            setImage3('');
+            setImage4('');
+            setImage5('');
+        }
+    }, [spotId])
 
     const validateImg = (image, name, errors) => {
         if (!image.length) return true
