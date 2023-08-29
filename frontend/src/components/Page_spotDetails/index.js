@@ -107,7 +107,6 @@ const SpotDetails = () => {
                                 key={review?.id}>
                                 <h2>
                                     {review?.User?.firstName || sessionUser?.firstName}
-                                    {review?.stars}
                                 </h2>
                                 <h3 className="review-date">
                                     {month[review?.createdAt.slice(5,7)]}&nbsp;
