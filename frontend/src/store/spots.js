@@ -102,9 +102,10 @@ export const removeSpot = spotId => async dispatch => {
     dispatch(deleteSpot(spotId))
 }
 
-export const modifySpot = spotId => async dispatch => {
-    const response = await csrfFetch(`/api/spots/${spotId}`, {
-        method: 'PUT'
+export const modifySpot = spot => async dispatch => {
+    const response = await csrfFetch(`/api/spots/${spot.id}`, {
+        method: 'PUT',
+        body: JSON.stringify(spot)
     })
 
     const data = await response.json()

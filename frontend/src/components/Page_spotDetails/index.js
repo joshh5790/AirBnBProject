@@ -39,6 +39,11 @@ const SpotDetails = () => {
         setRefresh(prev => !prev)
     }
 
+    const handleUpdate = (reviewId) => {
+        dispatch()
+        setRefresh(prev => !prev)
+    }
+
 
     return (
         <div className="spot-details-page">
@@ -130,11 +135,19 @@ const SpotDetails = () => {
                                 {review?.review}
                             </div>
                             {review?.userId===sessionUser?.id &&
-                            <button
-                                onClick={() => handleDelete(review.id)}
-                                className="delete-review-button gray-color-button">
-                                Delete
-                            </button>}
+                            <div>
+                                <button
+                                    onClick={() => handleUpdate(review.id)}
+                                    className="manage-review-button gray-color-button">
+                                    Update
+                                </button>
+                                <button
+                                    onClick={() => handleDelete(review.id)}
+                                    className="manage-review-button gray-color-button">
+                                    Delete
+                                </button>
+                            </div>
+                            }
                         </div>
                     )
                 })}

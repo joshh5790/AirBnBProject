@@ -190,12 +190,12 @@ router.put('/:spotId', validateSpot, async (req, res, next) => {
     const {
         address, city, state,
         country, lat, lng,
-        name, description, price
+        name, description, price, previewImage
     } = req.body
     await currSpot.update({
         address, city, state,
         country, lat, lng,
-        name, description, price
+        name, description, price, previewImage
     })
     res.json(currSpot)
 })

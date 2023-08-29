@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { useHistory, useParams } from 'react-router-dom'
 import './newSpot.css'
-import { createNewSpot, retrieveSpotDetails } from '../../store/spots'
+import { createNewSpot, modifySpot, retrieveSpotDetails } from '../../store/spots'
 import { generateSpotImage } from '../../store/spotImages'
 
 const NewSpot = () => {
@@ -106,8 +106,7 @@ const NewSpot = () => {
         setErrors({})
         const spotErrors = validateSpot()
 
-        if (Object.keys(spotErrors).length) return setErrors({...spotErrors})
-        const newSpot = await dispatch(createNewSpot({
+        const spotInfo = {
             country,
             address,
             city,
@@ -118,23 +117,32 @@ const NewSpot = () => {
             name: title,
             price,
             previewImage
-        }))
-            .catch(
-                async res => {
-                    const data = await res.json()
-                    if (data && data.errors) {
-                        setErrors(data.errors)
-                    }
-                }
-            )
+        }
 
+        if (Object.keys(spotErrors).length) return setErrors({...spotErrors})
+        if (spotId) {
+            spotInfo.id = spotId
+            await dispatch(modifySpot(spotInfo))
+                .then(history.push(`/spots/${spotId}`))
+                .catch(async res => {
+                        const data = await res.json()
+                        if (data && data.errors) setErrors(data.errors)
+                })
+            return
+        } else {
+            const newSpot = await dispatch(createNewSpot(spotInfo))
+                .catch(async res => {
+                        const data = await res.json()
+                        if (data && data.errors) setErrors(data.errors)
+                })
 
-        dispatch(generateSpotImage(image2, newSpot.id))
-        dispatch(generateSpotImage(image3, newSpot.id))
-        dispatch(generateSpotImage(image4, newSpot.id))
-        dispatch(generateSpotImage(image5, newSpot.id))
+            dispatch(generateSpotImage(image2, newSpot?.id))
+            dispatch(generateSpotImage(image3, newSpot?.id))
+            dispatch(generateSpotImage(image4, newSpot?.id))
+            dispatch(generateSpotImage(image5, newSpot?.id))
+            history.push(`/spots/${newSpot.id}`)
+        }
 
-        history.push(`/spots/${newSpot.id}`)
 
     }
 

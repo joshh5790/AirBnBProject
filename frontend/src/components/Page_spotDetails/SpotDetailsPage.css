@@ -82,6 +82,7 @@
     padding: 1rem;
     border-radius: 15px;
     width: 18rem;
+    height: 7rem;
 }
 
 .spot-details-reserve-top {
@@ -100,8 +101,9 @@
     border-radius: 10px;
 }
 
-.delete-review-button {
+.manage-review-button {
     width: 4rem;
+    margin-right: 1rem;
 }
 
 .no-reviews {
