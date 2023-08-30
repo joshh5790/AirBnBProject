@@ -7,6 +7,7 @@ import HomePage from "./components/Page_home";
 import SpotDetails from "./components/Page_spotDetails";
 import NewSpot from "./components/Page_newSpot";
 import ManageSpots from "./components/Page_manageSpots";
+import ManageReviews from "./components/Page_manageReviews";
 
 function App() {
   const dispatch = useDispatch()
@@ -35,6 +36,9 @@ function App() {
         </Route>
         <Route exact path='/spots/:spotId/edit'>
           <NewSpot />
+        </Route>
+        <Route exact path='/reviews/current'>
+          <ManageReviews />
         </Route>
       </Switch>
       <Navigation isLoaded={isLoaded}/>

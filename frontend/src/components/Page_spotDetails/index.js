@@ -6,8 +6,8 @@ import { getReviewsThunk, allSpotReviews } from "../../store/reviews"
 import { month } from "../../utils/utils"
 import OpenModalButton from "../OpenModalButton"
 import ReviewFormModal from "../Modal_reviewForm"
-import './SpotDetailsPage.css'
 import DeleteRecordModal from "../Modal_deleteRecord"
+import './SpotDetailsPage.css'
 
 const SpotDetails = () => {
     const dispatch = useDispatch()
@@ -82,12 +82,12 @@ const SpotDetails = () => {
                 </div>
             </div>
             <div className="spot-details-reviews">
-                <h1>
+                <h2>
                     <i className="fa-solid fa-star"></i>
                     {(spot?.avgStarRating && `  ${spot?.avgStarRating}  `) || ' New '}
                     &nbsp;·&nbsp;
                     {spot?.numReviews} review{spot?.numReviews!==1 && 's'}
-                </h1>
+                </h2>
                 {sessionUser && sessionUser?.id !== spot?.Owner?.id && !hasReview &&
                 <OpenModalButton
                     buttonText="Post Your Review"

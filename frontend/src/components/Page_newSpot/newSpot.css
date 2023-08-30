@@ -5,6 +5,10 @@
     margin: auto;
 }
 
+.subheader.first {
+    padding: 0;
+}
+
 label {
     margin-top: 1rem;
 }
@@ -83,4 +87,3 @@ label {
 .new-spot-input.desc {
     height: 5rem;
 }
-

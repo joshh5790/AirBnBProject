@@ -52,6 +52,18 @@ export const getReviewsThunk = spotId => async dispatch => {
     return response
 }
 
+export const getCurrentReviewsThunk = () => async dispatch => {
+    const response = await csrfFetch(`/api/reviews/current`)
+
+    const data = await response.json()
+    const dataID = {}
+    data.Reviews.forEach(review => {
+        dataID[review.id] = review
+    })
+    dispatch(getReviews(dataID))
+    return dataID
+}
+
 export const createReviewThunk = (review, spotId) => async dispatch => {
     const response = await csrfFetch(`/api/spots/${spotId}/reviews`, {
         method: 'POST',

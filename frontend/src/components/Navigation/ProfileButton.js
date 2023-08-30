@@ -47,6 +47,12 @@ function ProfileButton({ user }) {
     closeMenu()
   }
 
+  const handleManageReviews = e => {
+    e.preventDefault()
+    history.push('/reviews/current')
+    closeMenu()
+  }
+
   const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
 
   return (
@@ -65,6 +71,13 @@ function ProfileButton({ user }) {
                 onClick={handleManageSpots}
                 className="manage-spots-button">
                 Manage Spots
+              </button>
+            </li>
+            <li className="dropdown-button">
+              <button
+                onClick={handleManageReviews}
+                className="manage-reviews-button">
+                Manage Reviews
               </button>
             </li>
             <li>

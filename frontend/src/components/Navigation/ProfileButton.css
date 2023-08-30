@@ -8,10 +8,10 @@
     padding: 0;
     margin: 0.5rem 0;
     background-color: white;
-    width: 10rem;
+    width: 12rem;
     /* border-radius: 10%; */
-    top: 3.3rem;
-    filter: drop-shadow(0 0 1px #CCCCCC);
+    top: 3.2rem;
+    box-shadow: 0.5rem 0.5rem 0.5rem #EEEEEE, -0.5rem -0.5rem 0.5rem #EEEEEE;
 }
 
 .profile-button {
@@ -43,12 +43,18 @@
 .manage-spots-button {
     all: unset;
     border-top: 1px solid #CCCCCC;
+}
+
+.manage-reviews-button {
+    all: unset;
     border-bottom: 1px solid #CCCCCC;
+    font: 1.2em "Fira Sans", sans-serif;
+    cursor: pointer;
+    padding: 0.5rem 0.3rem;
 }
 
 .logout-button,
 .manage-spots-button {
-
     font: 1.2em "Fira Sans", sans-serif;
     cursor: pointer;
     padding: 0.5rem 1rem;

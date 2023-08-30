@@ -127,7 +127,6 @@ const NewSpot = () => {
                     let count = 0
                     for (let i in images) {
                         if (images[i].length) { // if text is in input
-                            console.log(imageArr, 'ADD ADD ADD')
                             if (imageArr[count]) { // if old image data was passed in
                                 if (imageArr[count].url !== images[i]) await dispatch(updateSpotImageThunk(images[i], imageArr[count].id))
                                 count++
@@ -166,7 +165,7 @@ const NewSpot = () => {
     return (
         <div className='new-spot-page'>
             <h1>{(spotId && 'Update your Spot') || 'Create a new Spot'}</h1>
-            <h2 className='subheader'>Where's your place located?</h2>
+            <h2 className='subheader first'>Where's your place located?</h2>
             <p className='new-spot-subdesc'>Guests will only get your exact address once they booked a reservation.</p>
             <form
                 className='new-spot-form'
