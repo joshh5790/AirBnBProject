@@ -32,6 +32,7 @@
     width: 100%;
     border-radius: 30px 0 0 30px;
     object-fit: cover;
+    border: 1px solid white;
     aspect-ratio: 1 / 1;
 }
 
@@ -40,6 +41,7 @@
     height: 100%;
     width: 100%;
     object-fit: cover;
+    border: 1px solid white;
     aspect-ratio: 1 / 1;
 }
 
@@ -49,6 +51,7 @@
     width: 100%;
     border-radius: 0 30px 0 0;
     object-fit: cover;
+    border: 1px solid white;
     aspect-ratio: 1 / 1;
 }
 
@@ -57,6 +60,7 @@
     height: 100%;
     width: 100%;
     object-fit: cover;
+    border: 1px solid white;
     aspect-ratio: 1 / 1;
 }
 
@@ -66,7 +70,17 @@
     width: 100%;
     border-radius: 0 0 30px 0;
     object-fit: cover;
+    border: 1px solid white;
     aspect-ratio: 1 / 1;
+}
+
+.spot-details-image-1:hover,
+.spot-details-image-2:hover,
+.spot-details-image-3:hover,
+.spot-details-image-4:hover,
+.spot-details-image-5:hover {
+    cursor: pointer;
+    border: 1px solid black;
 }
 
 .spot-details-description {

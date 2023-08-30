@@ -29,3 +29,8 @@
     border-radius: 1rem;
     box-shadow: 0.2rem 0.2rem 0.2px #CCCCCC, -0.2rem -0.2rem -0.2rem #CCCCCC;
   }
+
+  #modal-image {
+    top: 50px;
+    position: absolute;
+  }

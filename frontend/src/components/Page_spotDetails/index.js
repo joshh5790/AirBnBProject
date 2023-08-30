@@ -7,6 +7,7 @@ import { month } from "../../utils/utils"
 import OpenModalButton from "../OpenModalButton"
 import ReviewFormModal from "../Modal_reviewForm"
 import DeleteRecordModal from "../Modal_deleteRecord"
+import ViewImageModal from "../Modal_viewImage"
 import './SpotDetailsPage.css'
 
 const SpotDetails = () => {
@@ -33,30 +34,20 @@ const SpotDetails = () => {
                 {spot?.city}, {spot?.state}, {spot?.country}
             </div>
             <div className="spot-details-images">
-                <img
-                    src={spot?.previewImage || 'https://static.vecteezy.com/system/resources/previews/005/337/799/original/icon-image-not-found-free-vector.jpg'}
-                    alt={spot?.previewImage || 'Image not found'}
-                    onError={e => {e.target.error=null; e.target.src='https://static.vecteezy.com/system/resources/previews/005/337/799/original/icon-image-not-found-free-vector.jpg'}}
-                    className="spot-details-image-1"/>
-                <img
-                    src={(spot?.SpotImages && spot?.SpotImages[0]?.url) || 'https://static.vecteezy.com/system/resources/previews/005/337/799/original/icon-image-not-found-free-vector.jpg'}
-                    alt={(spot?.SpotImages && spot?.SpotImages[0]?.url) || 'Image not found'}
-                    onError={e => {e.target.error=null; e.target.src='https://static.vecteezy.com/system/resources/previews/005/337/799/original/icon-image-not-found-free-vector.jpg'}}
+                <ViewImageModal
+                    url={spot?.previewImage}
+                    className='spot-details-image-1'/>
+                <ViewImageModal
+                    url={spot?.SpotImages && spot?.SpotImages[0]?.url}
                     className="spot-details-image-2"/>
-                <img
-                    src={(spot?.SpotImages && spot?.SpotImages[1]?.url) || 'https://static.vecteezy.com/system/resources/previews/005/337/799/original/icon-image-not-found-free-vector.jpg'}
-                    alt={(spot?.SpotImages && spot?.SpotImages[1]?.url) || 'Image not found'}
-                    onError={e => {e.target.error=null; e.target.src='https://static.vecteezy.com/system/resources/previews/005/337/799/original/icon-image-not-found-free-vector.jpg'}}
+                <ViewImageModal
+                    url={spot?.SpotImages && spot?.SpotImages[1]?.url}
                     className="spot-details-image-3"/>
-                <img
-                    src={(spot?.SpotImages && spot?.SpotImages[2]?.url) || 'https://static.vecteezy.com/system/resources/previews/005/337/799/original/icon-image-not-found-free-vector.jpg'}
-                    alt={(spot?.SpotImages && spot?.SpotImages[2]?.url) || 'Image not found'}
-                    onError={e => {e.target.error=null; e.target.src='https://static.vecteezy.com/system/resources/previews/005/337/799/original/icon-image-not-found-free-vector.jpg'}}
+                <ViewImageModal
+                    url={spot?.SpotImages && spot?.SpotImages[2]?.url}
                     className="spot-details-image-4"/>
-                <img
-                    src={(spot?.SpotImages && spot?.SpotImages[3]?.url) || 'https://static.vecteezy.com/system/resources/previews/005/337/799/original/icon-image-not-found-free-vector.jpg'}
-                    alt={(spot?.SpotImages && spot?.SpotImages[3]?.url) || 'Image not found'}
-                    onError={e => {e.target.error=null; e.target.src='https://static.vecteezy.com/system/resources/previews/005/337/799/original/icon-image-not-found-free-vector.jpg'}}
+                <ViewImageModal
+                    url={spot?.SpotImages && spot?.SpotImages[3]?.url}
                     className="spot-details-image-5"/>
             </div>
             <div className="spot-details-description">
@@ -96,8 +87,9 @@ const SpotDetails = () => {
                 />}
                 {!spot?.numReviews &&
                     ((sessionUser?.id === spot?.Owner?.id &&
-                    <div className="no-reviews">Your spot currently has no reviews.</div>) ||
-                    <div className="no-reviews">Be the first to post a review!</div>)
+                    <div className="no-reviews">Your spot currently has no reviews.</div>)
+                    || (sessionUser?.id && <div className="no-reviews">Be the first to post a review!</div>)
+                    || <div className="no-reviews">Log in to post a review!</div>)
                 }
                 {reviews.map(review => {
                     return (
