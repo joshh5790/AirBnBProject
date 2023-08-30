@@ -38,16 +38,16 @@ const SpotDetails = () => {
                     url={spot?.previewImage}
                     className='spot-details-image-1'/>
                 <ViewImageModal
-                    url={spot?.SpotImages && spot?.SpotImages[0]?.url}
+                    url={spot?.SpotImages && spot?.SpotImages[0]?.url && spot?.SpotImages[0].url}
                     className="spot-details-image-2"/>
                 <ViewImageModal
-                    url={spot?.SpotImages && spot?.SpotImages[1]?.url}
+                    url={spot?.SpotImages && spot?.SpotImages[1]?.url && spot?.SpotImages[1].url}
                     className="spot-details-image-3"/>
                 <ViewImageModal
-                    url={spot?.SpotImages && spot?.SpotImages[2]?.url}
+                    url={spot?.SpotImages && spot?.SpotImages[2]?.url && spot?.SpotImages[2].url}
                     className="spot-details-image-4"/>
                 <ViewImageModal
-                    url={spot?.SpotImages && spot?.SpotImages[3]?.url}
+                    url={spot?.SpotImages && spot?.SpotImages[3]?.url && spot?.SpotImages[3].url}
                     className="spot-details-image-5"/>
             </div>
             <div className="spot-details-description">

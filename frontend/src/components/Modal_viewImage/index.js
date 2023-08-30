@@ -6,10 +6,14 @@ function ViewImageModal({ url, className }) {
 
     const onClick = () => {
         if (url) {
-            setModalImage((<img
-                src={url}
-                alt={url}
-                className='modal-image'/>))
+            setModalImage((
+                <div className='modal-img-background'>
+                    <img
+                        src={url}
+                        alt={url}
+                        className='modal-img'/>
+                </div>
+            ))
         }
     }
 

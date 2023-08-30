@@ -1,5 +1,12 @@
-.modal-image {
+.modal-img {
     max-width: 1000px;
     height: 620px;
-    border-radius: 50px;
+}
+
+.modal-img-background {
+    background-color: black;
+    width: 1000px;
+    height: 620px;
+    display: flex;
+    justify-content: center;
 }

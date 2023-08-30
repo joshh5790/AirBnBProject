@@ -153,7 +153,7 @@ const NewSpot = () => {
                 })
 
             for (const image in images) {
-                if (images[image].length) dispatch(createSpotImageThunk(image, newSpot?.id))
+                if (images[image].length) dispatch(createSpotImageThunk(images[image], newSpot?.id))
             }
 
             history.push(`/spots/${newSpot.id}`)
