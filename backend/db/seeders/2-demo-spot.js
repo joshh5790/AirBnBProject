@@ -135,7 +135,7 @@ const spots = [
     name: 'Historic Downtown Apartment',
     description: 'Step back in time with a stay in this charming historic apartment. Located in the heart of the city, it offers a glimpse into the past while providing modern comforts and easy access to cultural attractions.',
     price: '950',
-    previewImage: 'https://cf.bstatic.com/xdata/images/hotel/max1024x768/241420761.jpg'
+    previewImage: 'https://hotpotmedia.s3.us-east-2.amazonaws.com/8-4KoVSnVtp5adIh2.png'
   },
   {
     ownerId: 9,
