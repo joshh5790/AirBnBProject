@@ -2,8 +2,8 @@ import { useModal } from '../../context/Modal';
 import './viewImage.css'
 
 function ViewImageModal({ url, className }) {
-
     const { setModalImage } = useModal()
+
     const onClick = () => {
         if (url) {
             setModalImage((<img
