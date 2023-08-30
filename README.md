@@ -2,7 +2,7 @@
 
 ## Live Site
 
-https://air-bee-n-bee.onrender.com/api
+https://air-bee-n-bee.onrender.com/
 
 ## Database Schema Design
 
