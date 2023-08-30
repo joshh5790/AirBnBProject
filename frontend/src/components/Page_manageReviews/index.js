@@ -14,7 +14,7 @@ const ManageReviews = () => {
     useEffect(() => {
         dispatch(getCurrentReviewsThunk())
 
-    }, [dispatch])
+    }, [dispatch, reviews])
 
     return (
         <div className='manage-reviews'>
@@ -37,7 +37,7 @@ const ManageReviews = () => {
                             <div>
                                 <OpenModalButton
                                     buttonText="Update"
-                                    modalComponent={<ReviewFormModal spotId={review?.Spot?.id} review={review}/>}
+                                    modalComponent={<ReviewFormModal spotId={review?.Spot?.id} review={review} spotName={review?.Spot?.name}/>}
                                     className='manage-review-button gray-color-button'
                                 />
                                 <OpenModalButton

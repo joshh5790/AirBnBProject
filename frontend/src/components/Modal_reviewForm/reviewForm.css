@@ -5,6 +5,11 @@
     align-items: center;
 }
 
+.review-modal-header {
+    max-width: 24rem;
+    text-align: center;
+}
+
 .review-text {
     width: 20rem;
     height: 6rem;

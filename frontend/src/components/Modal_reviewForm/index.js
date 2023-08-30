@@ -5,7 +5,7 @@ import { createReviewThunk, updateReviewThunk } from "../../store/reviews";
 import { getSpotDetailsThunk } from "../../store/spots";
 import './reviewForm.css'
 
-function ReviewFormModal({ spotId, review }) {
+function ReviewFormModal({ spotId, review, spotName }) {
     const dispatch = useDispatch()
     const [reviewText, setReviewText] = useState('')
     const [rating, setRating] = useState('')
@@ -65,7 +65,9 @@ function ReviewFormModal({ spotId, review }) {
     }
     return (
         <>
-            <h1>How was your stay?</h1>
+            <h1 className="review-modal-header">
+                How was your stay{spotName && ` at ${spotName}`}?
+            </h1>
             {errors.message && <div className="error-msg">{errors.message}</div>}
             <form
                 onSubmit={onSubmit}
