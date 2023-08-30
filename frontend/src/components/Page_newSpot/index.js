@@ -95,7 +95,7 @@ const NewSpot = () => {
 
     useEffect(() => {
         const errors = validateSpot()
-        if (!Object.keys(errors)) setDisableButton(false)
+        if (!Object.keys(errors).length) setDisableButton(false)
         else setDisableButton(true)
         if (submitStatus) setErrors(errors)
     }, [country, address, city,
