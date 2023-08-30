@@ -11,7 +11,7 @@
     width: 12rem;
     /* border-radius: 10%; */
     top: 3.2rem;
-    box-shadow: 0.5rem 0.5rem 0.5rem #EEEEEE, -0.5rem -0.5rem 0.5rem #EEEEEE;
+    box-shadow: 0 0 1rem #DDDDDD;
 }
 
 .profile-button {
@@ -26,7 +26,7 @@
 }
 
 .profile-button:hover {
-    box-shadow: 0.12rem 0.25rem 0.25rem #CCCCCC, -0.12rem 0 0.25rem #CCCCCC;
+    box-shadow: 0 0 0.5rem #CCCCCC;
     cursor: pointer;
 }
 
@@ -74,7 +74,7 @@
 }
 
 .logout-button:hover {
-    box-shadow: 0.2rem 0.2rem 0.2rem #CCCCCC, -0.2rem 0 0.2rem #CCCCCC;
+    box-shadow: 0 0 0.5rem #CCCCCC;
 }
 
 .dropdown-button:hover {

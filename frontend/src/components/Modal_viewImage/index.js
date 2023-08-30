@@ -3,17 +3,20 @@ import './viewImage.css'
 
 function ViewImageModal({ imageOrder, imageList, className }) {
     const { setModalImage } = useModal()
+    const lastIdx = imageList.length - 1
 
-    const handleClick = ({lStyle, rStyle}) => {
+    const styleSet = num => {
+        if (parseInt(imageOrder) === num) return { display: 'none' }
+    }
+
+    const handleClick = ({ lStyle = {}, rStyle = {} }) => {
         if (imageList[imageOrder]?.url) {
             setModalImage((
                 <div className='modal-img-background'>
                     <i
                         onClick={() => {
                             if (imageOrder > 0) imageOrder--
-                            const lStyle = parseInt(imageOrder) === 0
-                                ? { display: 'none' } : {}
-                            handleClick({lStyle})
+                            handleClick({ lStyle: styleSet(0) })
                         }}
                         className="fa-solid fa-chevron-left img-arrow-button"
                         style={lStyle} />
@@ -23,10 +26,8 @@ function ViewImageModal({ imageOrder, imageList, className }) {
                         className='modal-img'/>
                     <i
                         onClick={() => {
-                            if (imageOrder < imageList.length - 1) imageOrder++
-                            const rStyle = parseInt(imageOrder) === imageList.length - 1
-                                ? { display: 'none' } : {}
-                            handleClick({rStyle})
+                            if (imageOrder < lastIdx) imageOrder++
+                            handleClick({ rStyle: styleSet(lastIdx) })
                         }}
                         className="fa-solid fa-chevron-right img-arrow-button"
                         style={rStyle} />
@@ -38,13 +39,7 @@ function ViewImageModal({ imageOrder, imageList, className }) {
     return (<img
                 src={imageList[imageOrder]?.url || 'https://static.vecteezy.com/system/resources/previews/005/337/799/original/icon-image-not-found-free-vector.jpg'}
                 alt={imageList[imageOrder]?.url || 'Image not found'}
-                onClick={() => {
-                    const rStyle = parseInt(imageOrder) === imageList.length - 1
-                        ? { display: 'none' } : {}
-                    const lStyle = parseInt(imageOrder) === 0
-                        ? { display: 'none' } : {}
-                    handleClick({lStyle, rStyle})
-                }}
+                onClick={() => handleClick({ lStyle: styleSet(0), rStyle: styleSet(lastIdx) })}
                 className={className}/>)
 }
 

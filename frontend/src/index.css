@@ -53,7 +53,7 @@ textarea {
 
 .gray-color-button:hover,
 .delete-modal-button:hover {
-    box-shadow: 0.2rem 0.2rem 0.2rem #CCCCCC, -0.2rem 0 0.2rem #CCCCCC;
+    box-shadow: 0 0 0.5rem #999999;
 }
 
 .delete-modal-button {

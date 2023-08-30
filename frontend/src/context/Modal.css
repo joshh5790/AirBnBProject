@@ -27,7 +27,7 @@
     top: 100px;
     padding: 1.5rem;
     border-radius: 1rem;
-    box-shadow: 0.2rem 0.2rem 0.2px #CCCCCC, -0.2rem -0.2rem -0.2rem #CCCCCC;
+    box-shadow: 0 0 0.5rem #CCCCCC;
   }
 
   #modal-image {

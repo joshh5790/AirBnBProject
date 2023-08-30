@@ -75,10 +75,7 @@
 .spot-details-image-4:hover,
 .spot-details-image-5:hover {
     cursor: pointer;
-    box-shadow: 0.2rem 0.2rem 0.2rem #CCCCCC,
-    -0.2rem -0.2rem 0.2rem #CCCCCC,
-    0.2rem -0.2rem 0.2rem #CCCCCC,
-    -0.2rem 0.2rem 0.2rem #CCCCCC;
+    box-shadow: 0 0 1rem #BBBBBB;
 }
 
 .spot-details-description {
