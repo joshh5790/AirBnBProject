@@ -21,6 +21,7 @@ const NewSpot = () => {
     const [previewImage, setPreviewImage] = useState('');
     const [images, setImages] = useState({ 0: '', 1: '', 2: '', 3: ''});
     const [submitStatus, setSubmitStatus] = useState(false)
+    const [disableButton, setDisableButton] = useState(true)
     const [errors, setErrors] = useState({})
     const [imageArr, setImageArr] = useState([])
 
@@ -93,7 +94,10 @@ const NewSpot = () => {
     }
 
     useEffect(() => {
-        if (submitStatus) setErrors(validateSpot())
+        const errors = validateSpot()
+        if (!Object.keys(errors)) setDisableButton(false)
+        else setDisableButton(true)
+        if (submitStatus) setErrors(errors)
     }, [country, address, city,
         state, latitude, longitude,
         description, title, price,
@@ -251,7 +255,7 @@ const NewSpot = () => {
                     className='new-spot-input desc'
                     value={description}
                     onChange={e => {setDescription(e.target.value)}}
-                    placeholder='Description' />
+                    placeholder='Please write at least 30 characters' />
                 <span className='error-msg new-spot'>{errors.description && `${errors.description}`}</span>
                 <h2 className='new-spot subheader'>Create a title for your spot</h2>
                 <p className='new-spot-subdesc'>Catch guests' attention with a spot title that highlights what makes your place special.</p>
@@ -260,7 +264,7 @@ const NewSpot = () => {
                     value={title}
                     onChange={e => {setTitle(e.target.value)}}
                     type='text'
-                    placeholder='Title' />
+                    placeholder='Name of your spot' />
                 <span className='error-msg new-spot'>{errors.name && `${errors.name}`}</span>
                 <h2 className='new-spot subheader'>Set a base price for your spot</h2>
                 <p className='new-spot-subdesc'>Competitive pricing can help your listing stand out and rank higher in search results.</p>
@@ -331,7 +335,8 @@ const NewSpot = () => {
                 </span>
                 <div className='new-spot-button-div'>
                     <button
-                        className='form-submit'>{(spotId && 'Save Spot') || 'Create New Spot'}</button>
+                        disabled={disableButton}
+                        className='form-submit'>{(spotId && 'Update Spot') || 'Create Spot'}</button>
                 </div>
             </form>
         </div>

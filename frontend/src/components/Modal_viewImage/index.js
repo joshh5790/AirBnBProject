@@ -1,7 +1,9 @@
+import { useState } from 'react';
 import { useModal } from '../../context/Modal';
 import './viewImage.css'
 
 function ViewImageModal({ imageOrder, imageList, className }) {
+    const [slideIO, setSlideIO] = useState(false)
     const { setModalImage } = useModal()
     const lastIdx = imageList.length - 1
 
@@ -11,15 +13,25 @@ function ViewImageModal({ imageOrder, imageList, className }) {
 
     const handleLeft = () => {
         if (imageOrder > 0) imageOrder--
-        handleClick({ lStyle: styleSet(0) })
+        setSlideIO(true)
+        handleClick({
+            lStyle: styleSet(0),
+            imgSlideIn: 'slide-in-right',
+            imgSlideOut: 'slide-out-right'
+        })
     }
 
     const handleRight = () => {
         if (imageOrder < lastIdx) imageOrder++
-        handleClick({ rStyle: styleSet(lastIdx) })
+        setSlideIO(true)
+        handleClick({
+            rStyle: styleSet(lastIdx),
+            imgSlideIn: 'slide-in-left',
+            imgSlideOut: 'slide-out-left'
+        })
     }
 
-    const handleClick = ({ lStyle = {}, rStyle = {} }) => {
+    const handleClick = ({ lStyle, rStyle, imgSlideIn, imgSlideOut }) => {
         if (imageList[imageOrder]?.url) {
             setModalImage((
                 <div className='modal-img-background'>
@@ -30,7 +42,8 @@ function ViewImageModal({ imageOrder, imageList, className }) {
                     <img
                         src={imageList[imageOrder]?.url}
                         alt={imageList[imageOrder]?.url}
-                        className='modal-img'/>
+                        className={(slideIO && `modal-img ${imgSlideOut}`)
+                                    || `modal-img ${imgSlideIn}`}/>
                     <i
                         onClick={handleRight}
                         className="fa-solid fa-chevron-right img-arrow-button"

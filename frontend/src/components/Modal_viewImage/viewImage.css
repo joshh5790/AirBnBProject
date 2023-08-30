@@ -2,7 +2,19 @@
     max-width: 1000px;
     height: 620px;
     user-select: none;
+    animation: 3s slide-left;
 }
+
+.slide-in-right {
+    transition: all 0.5s ease-in-out;
+    opacity: 0;
+    transform: translateX(-100%);
+}
+
+.slide-in-right.active {
+    opacity: 1;
+    transform: translateX(0%);
+  }
 
 .modal-img-background {
     background-color: black;
@@ -16,12 +28,15 @@
 .img-arrow-button {
     display: none;
     position: absolute;
-    color: white;
-    font-size: 24px;
+    background-color: rgb(255, 255, 255, 0.6);
+    color: rgb(0, 0, 0, 0.4);
+    font-size: 16px;
+    padding: 0.5rem 0.7rem;
+    border-radius: 50px;
 }
 
 .img-arrow-button:hover {
-    font-size: 30px;
+    font-size: 24px;
     transition: 0.1s;
     cursor: pointer;
 }
