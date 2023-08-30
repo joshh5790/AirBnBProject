@@ -34,7 +34,7 @@ function SignupFormModal() {
     if (password === confirmPassword) {
       setErrors({});
       return dispatch(
-        sessionActions.signup({
+        sessionActions.signupThunk({
           email,
           username,
           firstName,

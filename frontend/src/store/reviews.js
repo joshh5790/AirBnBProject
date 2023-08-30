@@ -1,7 +1,7 @@
 import { csrfFetch } from "./csrf"
 
 const GET_REVIEWS = 'spots/GET_REVIEWS'
-const MODIFY_REVIEW = 'reviews/MODIFY_REVIEW'
+const UPDATE_REVIEW = 'reviews/UPDATE_REVIEW'
 const DELETE_REVIEW = 'reviews/DELETE_REVIEW'
 
 // selectors
@@ -23,9 +23,9 @@ export function getReviews(reviews) {
     }
 }
 
-export function modifyReview(review) {
+export function updateReview(review) {
     return {
-        type: MODIFY_REVIEW,
+        type: UPDATE_REVIEW,
         payload: review
     }
 }
@@ -40,7 +40,7 @@ export function removeReview(reviewId) {
 
 // thunks
 
-export const retrieveReviews = spotId => async dispatch => {
+export const getReviewsThunk = spotId => async dispatch => {
     const response = await csrfFetch(`/api/spots/${spotId}/reviews`)
 
     const data = await response.json()
@@ -52,18 +52,18 @@ export const retrieveReviews = spotId => async dispatch => {
     return response
 }
 
-export const createNewReview = (review, spotId) => async dispatch => {
+export const createReviewThunk = (review, spotId) => async dispatch => {
     const response = await csrfFetch(`/api/spots/${spotId}/reviews`, {
         method: 'POST',
         body: JSON.stringify(review)
     })
 
     const data = await response.json()
-    dispatch(modifyReview(data))
+    dispatch(updateReview(data))
     return response
 }
 
-export const deleteReview = reviewId => async dispatch => {
+export const deleteReviewThunk = reviewId => async dispatch => {
     await csrfFetch(`/api/reviews/${reviewId}`, {
         method: 'DELETE'
     })
@@ -71,14 +71,14 @@ export const deleteReview = reviewId => async dispatch => {
     dispatch(removeReview(reviewId))
 }
 
-export const editReview = review => async dispatch => {
+export const updateReviewThunk = review => async dispatch => {
     const response = await csrfFetch(`/api/reviews/${review.id}`, {
         method: 'PUT',
         body: JSON.stringify(review)
     })
 
     const data = await response.json()
-    dispatch(modifyReview(data))
+    dispatch(updateReview(data))
     return response
 }
 
@@ -89,7 +89,7 @@ export default function reviewReducer(state = initialState, action) {
     switch(action.type) {
         case GET_REVIEWS:
             return { ...action.payload }
-        case MODIFY_REVIEW:
+        case UPDATE_REVIEW:
             return { ...state, [action.payload.id]: action.payload }
         case DELETE_REVIEW:
             const newState = { ...state }

@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import SpotCard from './SpotCard'
-import { retrieveAllSpots } from '../../store/spots'
+import { getAllSpotsThunk } from '../../store/spots'
 import './HomePage.css'
 
 const HomePage = () => {
@@ -9,7 +9,7 @@ const HomePage = () => {
     const allSpots = useSelector(state => Object.values(state.spots))
 
     useEffect(() => {
-        dispatch(retrieveAllSpots())
+        dispatch(getAllSpotsThunk())
     }, [dispatch])
 
     return (

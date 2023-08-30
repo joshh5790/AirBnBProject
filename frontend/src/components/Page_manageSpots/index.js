@@ -1,8 +1,8 @@
-import { useState, useEffect } from 'react'
+import { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import SpotCard from '../Page_home/SpotCard'
-import { retrieveCurrentSpots, removeSpot } from '../../store/spots'
+import { getCurrentSpotsThunk } from '../../store/spots'
 import './manageSpots.css'
 import OpenModalButton from '../OpenModalButton'
 import DeleteRecordModal from '../Modal_deleteRecord'
@@ -10,11 +10,10 @@ import DeleteRecordModal from '../Modal_deleteRecord'
 const ManageSpots = () => {
     const dispatch = useDispatch()
     const history = useHistory()
-    const [refresh, setRefresh] = useState(false)
     const allSpots = useSelector(state => Object.values(state.spots))
 
     useEffect(() => {
-        dispatch(retrieveCurrentSpots())
+        dispatch(getCurrentSpotsThunk())
     }, [dispatch])
 
     const handleUpdate = spotId => {
@@ -23,11 +22,6 @@ const ManageSpots = () => {
 
     const handleNewSpot = () => {
         history.push('/spots/new')
-    }
-
-    const handleDelete = spotId => {
-        dispatch(removeSpot(spotId))
-        setRefresh(prev => !prev)
     }
 
 

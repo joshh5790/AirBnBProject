@@ -1,7 +1,7 @@
 import { csrfFetch } from './csrf'
 
-const SET_USER = 'session/setUser'
-const REMOVE_USER = 'session/removeUser'
+const SET_USER = 'session/SET_USER'
+const REMOVE_USER = 'session/REMOVE_USER'
 
 // action creators
 
@@ -12,13 +12,13 @@ export function setUser(user) {
     }
 }
 
-export function removeUser() { // needs to remove the cookie too
+export function deleteUser() { // needs to remove the cookie too
     return { type: REMOVE_USER }
 }
 
 // thunks
 
-export const demoLogin = () => async dispatch => {
+export const demoLoginThunk = () => async dispatch => {
     const response = await csrfFetch('/api/session', {
         method: 'POST',
         body: JSON.stringify({
@@ -32,7 +32,7 @@ export const demoLogin = () => async dispatch => {
     return response
 }
 
-export const login = user => async dispatch => {
+export const loginThunk = user => async dispatch => {
     const { credential, password } = user
     const response = await csrfFetch('/api/session', {
         method: 'POST',
@@ -47,14 +47,14 @@ export const login = user => async dispatch => {
     return response
 }
 
-export const restoreUser = () => async dispatch => {
+export const restoreUserThunk = () => async dispatch => {
     const response = await csrfFetch('/api/session')
     const data = await response.json()
     dispatch(setUser(data.user))
     return response
 }
 
-export const signup = user => async dispatch => {
+export const signupThunk = user => async dispatch => {
     const { username, firstName, lastName, email, password } = user
     const response = await csrfFetch('/api/users', {
         method: 'POST',
@@ -75,7 +75,7 @@ export const logout = () => async dispatch => {
     const response = await csrfFetch('/api/session', {
         method: 'DELETE',
       });
-      dispatch(removeUser());
+      dispatch(deleteUser());
       return response;
 }
 

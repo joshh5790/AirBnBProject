@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
-import { login } from '../../store/session'
+import { loginThunk } from '../../store/session'
 import { useModal } from '../../context/Modal'
-import { demoLogin } from '../../store/session'
+import { demoLoginThunk } from '../../store/session'
 import './LoginForm.css'
 
 function LoginFormModal() {
@@ -29,7 +29,7 @@ function LoginFormModal() {
     const onSubmit = e => {
         setErrors({})
         e.preventDefault()
-        dispatch(login({ credential, password }))
+        dispatch(loginThunk({ credential, password }))
             .then(closeModal)
             .catch(
                 async res => {
@@ -41,7 +41,7 @@ function LoginFormModal() {
     }
 
     const handleDemo = () => { // demo
-        dispatch(demoLogin())
+        dispatch(demoLoginThunk())
         closeModal()
         history.push('/')
     }

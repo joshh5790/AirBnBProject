@@ -1,8 +1,8 @@
 import { useEffect } from "react"
 import { useParams } from "react-router-dom"
 import { useSelector, useDispatch } from "react-redux"
-import { retrieveSpotDetails } from "../../store/spots"
-import { retrieveReviews, allSpotReviews } from "../../store/reviews"
+import { getSpotDetailsThunk } from "../../store/spots"
+import { getReviewsThunk, allSpotReviews } from "../../store/reviews"
 import { month } from "../../utils/utils"
 import OpenModalButton from "../OpenModalButton"
 import ReviewFormModal from "../Modal_reviewForm"
@@ -18,8 +18,8 @@ const SpotDetails = () => {
     const hasReview = reviews.find(review => review.userId === sessionUser?.id)
 
     useEffect(() => {
-        dispatch(retrieveSpotDetails(spotId))
-        .then(() => dispatch(retrieveReviews(spotId)))
+        dispatch(getSpotDetailsThunk(spotId))
+        .then(() => dispatch(getReviewsThunk(spotId)))
     }, [dispatch, spotId])
 
     const handleReserve = () => {

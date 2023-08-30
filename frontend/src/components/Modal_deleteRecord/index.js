@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { useModal } from '../../context/Modal'
-import { deleteReview } from '../../store/reviews'
-import { removeSpot, retrieveSpotDetails } from '../../store/spots'
+import { deleteReviewThunk } from '../../store/reviews'
+import { deleteSpotThunk, getSpotDetailsThunk } from '../../store/spots'
 import './deleteRecord.css'
 
 function DeleteRecordModal({ spotId, reviewId, record }) {
@@ -13,12 +13,12 @@ function DeleteRecordModal({ spotId, reviewId, record }) {
 
     const handleDelete = () => {
         if (record === 'Review' && !clicked) {
-            dispatch(deleteReview(reviewId))
-                .then(() => dispatch(retrieveSpotDetails(spotId)))
+            dispatch(deleteReviewThunk(reviewId))
+                .then(() => dispatch(getSpotDetailsThunk(spotId)))
                 .then(() => setClicked(true))
         }
         if (record === 'Spot' && !clicked) {
-            dispatch(removeSpot(spotId))
+            dispatch(deleteSpotThunk(spotId))
                 .then(() => setClicked(true))
             setRefresh(prev => !prev)
         }

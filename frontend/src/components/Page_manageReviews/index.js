@@ -1,0 +1,1 @@
+import './manageReviews.css'

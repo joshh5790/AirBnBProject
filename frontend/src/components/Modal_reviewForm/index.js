@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
-import { createNewReview, editReview } from "../../store/reviews";
-import { retrieveSpotDetails } from "../../store/spots";
+import { createReviewThunk, updateReviewThunk } from "../../store/reviews";
+import { getSpotDetailsThunk } from "../../store/spots";
 import './reviewForm.css'
 
 function ReviewFormModal({ spotId, review }) {
@@ -40,21 +40,21 @@ function ReviewFormModal({ spotId, review }) {
         e.preventDefault()
         setErrors({})
         if (review) {
-            dispatch(editReview({
+            dispatch(updateReviewThunk({
                 id: review.id,
                 review: reviewText,
                 stars: rating }))
-                .then(() => dispatch(retrieveSpotDetails(spotId)))
+                .then(() => dispatch(getSpotDetailsThunk(spotId)))
                 .catch(
                     async res => {
                         const data = await res.json()
                         if (data) setErrors(data)
                 })
         } else {
-            dispatch(createNewReview({
+            dispatch(createReviewThunk({
                 review: reviewText,
                 stars: rating }, spotId))
-                .then(() => dispatch(retrieveSpotDetails(spotId)))
+                .then(() => dispatch(getSpotDetailsThunk(spotId)))
                 .catch(
                     async res => {
                         const data = await res.json()

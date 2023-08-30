@@ -2,8 +2,8 @@ import { useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { useHistory, useParams } from 'react-router-dom'
 import './newSpot.css'
-import { createNewSpot, modifySpot, retrieveSpotDetails } from '../../store/spots'
-import { generateSpotImage, editSpotImage, removeSpotImage } from '../../store/spotImages'
+import { createSpotThunk, editSpotThunk, getSpotDetailsThunk } from '../../store/spots'
+import { createSpotImageThunk, updateSpotImageThunk, deleteSpotImageThunk } from '../../store/spotImages'
 
 const NewSpot = () => {
     const history = useHistory()
@@ -26,7 +26,7 @@ const NewSpot = () => {
 
     useEffect(() => {
         if (spotId) {
-            dispatch(retrieveSpotDetails(spotId))
+            dispatch(getSpotDetailsThunk(spotId))
                 .then((data) => {
                     setCountry(data.country);
                     setAddress(data.address);
@@ -122,20 +122,20 @@ const NewSpot = () => {
 
         if (spotId) {
             spotInfo.id = spotId
-            await dispatch(modifySpot(spotInfo))
+            await dispatch(editSpotThunk(spotInfo))
                 .then(async () => {
                     let count = 0
                     for (let i in images) {
                         if (images[i].length) { // if text is in input
                             console.log(imageArr, 'ADD ADD ADD')
                             if (imageArr[count]) { // if old image data was passed in
-                                if (imageArr[count].url !== images[i]) await dispatch(editSpotImage(images[i], imageArr[count].id))
+                                if (imageArr[count].url !== images[i]) await dispatch(updateSpotImageThunk(images[i], imageArr[count].id))
                                 count++
                             }
-                            else await dispatch(generateSpotImage(images[i], spotId))
+                            else await dispatch(createSpotImageThunk(images[i], spotId))
                         }
                         else if (imageArr[count]) { // if old data was passed in and no text in input
-                            await dispatch(removeSpotImage(imageArr[count].id)) // delete image from backend
+                            await dispatch(deleteSpotImageThunk(imageArr[count].id)) // delete image from backend
                             count++
                         }
                     }
@@ -147,14 +147,14 @@ const NewSpot = () => {
                 })
             return
         } else {
-            const newSpot = await dispatch(createNewSpot(spotInfo))
+            const newSpot = await dispatch(createSpotThunk(spotInfo))
                 .catch(async res => {
                         const data = await res.json()
                         if (data && data.errors) setErrors(data.errors)
                 })
 
             for (const image in images) {
-                if (images[image].length) dispatch(generateSpotImage(image, newSpot?.id))
+                if (images[image].length) dispatch(createSpotImageThunk(image, newSpot?.id))
             }
 
             history.push(`/spots/${newSpot.id}`)
