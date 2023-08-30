@@ -8,25 +8,81 @@ if (process.env.NODE_ENV === 'production') {
 
 const users = [
   {
-    firstName: 'Bad',
-    lastName: 'Mango',
+    firstName: 'Braddicus',
+    lastName: 'Chaddicus',
     email: 'demo@user.io',
     username: 'Demo',
     hashedPassword: bcrypt.hashSync('password')
   },
   {
-    firstName: 'Dad',
-    lastName: 'Mango',
+    firstName: 'Chaddicus',
+    lastName: 'Braddicus',
     email: 'user1@user.io',
-    username: 'FakeUser1',
-    hashedPassword: bcrypt.hashSync('password1')
+    username: 'Demo1',
+    hashedPassword: bcrypt.hashSync('password')
   },
   {
-    firstName: 'Fad',
-    lastName: 'Mango',
+    firstName: 'Pika',
+    lastName: 'Chu',
     email: 'user2@user.io',
-    username: 'FakeUser2',
-    hashedPassword: bcrypt.hashSync('password2')
+    username: 'Demo2',
+    hashedPassword: bcrypt.hashSync('password')
+  },
+  {
+    firstName: 'Charm',
+    lastName: 'Ander',
+    email: 'user3@user.io',
+    username: 'Demo3',
+    hashedPassword: bcrypt.hashSync('password')
+  },
+  {
+    firstName: 'Charm',
+    lastName: 'Eleon',
+    email: 'user4@user.io',
+    username: 'Demo4',
+    hashedPassword: bcrypt.hashSync('password')
+  },
+  {
+    firstName: 'Chari',
+    lastName: 'Zard',
+    email: 'user5@user.io',
+    username: 'Demo5',
+    hashedPassword: bcrypt.hashSync('password')
+  },
+  {
+    firstName: 'Pi',
+    lastName: 'Chu',
+    email: 'user6@user.io',
+    username: 'Demo6',
+    hashedPassword: bcrypt.hashSync('password')
+  },
+  {
+    firstName: 'Rai',
+    lastName: 'Chu',
+    email: 'user7@user.io',
+    username: 'Demo7',
+    hashedPassword: bcrypt.hashSync('password')
+  },
+  {
+    firstName: 'Gira',
+    lastName: 'Tina',
+    email: 'user8@user.io',
+    username: 'Demo8',
+    hashedPassword: bcrypt.hashSync('password')
+  },
+  {
+    firstName: 'Luca',
+    lastName: 'Rio',
+    email: 'user9@user.io',
+    username: 'Demo9',
+    hashedPassword: bcrypt.hashSync('password')
+  },
+  {
+    firstName: 'Rio',
+    lastName: 'Lu',
+    email: 'user10@user.io',
+    username: 'Demo10',
+    hashedPassword: bcrypt.hashSync('password')
   },
 ]
 

@@ -59,6 +59,97 @@ const spots = [
     price: '1000',
     previewImage: 'https://www.refinery29.com/images/11082901.jpg'
   },
+  {
+    ownerId: 2,
+    address: '456 Cabin Way',
+    city: 'Aspen',
+    state: 'CO',
+    country: 'US',
+    lat: '39.2',
+    lng: '-106.8',
+    name: 'Rustic Mountain Cabin',
+    description: 'Experience the charm of a rustic mountain cabin nestled in the heart of the Rockies. Cozy up by the crackling fireplace, soak in the outdoor hot tub, and revel in the breathtaking views of snow-capped peaks.',
+    price: '800',
+    previewImage: 'https://cdn.onekindesign.com/wp-content/uploads/2018/11/Rustic-Mountain-Cabin-Walton-Architecture-01-1-Kindesign.jpg'
+  },
+  {
+    ownerId: 3,
+    address: '789 Shoreline Avenue',
+    city: 'Beachside',
+    state: 'FL',
+    country: 'US',
+    lat: '27.1',
+    lng: '-80.2',
+    name: 'Seaside Cottage Getaway',
+    description: 'Immerse yourself in the tranquil sounds of the waves at this charming seaside cottage. Walk along the sandy shore, enjoy breathtaking sunsets from the deck, and create lasting memories in this coastal haven.',
+    price: '1200',
+    previewImage: 'https://lonestarsouthern.com/wp-content/uploads/2021/05/SeasideFlBeachfrontCottage3-4-1200x800.jpg'
+  },
+  {
+    ownerId: 4,
+    address: '123 Loft Street',
+    city: 'Metropolis',
+    state: 'NY',
+    country: 'US',
+    lat: '40.7',
+    lng: '-74.0',
+    name: 'Urban Chic Loft',
+    description: 'Experience the vibrant energy of the city in this stylish loft. With sleek modern design, floor-to-ceiling windows, and easy access to cultural hotspots, this urban retreat offers the best of city living.',
+    price: '1500',
+    previewImage: 'https://i.ytimg.com/vi/OOJ8HuaOwuQ/maxresdefault.jpg'
+  },
+  {
+    ownerId: 5,
+    address: '567 Meadow Lane',
+    city: 'Tranquilville',
+    state: 'CA',
+    country: 'US',
+    lat: '35.3',
+    lng: '-120.7',
+    name: 'Serene Countryside Villa',
+    description: 'Escape to a serene countryside villa surrounded by rolling hills and lush gardens. Relax by the pool, enjoy al fresco dining under the stars, and experience the peace and beauty of rural living.',
+    price: '1100',
+    previewImage: 'https://luxuo-com-production.s3.ap-southeast-1.amazonaws.com/2016/06/2-36-660x532.jpg'
+  },
+  {
+    ownerId: 6,
+    address: '789 Lakeview Drive',
+    city: 'Lakewood',
+    state: 'CO',
+    country: 'US',
+    lat: '39.6',
+    lng: '-105.0',
+    name: 'Cozy Lakeside Cabin',
+    description: 'Find comfort in this charming lakeside cabin. Fish off the private dock, take leisurely canoe rides, and enjoy evenings by the campfire, sharing stories under the starlit sky.',
+    price: '900',
+    previewImage: 'https://cdn.onekindesign.com/wp-content/uploads/2016/12/Cozy-Lake-House-Pritchett-Dixon-01-1-Kindesign.jpg'
+  },
+  {
+    ownerId: 7,
+    address: '456 Historic Street',
+    city: 'Heritageville',
+    state: 'MA',
+    country: 'US',
+    lat: '42.3',
+    lng: '-71.1',
+    name: 'Historic Downtown Apartment',
+    description: 'Step back in time with a stay in this charming historic apartment. Located in the heart of the city, it offers a glimpse into the past while providing modern comforts and easy access to cultural attractions.',
+    price: '950',
+    previewImage: 'https://cf.bstatic.com/xdata/images/hotel/max1024x768/241420761.jpg'
+  },
+  {
+    ownerId: 9,
+    address: '789 Palm Avenue',
+    city: 'Island Paradise',
+    state: 'HI',
+    country: 'US',
+    lat: '21.3',
+    lng: '-157.8',
+    name: 'Tropical Paradise Villa',
+    description: 'Escape to a lush tropical paradise where palm trees sway in the breeze and turquoise waters beckon. This exquisite villa offers luxury, privacy, and an unforgettable island experience.',
+    price: '1800',
+    previewImage: 'https://media-cdn.tripadvisor.com/media/vr-splice-j/05/62/4c/35.jpg'
+  }
 ]
 
 /** @type {import('sequelize-cli').Migration} */
