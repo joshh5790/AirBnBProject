@@ -8,10 +8,12 @@ function ViewImageModal({ url, className }) {
         if (url) {
             setModalImage((
                 <div className='modal-img-background'>
+                    <i class="fa-solid fa-chevron-left img-arrow-button" />
                     <img
                         src={url}
                         alt={url}
                         className='modal-img'/>
+                    <i class="fa-solid fa-chevron-right img-arrow-button" />
                 </div>
             ))
         }

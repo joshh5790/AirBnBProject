@@ -4,10 +4,6 @@
     padding-top: 100%;
 }
 
-.spot-card:hover + .tooltip {
-    display: block;
-}
-
 .image-container {
     width: 100%;
     position: relative;
@@ -36,6 +32,7 @@
 }
 
 .tooltip {
+    display: none;
     position: absolute;
     background-color: #333;
     color: #fff;
@@ -44,4 +41,8 @@
     font-size: 12px;
     white-space: nowrap;
     z-index: 1;
+}
+
+.spot-card:hover > .tooltip {
+    display: block;
 }

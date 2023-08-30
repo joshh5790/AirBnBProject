@@ -9,4 +9,30 @@
     height: 620px;
     display: flex;
     justify-content: center;
+    align-items: center;
+}
+
+.img-arrow-button {
+    display: none;
+    position: absolute;
+    color: white;
+    font-size: 24px;
+}
+
+.img-arrow-button:hover {
+    font-size: 30px;
+    transition: 0.1s;
+    cursor: pointer;
+}
+
+.fa-solid.fa-chevron-right {
+    right: 30px;
+}
+
+.fa-solid.fa-chevron-left {
+    left: 30px;
+}
+
+.modal-img-background:hover > .img-arrow-button {
+    display: flex;
 }
