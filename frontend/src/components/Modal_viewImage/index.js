@@ -9,15 +9,22 @@ function ViewImageModal({ imageOrder, imageList, className }) {
         if (parseInt(imageOrder) === num) return { display: 'none' }
     }
 
+    const handleLeft = () => {
+        if (imageOrder > 0) imageOrder--
+        handleClick({ lStyle: styleSet(0) })
+    }
+
+    const handleRight = () => {
+        if (imageOrder < lastIdx) imageOrder++
+        handleClick({ rStyle: styleSet(lastIdx) })
+    }
+
     const handleClick = ({ lStyle = {}, rStyle = {} }) => {
         if (imageList[imageOrder]?.url) {
             setModalImage((
                 <div className='modal-img-background'>
                     <i
-                        onClick={() => {
-                            if (imageOrder > 0) imageOrder--
-                            handleClick({ lStyle: styleSet(0) })
-                        }}
+                        onClick={handleLeft}
                         className="fa-solid fa-chevron-left img-arrow-button"
                         style={lStyle} />
                     <img
@@ -25,10 +32,7 @@ function ViewImageModal({ imageOrder, imageList, className }) {
                         alt={imageList[imageOrder]?.url}
                         className='modal-img'/>
                     <i
-                        onClick={() => {
-                            if (imageOrder < lastIdx) imageOrder++
-                            handleClick({ rStyle: styleSet(lastIdx) })
-                        }}
+                        onClick={handleRight}
                         className="fa-solid fa-chevron-right img-arrow-button"
                         style={rStyle} />
                 </div>
