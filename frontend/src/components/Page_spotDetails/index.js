@@ -1,4 +1,4 @@
-import { useEffect } from "react"
+import { useState, useEffect } from "react"
 import { useParams } from "react-router-dom"
 import { useSelector, useDispatch } from "react-redux"
 import { getSpotDetailsThunk } from "../../store/spots"
@@ -17,9 +17,11 @@ const SpotDetails = () => {
     const reviews = useSelector(allSpotReviews)
     const sessionUser = useSelector(state => state.session.user)
     const hasReview = reviews.find(review => review.userId === sessionUser?.id)
+    const [imageList, setImageList] = useState([])
 
     useEffect(() => {
         dispatch(getSpotDetailsThunk(spotId))
+        .then(res => setImageList([{ url: res.previewImage }, ...res.SpotImages]))
         .then(() => dispatch(getReviewsThunk(spotId)))
     }, [dispatch, spotId])
 
@@ -35,19 +37,24 @@ const SpotDetails = () => {
             </div>
             <div className="spot-details-images">
                 <ViewImageModal
-                    url={spot?.previewImage}
+                    imageOrder='0'
+                    imageList={imageList}
                     className='spot-details-image-1'/>
                 <ViewImageModal
-                    url={spot?.SpotImages && spot?.SpotImages[0]?.url && spot?.SpotImages[0].url}
+                    imageOrder='1'
+                    imageList={imageList}
                     className="spot-details-image-2"/>
                 <ViewImageModal
-                    url={spot?.SpotImages && spot?.SpotImages[1]?.url && spot?.SpotImages[1].url}
+                    imageOrder='2'
+                    imageList={imageList}
                     className="spot-details-image-3"/>
                 <ViewImageModal
-                    url={spot?.SpotImages && spot?.SpotImages[2]?.url && spot?.SpotImages[2].url}
+                    imageOrder='3'
+                    imageList={imageList}
                     className="spot-details-image-4"/>
                 <ViewImageModal
-                    url={spot?.SpotImages && spot?.SpotImages[3]?.url && spot?.SpotImages[3].url}
+                    imageOrder='4'
+                    imageList={imageList}
                     className="spot-details-image-5"/>
             </div>
             <div className="spot-details-description">

@@ -1,6 +1,7 @@
 .modal-img {
     max-width: 1000px;
     height: 620px;
+    user-select: none;
 }
 
 .modal-img-background {
