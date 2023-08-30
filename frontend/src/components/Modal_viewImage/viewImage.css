@@ -34,5 +34,5 @@
 }
 
 .modal-img-background:hover > .img-arrow-button {
-    display: flex;
+    display: block;
 }
