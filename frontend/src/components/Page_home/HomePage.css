@@ -9,7 +9,7 @@
     margin: 0;
     grid-column-gap: 1.5rem;
     grid-row-gap: 2.5rem;
-    padding: 2rem 8rem;
+    padding: 2rem 10vw;
 }
 
 .spot-li {
@@ -18,19 +18,19 @@
 
 /* image takes up 100% of grid width, set to variable and set as height too */
 
-@media screen and (min-width: 550px) {
+@media (min-width: 550px) {
     .home-page {
         grid-template-columns: repeat(2, 1fr);
     }
 }
 
-@media screen and (min-width: 850px) {
+@media (min-width: 950px) {
     .home-page {
         grid-template-columns: repeat(3, 1fr);
     }
 }
 
-@media screen and (min-width: 1028px) {
+@media (min-width: 1128px) {
     .home-page {
         grid-template-columns: repeat(4, 1fr);
     }
