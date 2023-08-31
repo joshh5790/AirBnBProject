@@ -29,3 +29,11 @@
     box-shadow: 0 0 1rem #CCCCCC;
     border-radius: 30px;
 }
+
+.map-page-return {
+    color: #999999;
+}
+
+.map-page-return:hover {
+    text-decoration: underline;
+}

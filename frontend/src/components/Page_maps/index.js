@@ -39,7 +39,11 @@ const MapContainer = () => {
         <p>{currSpot?.city}, {currSpot?.state}, {currSpot?.country}</p>
         <p>Latitude: {currSpot?.lat}</p>
         <p>Longitude: {currSpot?.lng}</p>
-        <NavLink to={`/spots/${spotId}`}>{'< '}Back to location</NavLink>
+        <NavLink
+          className='map-page-return'
+          exact to={`/spots/${spotId}`}>
+          {'< '}Back to location
+        </NavLink>
       </div>
     </div>
   );
