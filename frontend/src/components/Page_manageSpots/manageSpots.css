@@ -24,19 +24,19 @@
     margin-right: 1rem;
 }
 
-@media screen and (min-width: 550px) {
+@media (min-width: 550px) {
     .manage-spots-listing {
         grid-template-columns: repeat(2, 1fr);
     }
 }
 
-@media screen and (min-width: 950px) {
+@media (min-width: 850px) {
     .manage-spots-listing {
         grid-template-columns: repeat(3, 1fr);
     }
 }
 
-@media screen and (min-width: 1128px) {
+@media (min-width: 1028px) {
     .manage-spots-listing {
         grid-template-columns: repeat(4, 1fr);
     }
