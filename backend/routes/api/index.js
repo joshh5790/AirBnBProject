@@ -12,6 +12,7 @@ router.use('/reviews', reviews.router)
 router.use('/bookings', require('./bookings'))
 router.use('/spot-images', require('./spot-images'))
 router.use('/review-images', require('./review-images'))
+router.use('/maps', require('./maps'))
 
 router.post('/test', function(req, res) {
     res.json({ requestBody: req.body });

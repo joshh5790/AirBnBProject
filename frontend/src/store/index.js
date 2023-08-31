@@ -4,13 +4,15 @@ import sessionReducer from "./session";
 import spotReducer from "./spots";
 import reviewReducer from "./reviews";
 import spotImageReducer from "./spotImages";
+import mapsReducer from "./maps";
 
 const rootReducer = combineReducers({
   // add reducer functions here
   session: sessionReducer,
   spots: spotReducer,
   reviews: reviewReducer,
-  spotImages: spotImageReducer
+  spotImages: spotImageReducer,
+  maps: mapsReducer
 });
 
 let enhancer;

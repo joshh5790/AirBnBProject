@@ -9,9 +9,11 @@ import ReviewFormModal from "../Modal_reviewForm"
 import DeleteRecordModal from "../Modal_deleteRecord"
 import ViewImageModal from "../Modal_viewImage"
 import './SpotDetailsPage.css'
+import { useHistory } from "react-router-dom"
 
 const SpotDetails = () => {
     const dispatch = useDispatch()
+    const history = useHistory()
     const spotId = useParams().id
     const spot = useSelector(state => state.spots[spotId])
     const reviews = useSelector(allSpotReviews)
@@ -29,10 +31,16 @@ const SpotDetails = () => {
         alert("Feature coming soon!")
     }
 
+    const handleMap = () => {
+        history.push(`/spots/${spotId}/map`)
+    }
+
     return (
         <div className="spot-details-page">
             <h1>{spot?.name}</h1>
-            <div className="spot-details-loc">
+            <div
+                onClick={handleMap}
+                className="spot-details-loc">
                 {spot?.city}, {spot?.state}, {spot?.country}
             </div>
             <div className="spot-details-images">

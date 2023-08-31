@@ -8,6 +8,7 @@ import SpotDetails from "./components/Page_spotDetails";
 import NewSpot from "./components/Page_newSpot";
 import ManageSpots from "./components/Page_manageSpots";
 import ManageReviews from "./components/Page_manageReviews";
+import MapContainer from "./components/Page_maps";
 
 function App() {
   const dispatch = useDispatch()
@@ -39,6 +40,9 @@ function App() {
         </Route>
         <Route exact path='/reviews/current'>
           <ManageReviews />
+        </Route>
+        <Route exact path='/spots/:spotId/map'>
+          <MapContainer />
         </Route>
       </Switch>
       <Navigation isLoaded={isLoaded}/>
