@@ -2,14 +2,8 @@ import { csrfFetch } from "./csrf"
 
 const GET_SPOTS = 'spots/GET_SPOTS'
 const GET_SPOT_DETAILS = 'spots/GET_SPOT_DETAILS'
-const CREATE_SPOT = 'spots/CREATE_SPOT'
 const DELETE_SPOT = 'spots/DELETE_SPOT'
 const EDIT_SPOT = '/spots/EDIT_SPOT'
-
-
-
-// selectors
-
 
 
 // action creators

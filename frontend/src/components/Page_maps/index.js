@@ -18,7 +18,7 @@ const MapContainer = () => {
     if (!key) dispatch(getKey())
     dispatch(getSpotDetailsThunk(spotId))
     .then(() => setIsLoaded(true))
-  }, [dispatch, key]);
+  }, [dispatch, key, spotId]);
 
   if (!key) {
     return null;

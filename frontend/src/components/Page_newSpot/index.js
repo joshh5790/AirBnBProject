@@ -62,7 +62,7 @@ const NewSpot = () => {
             setImages({ 0: '', 1: '', 2: '', 3: ''})
             setIsLoaded(true)
         }
-    }, [spotId])
+    }, [spotId, dispatch])
 
     const validateImg = (image, name, errors) => {
         if (!image.length) return true

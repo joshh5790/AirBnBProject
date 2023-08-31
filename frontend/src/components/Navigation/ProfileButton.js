@@ -41,15 +41,9 @@ function ProfileButton({ user }) {
     closeMenu()
   };
 
-  const handleManageSpots = e => {
+  const handleButton = (e, path) => {
     e.preventDefault()
-    history.push('/spots/current')
-    closeMenu()
-  }
-
-  const handleManageReviews = e => {
-    e.preventDefault()
-    history.push('/reviews/current')
+    history.push(path)
     closeMenu()
   }
 
@@ -68,16 +62,23 @@ function ProfileButton({ user }) {
             <li className="user-info">{user.email}</li>
             <li className="dropdown-button">
               <button
-                onClick={handleManageSpots}
+                onClick={e => handleButton(e, '/spots/current')}
                 className="manage-spots-button">
                 Manage Spots
               </button>
             </li>
             <li className="dropdown-button">
               <button
-                onClick={handleManageReviews}
+                onClick={e => handleButton(e, '/reviews/current')}
                 className="manage-reviews-button">
                 Manage Reviews
+              </button>
+            </li>
+            <li className="dropdown-button">
+              <button
+                onClick={e => handleButton(e, '/account')}
+                className="manage-reviews-button">
+                Account
               </button>
             </li>
             <li>

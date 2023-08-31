@@ -1,0 +1,46 @@
+.info-container {
+    display: grid;
+    width: 100%;
+    grid-template-areas:
+        "one two"
+        "three three";
+    grid-template-columns: 2fr 1fr;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #CCCCCC;
+}
+
+.info-label {
+    margin-bottom: 1rem;
+    font-weight: bold;
+}
+
+.info-edit-button {
+    position: unset;
+    justify-self: end;
+    grid-area: two;
+    margin-bottom: 1rem;
+    text-decoration: underline;
+    user-select: none;
+}
+
+.info-edit-button:hover {
+    cursor: pointer;
+}
+
+.info-inputs-div {
+    display: flex;
+    margin-top: 1rem;
+}
+
+.info-input {
+    margin: 0 1rem 1rem 0;
+}
+
+.info-edit-panel {
+    grid-area: three;
+}
+
+.save-personal {
+    width: 4rem;
+}

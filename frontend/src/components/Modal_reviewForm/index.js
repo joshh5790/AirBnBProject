@@ -29,7 +29,7 @@ function ReviewFormModal({ spotId, review, spotName }) {
             setRating(review.stars)
             setHoverRating(review.stars)
         }
-    }, [])
+    }, [review])
 
     useEffect(() => {
         if (reviewText.length > 9 && rating > 0) setDisableButton(false)

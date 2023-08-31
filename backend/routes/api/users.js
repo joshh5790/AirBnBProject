@@ -1,11 +1,10 @@
 const express = require('express')
 const router = express.Router()
 const bcrypt = require('bcryptjs')
-const { setTokenCookie, requireAuth } = require('../../utils/auth')
-const { User, Review, Booking } = require('../../db/models')
+const { setTokenCookie } = require('../../utils/auth')
+const { User } = require('../../db/models')
 const { check } = require('express-validator')
 const { handleValidationErrors } = require('../../utils/validation')
-const Sequelize = require('sequelize');
 
 
 const validateSignup = [
@@ -56,18 +55,6 @@ router.post('/', validateSignup, async (req, res) => {
     const { firstName, lastName, email, password, username } = req.body
     const hashedPassword = bcrypt.hashSync(password)
 
-    const existingEmail = await User.findOne({ where: { email }})
-    if (existingEmail) res.status(500).json({
-        message: "User already exists",
-        errors: { email: "User with that email already exists" }
-    })
-    const existingUsername = await User.findOne({ where: { username }})
-    if (existingUsername) res.status(500).json({
-        message: "User already exists",
-        errors: { username: "User with that username already exists" }
-    })
-
-
     const user = await User.create({ firstName, lastName, email, username, hashedPassword })
 
     const safeUser = {
@@ -83,14 +70,27 @@ router.post('/', validateSignup, async (req, res) => {
     res.json({ user: safeUser })
 })
 
-router.get('/fuck/:fuck', async (req, res) => {
+// edit user information
+router.put('/edit', validateSignup, async (req, res) => {
+    const { user } = req
+    if (!user) res.status(403).json({ message: "Forbidden" })
 
-    const findMe = req.params.fuck
-    let allThis
-    if (findMe === 'user') allThis = await User.findAll()
-    if (findMe === 'review') allThis = await Review.findAll()
-    if (findMe === 'booking') allThis = await Booking.findAll()
-    res.json(allThis)
+    const currUser = await User.findByPk(user.id)
+
+    const { firstName, lastName, email, password, username } = req.body
+    const hashedPassword = bcrypt.hashSync(password)
+
+    await currUser.update({ firstName, lastName, email, hashedPassword, username })
+
+    const safeUser = {
+        firstName: currUser.firstName,
+        lastName: currUser.lastName,
+        id: currUser.id,
+        email: currUser.email,
+        username: currUser.username
+    }
+
+    res.json({ user: safeUser})
 })
 
 module.exports = router

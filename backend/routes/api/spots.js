@@ -225,20 +225,6 @@ router.get('/', validateQuery, async (req, res) => {
     })
     res.json({ Spots: allSpots })
 })
-    // for (const spot of allSpots) {
-    //     const currCreate = spot.createdAt.slice(0,19).replace('T', ' ')
-    //     const currUpdate = spot.updatedAt.slice(0,19).replace('T', ' ')
-    //     await spot.update({
-    //         createdAt: currCreate,
-    //         updatedAt: currUpdate
-    //     })
-    // }
-    // for (let i = 0; i < allSpots.length; i++) {
-    //     const currCreate = `${allSpots[i].createdAt}`.slice(0,19)
-    //     const currUpdate = `${allSpots[i].updatedAt}`.slice(0,19)
-    //     allSpots[i].createdAt = currCreate
-    //     allSpots[i].updatedAt = currUpdate
-    // }
 
 // Creates a booking for a spot
 router.post('/:spotId/bookings', async (req, res) => {
