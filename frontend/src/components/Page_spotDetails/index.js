@@ -20,11 +20,13 @@ const SpotDetails = () => {
     const sessionUser = useSelector(state => state.session.user)
     const hasReview = reviews.find(review => review.userId === sessionUser?.id)
     const [imageList, setImageList] = useState([])
+    const [isLoaded, setIsLoaded] = useState(false)
 
     useEffect(() => {
         dispatch(getSpotDetailsThunk(spotId))
         .then(res => setImageList([{ url: res.previewImage }, ...res.SpotImages]))
         .then(() => dispatch(getReviewsThunk(spotId)))
+        .then(() => setIsLoaded(true))
     }, [dispatch, spotId])
 
     const handleReserve = () => {
@@ -36,6 +38,7 @@ const SpotDetails = () => {
     }
 
     return (
+        <> {isLoaded &&
         <div className="spot-details-page">
             <h1>{spot?.name}</h1>
             <div
@@ -139,7 +142,8 @@ const SpotDetails = () => {
                     )
                 })}
             </div>
-        </div>
+        </div>}
+        </>
     )
 }
 

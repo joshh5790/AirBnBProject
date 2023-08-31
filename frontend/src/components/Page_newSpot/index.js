@@ -24,7 +24,7 @@ const NewSpot = () => {
     const [disableButton, setDisableButton] = useState(true)
     const [errors, setErrors] = useState({})
     const [imageArr, setImageArr] = useState([])
-
+    const [isLoaded, setIsLoaded] = useState(false)
     useEffect(() => {
         if (spotId) {
             dispatch(getSpotDetailsThunk(spotId))
@@ -47,6 +47,7 @@ const NewSpot = () => {
                     })
                     setImageArr([...data.SpotImages])
                 })
+                .then(() => setIsLoaded(true))
         } else {
             setCountry('');
             setAddress('');
@@ -59,6 +60,7 @@ const NewSpot = () => {
             setPrice('');
             setPreviewImage('');
             setImages({ 0: '', 1: '', 2: '', 3: ''})
+            setIsLoaded(true)
         }
     }, [spotId])
 
@@ -167,6 +169,7 @@ const NewSpot = () => {
     }
 
     return (
+        <>{isLoaded &&
         <div className='new-spot-page'>
             <h1>{(spotId && 'Update your Spot') || 'Create a new Spot'}</h1>
             <h2 className='subheader first'>Where's your place located?</h2>
@@ -339,7 +342,8 @@ const NewSpot = () => {
                         className='form-submit'>{(spotId && 'Update Spot') || 'Create Spot'}</button>
                 </div>
             </form>
-        </div>
+        </div>}
+        </>
     )
 }
 

@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getKey } from '../../store/maps';
 import { useParams } from 'react-router-dom';
@@ -12,12 +12,12 @@ const MapContainer = () => {
   const dispatch = useDispatch();
   const { spotId }= useParams()
   const currSpot = useSelector(state => state.spots[spotId])
+  const [isLoaded, setIsLoaded] = useState(false)
 
   useEffect(() => {
+    if (!key) dispatch(getKey())
     dispatch(getSpotDetailsThunk(spotId))
-    if (!key) {
-      dispatch(getKey());
-    }
+    .then(() => setIsLoaded(true))
   }, [dispatch, key]);
 
   if (!key) {
@@ -30,6 +30,7 @@ const MapContainer = () => {
   }
 
   return (
+    <> {isLoaded &&
     <div className='map-page'>
       <div className='map-container'>
           <Maps apiKey={key} center={center} />
@@ -45,7 +46,8 @@ const MapContainer = () => {
           {'< '}Back to location
         </NavLink>
       </div>
-    </div>
+    </div>}
+    </>
   );
 };
 

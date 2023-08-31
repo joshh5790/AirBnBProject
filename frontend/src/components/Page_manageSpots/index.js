@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import SpotCard from '../Page_home/SpotCard'
@@ -11,9 +11,11 @@ const ManageSpots = () => {
     const dispatch = useDispatch()
     const history = useHistory()
     const allSpots = useSelector(state => Object.values(state.spots))
+    const [isLoaded, setIsLoaded] = useState(false)
 
     useEffect(() => {
         dispatch(getCurrentSpotsThunk())
+        .then(() => setIsLoaded(true))
     }, [dispatch])
 
     const handleUpdate = spotId => {
@@ -26,6 +28,7 @@ const ManageSpots = () => {
 
 
     return (
+        <> {isLoaded &&
         <div className='manage-spots'>
             <h1>Manage Your Spots</h1>
             <button
@@ -52,7 +55,8 @@ const ManageSpots = () => {
                     </li>
                 ))}
             </ul>
-        </div>
+        </div>}
+        </>
     )
 }
 

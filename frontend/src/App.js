@@ -24,25 +24,25 @@ function App() {
     <>
       <Switch>
         <Route exact path='/'>
-          <HomePage />
+          {isLoaded && <HomePage />}
         </Route>
         <Route exact path='/spots/new'>
-          <NewSpot />
+          {isLoaded && <NewSpot />}
         </Route>
         <Route exact path='/spots/current'>
-          <ManageSpots />
+          {isLoaded && <ManageSpots />}
         </Route>
         <Route exact path='/spots/:id'>
-          <SpotDetails />
+          {isLoaded && <SpotDetails />}
         </Route>
         <Route exact path='/spots/:spotId/edit'>
-          <NewSpot />
+          {isLoaded && <NewSpot />}
         </Route>
         <Route exact path='/reviews/current'>
-          <ManageReviews />
+          {isLoaded && <ManageReviews />}
         </Route>
         <Route exact path='/spots/:spotId/map'>
-          <MapContainer />
+          {isLoaded && <MapContainer />}
         </Route>
       </Switch>
       <Navigation isLoaded={isLoaded}/>
