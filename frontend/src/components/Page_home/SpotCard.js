@@ -30,7 +30,7 @@ const SpotCard = ({ spot }) => {
                     <p className='loc'>{spot.city}, {spot.state}</p>
                     <p className='rating'>
                         <i className="fa-solid fa-star"></i>
-                        {spot?.avgStarRating ? `  ${spot.avgStarRating.toFixed(1)}` : "  New"}
+                        {spot?.avgStarRating ? `  ${parseFloat(spot.avgStarRating).toFixed(1)}` : "  New"}
                     </p>
                 </div>
                 <div className='price'><span className='price-num'>{`$${spot.price} `}</span>night</div>

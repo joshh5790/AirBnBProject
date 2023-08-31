@@ -68,7 +68,7 @@ const SpotDetails = () => {
                         <p>
                             <i className="fa-solid fa-star"></i>
                             {(spot?.avgStarRating &&
-                                `  ${spot?.avgStarRating.toFixed(1)} · ${spot?.numReviews} review${spot?.numReviews!==1 && 's'}`)
+                                `  ${parseFloat(spot?.avgStarRating).toFixed(1)} · ${spot?.numReviews} review${spot?.numReviews!==1 && 's'}`)
                                 || ' New '}
                         </p>
                     </div>
@@ -83,7 +83,7 @@ const SpotDetails = () => {
                 <h2>
                     <i className="fa-solid fa-star"></i>
                     {(spot?.avgStarRating &&
-                        `  ${spot?.avgStarRating.toFixed(1)} · ${spot?.numReviews} review${spot?.numReviews!==1 && 's'}`)
+                        `  ${parseFloat(spot?.avgStarRating).toFixed(1)} · ${spot?.numReviews} review${spot?.numReviews!==1 && 's'}`)
                         || ' New '}
                 </h2>
                 {sessionUser && sessionUser?.id !== spot?.Owner?.id && !hasReview &&
