@@ -18,6 +18,11 @@
     margin-top: 0;
 }
 
+.map-loc {
+    font-weight: bold;
+    color: #999999;
+}
+
 .map-page-desc {
     position: absolute;
     top: 1rem;

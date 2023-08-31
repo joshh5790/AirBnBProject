@@ -36,7 +36,7 @@ const MapContainer = () => {
       </div>
       <div className='map-page-desc'>
         <h1 className='map-page-header'>Where you'll be:</h1>
-        <p>{currSpot?.city}, {currSpot?.state}, {currSpot?.country}</p>
+        <p className='map-loc'>{currSpot?.city}, {currSpot?.state}, {currSpot?.country}</p>
         <p>Latitude: {currSpot?.lat}</p>
         <p>Longitude: {currSpot?.lng}</p>
         <NavLink
