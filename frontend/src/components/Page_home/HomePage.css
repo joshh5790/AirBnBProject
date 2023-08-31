@@ -18,7 +18,7 @@
 
 /* image takes up 100% of grid width, set to variable and set as height too */
 
-@media screen and (min-width: 450px) {
+@media screen and (min-width: 550px) {
     .home-page {
         grid-template-columns: repeat(2, 1fr);
     }
