@@ -35,14 +35,14 @@
     align-items: center;
     justify-content: center;
     grid-template-columns: repeat(4, 25%);
-    width: 100%
+    width: 100%;
 }
 
 .spot-details-image-1 {
     grid-area: one;
     height: 100%;
     width: 100%;
-    border-radius: 30px 0 0 30px;
+    border-radius: 1rem 0 0 1rem;
     object-fit: cover;
     aspect-ratio: 1 / 1;
 }
@@ -60,7 +60,7 @@
     grid-area: three;
     height: 100%;
     width: 100%;
-    border-radius: 0 30px 0 0;
+    border-radius: 0 1rem 0 0;
     object-fit: cover;
     aspect-ratio: 1 / 1;
 }
@@ -78,7 +78,7 @@
     grid-area: five;
     height: 100%;
     width: 100%;
-    border-radius: 0 0 30px 0;
+    border-radius: 0 0 1rem 0;
     object-fit: cover;
     aspect-ratio: 1 / 1;
 }
@@ -141,4 +141,37 @@
 
 .spot-details-review-list {
     margin: 2rem 0;
+}
+
+@media (max-width: 550px) {
+    .spot-details-images {
+        grid-template-areas:
+        "one one"
+        "one one"
+        "two three"
+        "four five";
+        grid-template-columns: repeat(2, 50%);
+    }
+    .spot-details-description {
+        flex-direction: column;
+        align-items: center;
+    }
+    .spot-details-image-1 {
+        border-radius: 1rem 1rem 0 0;
+    }
+    .spot-details-image-3 {
+        border-radius: 0;
+    }
+    .spot-details-image-4 {
+        border-radius: 0 0 0 1rem;
+    }
+    .spot-details-image-5 {
+        border-radius: 0 0 1rem 0;
+    }
+    .spot-details-text {
+        width: 100%;
+    }
+    .spot-details-reserve {
+        width: 100%;
+    }
 }

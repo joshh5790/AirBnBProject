@@ -13,15 +13,18 @@ const HomePage = () => {
     }, [dispatch])
 
     return (
-        <ul className='home-page'>
-            {allSpots.map(spot => (
-                <li
+        <div>
+            <ul className='home-page'>
+                {allSpots.map(spot => (
+                    <li
                     className='spot-li'
                     key={spot.id}>
-                    <SpotCard spotId={spot.id} />
-                </li>
-            ))}
-        </ul>
+                        <SpotCard spotId={spot.id} />
+                    </li>
+                ))}
+            </ul>
+            <div className='paginate'></div>
+        </div>
     )
 }
 
