@@ -47,7 +47,7 @@ function AccountSettings() {
             <h2>Security</h2>
                 <InfoContainer
                     label='Password'
-                    desc='Reset password functionality is unavailable so use with caution!'
+                    desc='Reset password functionality is unavailable so use with caution! Functionality still buggy'
                     type='password'
                     variables={ {'Old Password': '', 'New Password': '', 'Confirm New Password': ''} }
                     otherEdit={otherEdit}
