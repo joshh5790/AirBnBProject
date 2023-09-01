@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getKey } from '../../store/maps';
+import { getKey } from '../../../store/maps';
 import { useParams } from 'react-router-dom';
-import { getSpotDetailsThunk } from '../../store/spots';
+import { getSpotDetailsThunk } from '../../../store/spots';
 import { NavLink } from 'react-router-dom';
 import Maps from './Maps';
 import './mapContainer.css'

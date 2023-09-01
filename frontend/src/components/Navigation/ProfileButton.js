@@ -2,8 +2,8 @@ import React, { useState, useEffect, useRef } from "react";
 import { useDispatch } from 'react-redux';
 import * as sessionActions from '../../store/session';
 import OpenModalButton from "../OpenModalButton";
-import LoginFormModal from "../Modal_loginForm";
-import SignupFormModal from "../Modal_signupForm";
+import LoginFormModal from "../Modals/loginForm";
+import SignupFormModal from "../Modals/signupForm";
 import { useHistory } from "react-router-dom";
 import './ProfileButton.css'
 

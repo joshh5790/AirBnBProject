@@ -1,13 +1,13 @@
 import { useState, useEffect } from "react"
 import { useParams } from "react-router-dom"
 import { useSelector, useDispatch } from "react-redux"
-import { getSpotDetailsThunk } from "../../store/spots"
-import { getReviewsThunk, allSpotReviews } from "../../store/reviews"
-import { month } from "../../utils/utils"
-import OpenModalButton from "../OpenModalButton"
-import ReviewFormModal from "../Modal_reviewForm"
-import DeleteRecordModal from "../Modal_deleteRecord"
-import ViewImageModal from "../Modal_viewImage"
+import { getSpotDetailsThunk } from "../../../store/spots"
+import { getReviewsThunk, allSpotReviews } from "../../../store/reviews"
+import { month } from "../../../utils/utils"
+import OpenModalButton from "../../OpenModalButton"
+import ReviewFormModal from "../../Modals/reviewForm"
+import DeleteRecordModal from "../../Modals/deleteRecord"
+import ViewImageModal from "../../Modals/viewImage"
 import './SpotDetailsPage.css'
 import { useHistory } from "react-router-dom"
 
@@ -78,8 +78,8 @@ const SpotDetails = () => {
                         <p>
                             <i className="fa-solid fa-star"></i>
                             {(spot?.avgStarRating &&
-                                `  ${parseFloat(spot?.avgStarRating).toFixed(1)} · ${spot?.numReviews} review${spot?.numReviews!==1 && 's'}`)
-                                || ' New '}
+                                `  ${parseFloat(spot?.avgStarRating).toFixed(1)} · ${spot?.numReviews} review`)
+                                || ' New '}{spot?.avgStarRating && spot?.numReviews!==1 && 's'}
                         </p>
                     </div>
                     <button

@@ -3,13 +3,13 @@ import { Route, Switch } from 'react-router-dom'
 import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import * as sessionActions from "./store/session";
-import HomePage from "./components/Page_home";
-import SpotDetails from "./components/Page_spotDetails";
-import NewSpot from "./components/Page_newSpot";
-import ManageSpots from "./components/Page_manageSpots";
-import ManageReviews from "./components/Page_manageReviews";
-import MapContainer from "./components/Page_maps";
-import AccountSettings from "./components/Page_accountSettings";
+import HomePage from "./components/Pages/home";
+import SpotDetails from "./components/Pages/spotDetails";
+import NewSpot from "./components/Pages/newSpot";
+import ManageSpots from "./components/Pages/manageSpots";
+import ManageReviews from "./components/Pages/manageReviews";
+import MapContainer from "./components/Pages/maps";
+import AccountSettings from "./components/Pages/accountSettings";
 
 function App() {
   const dispatch = useDispatch()

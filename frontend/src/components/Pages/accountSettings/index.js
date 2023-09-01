@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import InfoContainer from "./infoContainer"
-import { restoreUserThunk } from "../../store/session"
+import { restoreUserThunk } from "../../../store/session"
 import './accountSettings.css'
 
 function AccountSettings() {

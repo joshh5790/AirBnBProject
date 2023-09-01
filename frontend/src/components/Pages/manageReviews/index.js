@@ -1,10 +1,10 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { useState, useEffect } from 'react'
-import { getCurrentReviewsThunk } from '../../store/reviews'
-import { month } from '../../utils/utils'
-import OpenModalButton from '../OpenModalButton'
-import ReviewFormModal from '../Modal_reviewForm'
-import DeleteRecordModal from '../Modal_deleteRecord'
+import { getCurrentReviewsThunk } from '../../../store/reviews'
+import { month } from '../../../utils/utils'
+import OpenModalButton from '../../OpenModalButton'
+import ReviewFormModal from '../../Modals/reviewForm'
+import DeleteRecordModal from '../../Modals/deleteRecord'
 import './manageReviews.css'
 
 const ManageReviews = () => {
@@ -15,12 +15,13 @@ const ManageReviews = () => {
     useEffect(() => {
         dispatch(getCurrentReviewsThunk())
         .then(() => setIsLoaded(true))
-    }, [dispatch, reviews])
+    }, [dispatch])
 
     return (
         <> {isLoaded &&
         <div className='manage-reviews'>
             <h1>Manage Reviews</h1>
+            {!reviews.length && <div>You haven't written any reviews. Go and explore!</div>}
             {reviews.map(review => {
                 return (
                     <div key={review.id}>

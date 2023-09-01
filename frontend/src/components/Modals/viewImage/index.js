@@ -1,4 +1,4 @@
-import { useModal } from '../../context/Modal';
+import { useModal } from '../../../context/Modal';
 import './viewImage.css'
 
 function ViewImageModal({ imageOrder, imageList, className }) {

@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
-import SpotCard from '../Page_home/SpotCard'
-import { getCurrentSpotsThunk } from '../../store/spots'
+import SpotCard from '../home/SpotCard'
+import { getCurrentSpotsThunk } from '../../../store/spots'
 import './manageSpots.css'
-import OpenModalButton from '../OpenModalButton'
-import DeleteRecordModal from '../Modal_deleteRecord'
+import OpenModalButton from '../../OpenModalButton'
+import DeleteRecordModal from '../../Modals/deleteRecord'
 
 const ManageSpots = () => {
     const dispatch = useDispatch()

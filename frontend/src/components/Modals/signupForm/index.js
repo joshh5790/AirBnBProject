@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import * as sessionActions from "../../store/session";
-import { useModal } from "../../context/Modal";
+import * as sessionActions from "../../../store/session";
+import { useModal } from "../../../context/Modal";
 import './SignupForm.css'
 
 function SignupFormModal() {

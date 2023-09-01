@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { useModal } from '../../context/Modal'
-import { deleteReviewThunk } from '../../store/reviews'
-import { deleteSpotThunk, getSpotDetailsThunk } from '../../store/spots'
+import { useModal } from '../../../context/Modal'
+import { deleteReviewThunk } from '../../../store/reviews'
+import { deleteSpotThunk, getSpotDetailsThunk } from '../../../store/spots'
 import './deleteRecord.css'
 
 function DeleteRecordModal({ spotId, reviewId, record }) {

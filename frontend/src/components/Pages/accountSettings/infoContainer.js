@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import './infoContainer.css'
-import { editUserThunk } from "../../store/session"
+import { editUserThunk } from "../../../store/session"
 
 function InfoContainer({label,
     desc,

@@ -2,8 +2,8 @@ import { useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { useHistory, useParams } from 'react-router-dom'
 import './newSpot.css'
-import { createSpotThunk, editSpotThunk, getSpotDetailsThunk } from '../../store/spots'
-import { createSpotImageThunk, updateSpotImageThunk, deleteSpotImageThunk } from '../../store/spotImages'
+import { createSpotThunk, editSpotThunk, getSpotDetailsThunk } from '../../../store/spots'
+import { createSpotImageThunk, updateSpotImageThunk, deleteSpotImageThunk } from '../../../store/spotImages'
 
 const NewSpot = () => {
     const history = useHistory()

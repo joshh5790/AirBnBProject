@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
-import { loginThunk } from '../../store/session'
-import { useModal } from '../../context/Modal'
-import { demoLoginThunk } from '../../store/session'
+import { loginThunk } from '../../../store/session'
+import { useModal } from '../../../context/Modal'
+import { demoLoginThunk } from '../../../store/session'
 import './LoginForm.css'
 
 function LoginFormModal() {

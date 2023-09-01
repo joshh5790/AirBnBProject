@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { useModal } from "../../context/Modal";
-import { createReviewThunk, updateReviewThunk } from "../../store/reviews";
-import { getSpotDetailsThunk } from "../../store/spots";
+import { useModal } from "../../../context/Modal";
+import { createReviewThunk, updateReviewThunk } from "../../../store/reviews";
+import { getSpotDetailsThunk } from "../../../store/spots";
 import './reviewForm.css'
 
 function ReviewFormModal({ spotId, review, spotName }) {

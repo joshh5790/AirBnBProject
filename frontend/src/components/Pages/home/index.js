@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import SpotCard from './SpotCard'
-import { getAllSpotsThunk } from '../../store/spots'
+import { getAllSpotsThunk } from '../../../store/spots'
 import './HomePage.css'
 
 const HomePage = () => {
