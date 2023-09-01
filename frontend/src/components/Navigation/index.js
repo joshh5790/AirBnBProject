@@ -17,7 +17,7 @@ function Navigation({ isLoaded }){
             alt='logo'
             className='logo'
           />
-          <p className='logo-text'>airbee-n-bee</p>
+          <p className='logo-text'>air-bee-n-bee</p>
         </NavLink>
       </li>
       {isLoaded && <li className='nav-right'>

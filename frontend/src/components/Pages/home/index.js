@@ -7,11 +7,9 @@ import './HomePage.css'
 const HomePage = () => {
     const dispatch = useDispatch()
     const allSpots = useSelector(state => Object.values(state.spots))
-    const [isLoaded, setIsLoaded] = useState(false)
 
     useEffect(() => {
         dispatch(getAllSpotsThunk())
-        .then(() => setIsLoaded(true))
     }, [dispatch])
 
     return (
