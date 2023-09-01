@@ -11,8 +11,13 @@
     height: 100%;
 }
 
+.spot-details-header {
+    min-width: 20rem;
+}
+
 .spot-details-loc {
     margin-bottom: 1rem;
+    min-width: 8rem;
 }
 
 .spot-details-loc:hover {
@@ -29,6 +34,8 @@
     grid-row-gap: 0.5rem;
     align-items: center;
     justify-content: center;
+    grid-template-columns: repeat(4, 25%);
+    width: 100%
 }
 
 .spot-details-image-1 {
@@ -45,6 +52,7 @@
     height: 100%;
     width: 100%;
     object-fit: cover;
+    border-radius: 0;
     aspect-ratio: 1 / 1;
 }
 
@@ -62,6 +70,7 @@
     height: 100%;
     width: 100%;
     object-fit: cover;
+    border-radius: 0;
     aspect-ratio: 1 / 1;
 }
 
@@ -74,11 +83,11 @@
     aspect-ratio: 1 / 1;
 }
 
-.spot-details-image-1:hover,
-.spot-details-image-2:hover,
-.spot-details-image-3:hover,
-.spot-details-image-4:hover,
-.spot-details-image-5:hover {
+.spot-details-image-1:not(.skeleton):hover,
+.spot-details-image-2:not(.skeleton):hover,
+.spot-details-image-3:not(.skeleton):hover,
+.spot-details-image-4:not(.skeleton):hover,
+.spot-details-image-5:not(.skeleton):hover {
     cursor: pointer;
     box-shadow: 0 0 1rem #BBBBBB;
 }
@@ -88,7 +97,7 @@
     justify-content: space-between;
     width: 100%;
     padding: 1rem 0;
-    border-bottom: 1px solid gray;
+    border-bottom: 1px solid #CCCCCC;
 }
 
 .spot-details-text {
@@ -132,8 +141,4 @@
 
 .spot-details-review-list {
     margin: 2rem 0;
-}
-
-.review-date {
-    color: gray;
 }

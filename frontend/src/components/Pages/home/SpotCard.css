@@ -27,6 +27,14 @@
     margin: 0.5rem 0;
 }
 
+.loc {
+    min-width: 8rem;
+}
+
+.rating {
+    min-width: 2rem;
+}
+
 .price-num {
     font-weight: bold;
 }
@@ -41,6 +49,10 @@
     font-size: 12px;
     white-space: nowrap;
     z-index: 1;
+}
+
+.price {
+    max-width: 6rem;
 }
 
 .spot-card:hover > .tooltip {

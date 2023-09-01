@@ -36,10 +36,9 @@ const SpotDetails = () => {
         history.push(`/spots/${spotId}/map`)
     }
 
-    return (
-        <> {isLoaded &&
+    if (isLoaded) return (
         <div className="spot-details-page">
-            <h1>{spot?.name}</h1>
+            <h1 className="spot-details-header">{spot?.name}</h1>
             <div
                 onClick={handleMap}
                 className="spot-details-loc">
@@ -117,7 +116,7 @@ const SpotDetails = () => {
                                 <h2>
                                     {review?.User?.firstName || sessionUser?.firstName}
                                 </h2>
-                                <h3 className="review-date">
+                                <h3 className="gray">
                                     {month[review?.createdAt.slice(5,7)]}&nbsp;
                                     {review?.createdAt.slice(0,4)}
                                 </h3>
@@ -141,8 +140,20 @@ const SpotDetails = () => {
                     )
                 })}
             </div>
-        </div>}
-        </>
+        </div>
+    )
+    else return (
+        <div className="spot-details-page">
+            <h1 className="spot-details-header skeleton">&nbsp;</h1>
+            <div className="spot-details-loc skeleton">&nbsp;</div>
+            <div className="spot-details-images">
+                <div className="spot-details-image-1 skeleton">&nbsp;</div>
+                <div className="spot-details-image-2 skeleton">&nbsp;</div>
+                <div className="spot-details-image-3 skeleton">&nbsp;</div>
+                <div className="spot-details-image-4 skeleton">&nbsp;</div>
+                <div className="spot-details-image-5 skeleton">&nbsp;</div>
+            </div>
+        </div>
     )
 }
 

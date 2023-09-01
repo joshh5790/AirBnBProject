@@ -108,7 +108,7 @@ export default function spotReducer(state = initialState, action) {
             return { ...action.payload }
         case GET_SPOT_DETAILS:
             const currSpot = action.payload
-            return { [currSpot.id]: currSpot }
+            return { ...state, [currSpot.id]: currSpot }
         case DELETE_SPOT:
             const newState = { ...state }
             delete newState[action.payload]

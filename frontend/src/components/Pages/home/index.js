@@ -15,17 +15,15 @@ const HomePage = () => {
     }, [dispatch])
 
     return (
-        <> {isLoaded &&
         <ul className='home-page'>
             {allSpots.map(spot => (
                 <li
                     className='spot-li'
                     key={spot.id}>
-                    <SpotCard spot={spot} />
+                    <SpotCard spotId={spot.id} />
                 </li>
             ))}
-        </ul>}
-        </>
+        </ul>
     )
 }
 

@@ -1,9 +1,19 @@
 import './SpotCard.css'
 import { NavLink } from 'react-router-dom'
-import { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { useEffect, useState } from 'react'
+import { getSpotDetailsThunk } from '../../../store/spots'
 
-const SpotCard = ({ spot }) => {
+const SpotCard = ({ spotId }) => {
+    const dispatch = useDispatch()
     const [position, setPosition] = useState({ x: 0, y: 0 })
+    const [isLoaded, setIsLoaded] = useState(false)
+    const spot = useSelector(state => state.spots[spotId])
+
+    useEffect(() => {
+        dispatch(getSpotDetailsThunk(spotId))
+        .then(() => setIsLoaded(true))
+    }, [dispatch])
 
     const handleMouseMove = (e) => {
         const currCard = e.currentTarget.getBoundingClientRect()
@@ -13,7 +23,8 @@ const SpotCard = ({ spot }) => {
         });
     };
 
-    return (
+    if (isLoaded) return (
+        // <>{isLoaded &&
         <NavLink
             to={`/spots/${spot.id}`}
             className="spot-card"
@@ -39,6 +50,17 @@ const SpotCard = ({ spot }) => {
                 {spot.name}
             </div>
         </NavLink>
+        // }</>
+    )
+    else return (
+        <>
+            <div className='image-container skeleton' />
+            <div className='loc-rating'>
+                <p className='loc skeleton'>&nbsp;</p>
+                <p className='rating skeleton'>&nbsp;</p>
+            </div>
+            <div className='price skeleton'>&nbsp;</div>
+        </>
     )
 }
 

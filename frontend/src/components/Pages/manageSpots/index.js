@@ -36,12 +36,13 @@ const ManageSpots = () => {
                 className='gray-color-button'>
                 Create a New Spot
             </button>
+            {!allSpots.length && <div>You aren't currently hosting any spots.</div>}
             <ul className='manage-spots-listing'>
                 {allSpots.map(spot => (
                     <li
                         className='spot-li'
                         key={spot.id}>
-                        <SpotCard spot={spot} />
+                        <SpotCard spotId={spot?.id} />
                         <button
                             onClick={() => handleUpdate(spot.id)}
                             className='gray-color-button modify-spot-button'>
