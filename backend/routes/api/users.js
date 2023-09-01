@@ -49,6 +49,36 @@ const validateSignup = [
     handleValidationErrors
 ]
 
+const validateUpdate = [
+    check('firstName')
+        .optional()
+        .isLength({ min: 1, max: 30 })
+        .withMessage('First Name is required'),
+    check('lastName')
+        .optional()
+        .isLength({ min: 1, max: 30 })
+        .withMessage('Last Name is required'),
+    check('email')
+        .optional()
+        .isEmail()
+        .withMessage('Please provide a valid email.'),
+    check('email')
+        .optional()
+        .custom(async value => {
+            if (value) {
+                const existingUser = await User.findOne({ where: { email: value }})
+                if (existingUser) throw new Error("User with that email already exists")
+            }
+            return true
+        })
+        .withMessage('User with that email already exists'),
+    check('password')
+        .optional()
+        .isLength({ min: 6 })
+        .withMessage('Password must be 6 characters or more.'),
+    handleValidationErrors
+]
+
 
 // sign up!
 router.post('/', validateSignup, async (req, res) => {
@@ -71,16 +101,30 @@ router.post('/', validateSignup, async (req, res) => {
 })
 
 // edit user information
-router.put('/edit', validateSignup, async (req, res) => {
+router.put('/:userId', validateUpdate, async (req, res) => {
     const { user } = req
-    if (!user) res.status(403).json({ message: "Forbidden" })
+    if (!user || user.id !== parseInt(req.params.userId)) res.status(403).json({ message: "Forbidden" })
+    const currUser = await User.unscoped().findByPk(req.params.userId)
+    const { firstName, lastName, email, oldPassword, newPassword } = req.body
 
-    const currUser = await User.findByPk(user.id)
+    const updatedUser = {}
+    if (firstName !== currUser.firstName) updatedUser.firstName = firstName
+    if (lastName !== currUser.lastName) updatedUser.lastName = lastName
+    if (email !== currUser.email) updatedUser.email = email
 
-    const { firstName, lastName, email, password, username } = req.body
-    const hashedPassword = bcrypt.hashSync(password)
 
-    await currUser.update({ firstName, lastName, email, hashedPassword, username })
+    let hashedPassword
+    if (oldPassword && !bcrypt.compareSync(oldPassword, currUser.hashedPassword.toString())) {
+        // throw error
+        res.status(400).json({['Old Password']: 'Password did not match old password.'})
+    }
+    if (newPassword) hashedPassword = bcrypt.hashSync(newPassword)
+
+    updatedUser.hashedPassword = hashedPassword
+
+
+
+    await currUser.update(updatedUser)
 
     const safeUser = {
         firstName: currUser.firstName,
@@ -90,7 +134,9 @@ router.put('/edit', validateSignup, async (req, res) => {
         username: currUser.username
     }
 
-    res.json({ user: safeUser})
+    await setTokenCookie(res, safeUser)
+
+    res.json({ user: safeUser })
 })
 
 module.exports = router

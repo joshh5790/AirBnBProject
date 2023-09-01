@@ -21,7 +21,6 @@ const SpotDetails = () => {
     const hasReview = reviews.find(review => review.userId === sessionUser?.id)
     const [imageList, setImageList] = useState([])
     const [isLoaded, setIsLoaded] = useState(false)
-    console.log(Object.entries(spot))
     useEffect(() => {
         dispatch(getSpotDetailsThunk(spotId))
         .then(res => setImageList([{ url: res.previewImage }, ...res.SpotImages]))

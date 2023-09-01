@@ -79,6 +79,17 @@ export const logout = () => async dispatch => {
       return response;
 }
 
+export const editUserThunk = user => async dispatch => {
+    const response = await csrfFetch(`/api/users/${user.id}`, {
+        method: 'PUT',
+        body: JSON.stringify(user)
+    })
+
+    const data = await response.json()
+    dispatch(setUser(data))
+    return response
+}
+
 // reducer
 
 const initialState = { user: null }
