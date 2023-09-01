@@ -105,9 +105,7 @@ function InfoContainer({label,
                                 placeholder={entry[0]}
                                 value={values[entry[0]]}
                                 onChange={e => setValues(prev => {return {...prev, [entry[0]]: e.target.value}})} />
-                            {(errors[entry[0]]
-                                && <div className="error-msg">{errors[entry[0]]}</div>)
-                                || <div className="gap" />}
+                            <div className="error-msg">{errors[entry[0]] && errors[entry[0]]}&nbsp;</div>
                         </span>)}
                     </div>
                     <button
@@ -128,10 +126,7 @@ function InfoContainer({label,
                                 value={values[entry[0]]}
                                 type='password'
                                 onChange={e => setValues(prev => {return {...prev, [entry[0]]: e.target.value}})} />
-                            {(onSubmit
-                                && errors[entry[0]]
-                                && <div className="error-msg">{errors[entry[0]]}</div>)
-                                || <div className="gap"/>}
+                            <div className="error-msg">{onSubmit && errors[entry[0]] && errors[entry[0]]}&nbsp;</div>
                         </span>)}
                     </div>
                     <button

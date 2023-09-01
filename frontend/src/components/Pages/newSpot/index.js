@@ -290,7 +290,7 @@ const NewSpot = () => {
                     type='text'
                     placeholder='Preview Image URL' />
                 <span className='error-msg new-spot'>
-                    {(errors.previewImage && `${errors.previewImage}`) || <div className='gap'/>}
+                    {errors.previewImage && `${errors.previewImage}`}&nbsp;
                 </span>
                 <input
                     className='new-spot-input img'
@@ -301,7 +301,7 @@ const NewSpot = () => {
                     type='text'
                     placeholder='Image URL' />
                 <span className='error-msg new-spot'>
-                    {(errors.image2 && `${errors.image2}`) || <div className='gap'/>}
+                    {errors.image2 && `${errors.image2}`}&nbsp;
                 </span>
                 <input
                     className='new-spot-input img'
@@ -312,7 +312,7 @@ const NewSpot = () => {
                     type='text'
                     placeholder='Image URL' />
                 <span className='error-msg new-spot'>
-                    {(errors.image3 && `${errors.image3}`) || <div className='gap'/>}
+                    {errors.image3 && `${errors.image3}`}&nbsp;
                 </span>
                 <input
                     className='new-spot-input img'
@@ -323,7 +323,7 @@ const NewSpot = () => {
                     type='text'
                     placeholder='Image URL' />
                 <span className='error-msg new-spot'>
-                    {(errors.image4 && `${errors.image4}`) || <div className='gap'/>}
+                    {errors.image4 && `${errors.image4}`}&nbsp;
                 </span>
                 <input
                     className='new-spot-input img'
@@ -334,7 +334,7 @@ const NewSpot = () => {
                     type='text'
                     placeholder='Image URL' />
                 <span className='error-msg new-spot'>
-                    {(errors.image5 && `${errors.image5}`) || <div className='gap'/>}
+                    {errors.image5 && `${errors.image5}`}&nbsp;
                 </span>
                 <div className='new-spot-button-div'>
                     <button
