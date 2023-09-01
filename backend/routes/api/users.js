@@ -115,8 +115,7 @@ router.put('/:userId', validateUpdate, async (req, res) => {
 
     let hashedPassword
     if (oldPassword && !bcrypt.compareSync(oldPassword, currUser.hashedPassword.toString())) {
-        // throw error
-        res.status(400).json({['Old Password']: 'Password did not match old password.'})
+        return res.status(400).json({['Old Password']: 'Password did not match old password.'})
     }
     if (newPassword) hashedPassword = bcrypt.hashSync(newPassword)
 
