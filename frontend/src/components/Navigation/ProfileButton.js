@@ -60,28 +60,38 @@ function ProfileButton({ user }) {
           <>
             <li className="user-info">Hello, {user.firstName}</li>
             <li className="user-info">{user.email}</li>
-            <li className="dropdown-button">
+            <li className="dropdown-button-div">
+              <button
+                onClick={e => handleButton(e, '/spots/new')}
+                className="dropdown-button hidden">
+                Create a New Spot
+              </button>
+            </li>
+            <li className="border" />
+            <li className="dropdown-button-div">
               <button
                 onClick={e => handleButton(e, '/spots/current')}
-                className="manage-spots-button">
+                className="dropdown-button">
                 Manage Spots
               </button>
             </li>
-            <li className="dropdown-button">
+            <li className="dropdown-button-div">
               <button
                 onClick={e => handleButton(e, '/reviews/current')}
-                className="manage-reviews-button">
+                className="dropdown-button">
                 Manage Reviews
               </button>
             </li>
-            <li className="dropdown-button">
+            <li className="border" />
+            <li className="dropdown-button-div">
               <button
                 onClick={e => handleButton(e, '/account')}
-                className="manage-reviews-button">
+                className="dropdown-button">
                 Account
               </button>
             </li>
-            <li>
+            <li className="border" />
+            <li className="logout-button-div">
               <button
                 onClick={logout}
                 className='logout-button'
@@ -92,7 +102,7 @@ function ProfileButton({ user }) {
           </>
           ) : (
             <>
-            <li className="dropdown-button">
+            <li className="dropdown-button-div">
               <OpenModalButton
                 buttonText="Log In"
                 modalComponent={<LoginFormModal />}
@@ -100,7 +110,7 @@ function ProfileButton({ user }) {
                 className='login-button'
                 />
             </li>
-            <li className="dropdown-button">
+            <li className="dropdown-button-div">
               <OpenModalButton
                 buttonText="Sign Up"
                 modalComponent={<SignupFormModal />}

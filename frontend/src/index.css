@@ -41,6 +41,10 @@ textarea {
     filter: drop-shadow(0 0 1px black)
 }
 
+.hidden {
+    display: none;
+}
+
 .gray-color-button {
     background-color: #999999;
     color: white;
