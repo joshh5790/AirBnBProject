@@ -1,5 +1,5 @@
 import React from 'react';
-import { GoogleMap, useJsApiLoader } from '@react-google-maps/api';
+import { GoogleMap, Marker, useJsApiLoader } from '@react-google-maps/api';
 
 const containerStyle = {
   width: '100%',
@@ -14,15 +14,14 @@ const Maps = ({ apiKey, center }) => {
   });
 
 
-  return (
+  if (isLoaded) return (
     <>
-      {isLoaded && (
-        <GoogleMap
-          mapContainerStyle={containerStyle}
-          center={center}
-          zoom={10}
-        />
-      )}
+      <GoogleMap
+        mapContainerStyle={containerStyle}
+        center={center}
+        zoom={10}>
+        <Marker position={center}/>
+      </GoogleMap>
     </>
   );
 };
