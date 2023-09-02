@@ -27,6 +27,8 @@ function InfoContainer({label,
                 case 'name':
                     if (values['First Name'].length === 0) errorList['First Name'] = 'First name is required'
                     if (values['Last Name'].length === 0) errorList['Last Name'] = 'Last name is required'
+                    if (values['First Name'] === variables['First Name']
+                        && values['Last Name'] === variables['Last Name']) errorList['First Name'] = null
                     break;
                 case 'email':
                     if (!values['Email address'].match(validEmailCheck)) errorList['Email address'] = 'Not a valid email'
