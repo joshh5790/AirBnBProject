@@ -40,7 +40,7 @@
 }
 
 .tooltip {
-    display: none;
+    visibility: hidden;
     position: absolute;
     background-color: #333;
     color: #fff;
@@ -56,7 +56,11 @@
 }
 
 .spot-card:hover > .tooltip {
-    display: block;
+    transition-delay: 0.5s;
+    transition-property: visibility;
+    visibility: visible;
+    opacity: 1;
+
 }
 
 @media (max-width: 550px) {
