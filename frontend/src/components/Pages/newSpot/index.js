@@ -210,7 +210,7 @@ const NewSpot = () => {
                             onChange={e => {setCity(e.target.value)}}
                             type='text'
                             placeholder='City' />
-                    <span className='comma'>&nbsp;&nbsp;,</span>
+                    <span className='comma'>&nbsp;,</span>
                     </div>
                     <div className='state-div'>
                         <label name='state'>State&nbsp;&nbsp;
@@ -237,7 +237,7 @@ const NewSpot = () => {
                             onChange={e => {setLatitude(e.target.value)}}
                             type='text'
                             placeholder='Latitude' />
-                        <span className='comma'>&nbsp;&nbsp;,</span>
+                        <span className='comma'>&nbsp;,</span>
                     </div>
                     <div className='lng-div'>
                         <label name='longitude'>Longitude&nbsp;&nbsp;
