@@ -77,9 +77,9 @@ const NewSpot = () => {
         if (!city) spotErrors.city = 'City is required';
         if (!state) spotErrors.state = 'State is required';
         if (!latitude) spotErrors.lat = 'Latitude is required';
-        else if (latitude > 90 || latitude < -90) spotErrors.lat = 'Invalid latitude';
+        else if (parseFloat(latitude) > 90 || parseFloat(latitude) < -90) spotErrors.lat = 'Invalid latitude';
         if (!longitude) spotErrors.lng = 'Longitude is required';
-        else if (longitude > 180 || longitude < -180) spotErrors.lng = 'Invalid longitude';
+        else if (parseFloat(longitude) > 180 || parseFloat(longitude) < -180) spotErrors.lng = 'Invalid longitude';
         if (!description || description.length < 30) {
             spotErrors.description = 'Description needs a minimum of 30 characters';
         }
@@ -235,7 +235,7 @@ const NewSpot = () => {
                             name='latitude'
                             value={latitude}
                             onChange={e => {setLatitude(e.target.value)}}
-                            type='number'
+                            type='text'
                             placeholder='Latitude' />
                         <span className='comma'>&nbsp;&nbsp;,</span>
                     </div>
@@ -248,7 +248,7 @@ const NewSpot = () => {
                             name='longitude'
                             value={longitude}
                             onChange={e => {setLongitude(e.target.value)}}
-                            type='number'
+                            type='text'
                             placeholder='Longitude' />
                     </div>
                 </div>
