@@ -11,7 +11,7 @@ router.delete('/:reviewImageId', async (req, res) => {
     if (user.id !== currReview.userId) return res.status(403).json({ message: "Forbidden" })
 
     await currImg.destroy()
-    res.json({ message: "Successfully deleted" })
+    return res.json({ message: "Successfully deleted" })
 })
 
 module.exports = router

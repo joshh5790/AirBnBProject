@@ -24,6 +24,10 @@
     user-select: none;
 }
 
+.info-edit-button.gray {
+    color: #CCCCCC;
+}
+
 .info-inputs-div {
     display: flex;
 }

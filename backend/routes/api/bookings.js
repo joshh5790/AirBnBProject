@@ -15,7 +15,7 @@ router.get('/current', async (req, res) => {
             }
         }
     })
-    res.json({ Bookings: userBookings })
+    return res.json({ Bookings: userBookings })
 })
 
 // edit a booking by bookingId
@@ -60,7 +60,7 @@ router.put('/:bookingId', async (req, res) => {
     })
 
     await currBooking.update({ startDate, endDate })
-    res.json(currBooking)
+    return res.json(currBooking)
 })
 
 // delete a booking
@@ -75,7 +75,7 @@ router.delete('/:bookingId', async (req, res) => {
 
 
     await currBooking.destroy()
-    res.json({ message: "Successfully deleted" })
+    return res.json({ message: "Successfully deleted" })
 })
 
 module.exports = router

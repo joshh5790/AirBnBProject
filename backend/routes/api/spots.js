@@ -108,7 +108,7 @@ router.get('/:spotId/reviews', async (req, res) => {
                 }
             ]
         })
-        res.json(spotReviews)
+        return res.json(spotReviews)
     } catch {
         return res.status(404).json({ message: "Spot couldn't be found" })
     }
@@ -168,9 +168,9 @@ router.get('/:spotId', async (req, res) => {
         ],
         attributes: { exclude: ['createdAt', 'updatedAt'] }
     })
-    if (currSpot) res.json(currSpot)
+    if (currSpot) return res.json(currSpot)
     else {
-        res.status(404).json({ message: "Spot couldn't be found"})
+        return res.status(404).json({ message: "Spot couldn't be found"})
     }
 })
 
@@ -179,12 +179,12 @@ router.put('/:spotId', validateSpot, async (req, res, next) => {
 
     // checks if owner is logged in
     const { user } = req
-    if (!user) res.status(403).json({ message: "Forbidden" })
+    if (!user) return res.status(403).json({ message: "Forbidden" })
     const currSpot = await Spot.findOne({
         where:{ id: req.params.spotId },
         attributes: { exclude: ['previewImage', 'avgStarRating', 'numReviews'] }
     })
-    if (!currSpot) res.status(404).json({ message: "Spot couldn't be found"})
+    if (!currSpot) return res.status(404).json({ message: "Spot couldn't be found"})
     if (user.id !== currSpot.ownerId) res.status(403).json({ message: "Forbidden" })
 
     const {
@@ -223,7 +223,7 @@ router.get('/', validateQuery, async (req, res) => {
         offset: size * (page - 1),
         limit: size
     })
-    res.json({ Spots: allSpots })
+    return res.json({ Spots: allSpots })
 })
 
 // Creates a booking for a spot
@@ -235,7 +235,7 @@ router.post('/:spotId/bookings', async (req, res) => {
     endDate = new Date(endDate)
 
     // check if startDate is after endDate
-    if (startDate >= endDate) res.status(400).json({
+    if (startDate >= endDate) return res.status(400).json({
         message: "Bad Request",
         errors: {
             endDate: "endDate cannot be on or before startDate"
@@ -272,7 +272,7 @@ router.post('/:spotId/bookings', async (req, res) => {
         userId: currUser.id,
         startDate, endDate
     })
-    res.json(newBooking)
+    return res.json(newBooking)
 
 })
 
@@ -299,7 +299,7 @@ router.post('/:spotId/reviews', reviews.validateReview, async (req, res) => {
     const avgStarRating = Math.round(sum * 10 / numReviews) / 10
     await currSpot.update({ avgStarRating, numReviews })
 
-    res.json(newReview)
+    return res.json(newReview)
 })
 
 // create a new image for a spot
@@ -314,7 +314,7 @@ router.post('/:spotId/images', async (req, res) => {
     const spotImg = await SpotImage.create({
         url, preview, spotId: currSpot.id
     })
-    res.json({
+    return res.json({
         id: spotImg.id,
         url: spotImg.url,
         preview: spotImg.preview
@@ -348,9 +348,7 @@ router.delete('/:spotId', async (req, res) => {
     if (user.id !== currSpot.ownerId) return res.status(403).json({ message: "Forbidden" })
 
     await currSpot.destroy()
-    res.json({
-        message: "Successfully deleted"
-    })
+    res.json({ message: "Successfully deleted" })
 })
 
 

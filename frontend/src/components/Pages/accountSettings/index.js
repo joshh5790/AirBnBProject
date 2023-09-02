@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import InfoContainer from "./infoContainer"
 import { restoreUserThunk } from "../../../store/session"
+import OpenModalButton from '../../OpenModalButton'
+import DeleteAccountModal from "../../Modals/deleteAccount"
+import InfoContainer from "./infoContainer"
 import './accountSettings.css'
 
 function AccountSettings() {
@@ -34,7 +36,7 @@ function AccountSettings() {
                     otherEdit={otherEdit}
                     changeOther={changeEditStatus}
                     restoreUser={restoreUser}
-                    />
+                />
                 <InfoContainer
                     label='Email address'
                     desc='Use an address you’ll always have access to.'
@@ -43,7 +45,7 @@ function AccountSettings() {
                     otherEdit={otherEdit}
                     changeOther={changeEditStatus}
                     restoreUser={restoreUser}
-                    />
+                />
             <h2>Security</h2>
                 <InfoContainer
                     label='Password'
@@ -53,7 +55,13 @@ function AccountSettings() {
                     otherEdit={otherEdit}
                     changeOther={changeEditStatus}
                     restoreUser={restoreUser}
-                    />
+                />
+            {!otherEdit &&
+            <OpenModalButton
+                buttonText='Delete Account'
+                modalComponent={<DeleteAccountModal user={user}/>}
+                className='delete-account-button'
+            />}
         </div>
         }</>
     )

@@ -1,7 +1,7 @@
 import { csrfFetch } from './csrf'
 
 const SET_USER = 'session/SET_USER'
-const REMOVE_USER = 'session/REMOVE_USER'
+const DELETE_USER = 'session/DELETE_USER'
 
 // action creators
 
@@ -12,8 +12,8 @@ export function setUser(user) {
     }
 }
 
-export function deleteUser() { // needs to remove the cookie too
-    return { type: REMOVE_USER }
+export function deleteUser() {
+    return { type: DELETE_USER }
 }
 
 // thunks
@@ -90,6 +90,15 @@ export const editUserThunk = user => async dispatch => {
     return response
 }
 
+export const deleteUserThunk = userId => async dispatch => {
+    const response = await csrfFetch(`/api/users/${userId}`, {
+        method: 'DELETE'
+    })
+
+    dispatch(deleteUser(userId))
+    return response
+}
+
 // reducer
 
 const initialState = { user: null }
@@ -97,8 +106,8 @@ const initialState = { user: null }
 export default function sessionReducer(state = initialState, action) {
     switch(action.type) {
         case SET_USER:
-            return { ...state, user: action.payload }
-        case REMOVE_USER:
+            return { user: action.payload }
+        case DELETE_USER:
             return initialState
         default:
             return state

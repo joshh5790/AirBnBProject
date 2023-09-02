@@ -58,3 +58,9 @@
 .spot-card:hover > .tooltip {
     display: block;
 }
+
+@media (max-width: 550px) {
+    .tooltip {
+        display: none;
+    }
+}

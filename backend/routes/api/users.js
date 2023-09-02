@@ -103,7 +103,7 @@ router.post('/', validateSignup, async (req, res) => {
 // edit user information
 router.put('/:userId', validateUpdate, async (req, res) => {
     const { user } = req
-    if (!user || user.id !== parseInt(req.params.userId)) res.status(403).json({ message: "Forbidden" })
+    if (!user || user.id !== parseInt(req.params.userId)) return res.status(403).json({ message: "Forbidden" })
     const currUser = await User.unscoped().findByPk(req.params.userId)
     const { firstName, lastName, email, oldPassword, newPassword } = req.body
 
@@ -111,17 +111,10 @@ router.put('/:userId', validateUpdate, async (req, res) => {
     if (firstName !== currUser.firstName) updatedUser.firstName = firstName
     if (lastName !== currUser.lastName) updatedUser.lastName = lastName
     if (email !== currUser.email) updatedUser.email = email
-
-
-    let hashedPassword
     if (oldPassword && !bcrypt.compareSync(oldPassword, currUser.hashedPassword.toString())) {
         return res.status(400).json({['Old Password']: 'Password did not match old password.'})
     }
-    if (newPassword) hashedPassword = bcrypt.hashSync(newPassword)
-
-    updatedUser.hashedPassword = hashedPassword
-
-
+    if (oldPassword && newPassword) updatedUser.hashedPassword = bcrypt.hashSync(newPassword)
 
     await currUser.update(updatedUser)
 
@@ -136,6 +129,17 @@ router.put('/:userId', validateUpdate, async (req, res) => {
     await setTokenCookie(res, safeUser)
 
     res.json({ user: safeUser })
+})
+
+// delete user from database
+router.delete('/:userId', async (req, res) => {
+    const { user } = req
+    if (!user || user.id !== parseInt(req.params.userId)) return res.status(403).json({ message: "Forbidden" })
+    const currUser = await User.findByPk(user.id)
+    if (!currUser) return res.status(404).json({ message: "User couldn't be found" })
+
+    await currUser.destroy()
+    res.json({ message: 'Successfully deleted' })
 })
 
 module.exports = router

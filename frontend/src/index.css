@@ -56,7 +56,10 @@ textarea {
 }
 
 .gray-color-button:hover,
-.delete-modal-button:hover {
+.delete-modal-button:hover,
+.delete-account-button:hover,
+.delete-acc-cancel:hover,
+.confirm-delete-acc-button:enabled:hover {
     box-shadow: 0 0 0.5rem #999999;
 }
 

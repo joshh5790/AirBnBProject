@@ -110,6 +110,7 @@ function ProfileButton({ user }) {
                 className='login-button'
                 />
             </li>
+            <li className="border" />
             <li className="dropdown-button-div">
               <OpenModalButton
                 buttonText="Sign Up"

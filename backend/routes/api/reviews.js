@@ -56,16 +56,16 @@ router.post('/:reviewId/images', async (req, res) => {
         const newImage = await ReviewImage.create({
             url, reviewId: currReview.id
         })
-        res.json({
+        return res.json({
             id: newImage.id,
             url
         })
     } catch(error) {
         if (error.errors[0].path === 'url') {
-            res.json({ message: "Invalid image url"})
+            return res.json({ message: "Invalid image url"})
         }
         if (error.errors[0].path === 'reviewId') {
-            res.json({ message: "Maximum number of images for this resource was reached"})
+            return res.json({ message: "Maximum number of images for this resource was reached"})
         }
     }
 })
@@ -108,7 +108,7 @@ router.delete('/:reviewId', async (req, res) => {
         Math.round(sum * 10 / numReviews) / 10 : 0
     await currSpot.update({ avgStarRating, numReviews })
 
-    res.json({ message: "Successfully deleted" })
+    return res.json({ message: "Successfully deleted" })
 })
 
 module.exports = {
