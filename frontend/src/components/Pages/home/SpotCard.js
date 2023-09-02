@@ -44,7 +44,7 @@ const SpotCard = ({ spotId }) => {
                         {spot?.avgStarRating ? `  ${parseFloat(spot.avgStarRating).toFixed(1)}` : "  New"}
                     </p>
                 </div>
-                <div className='price'><span className='price-num'>{`$${spot.price} `}</span>night</div>
+                <div className='spot-card-price'><span className='price-num'>{`$${spot.price} `}</span>night</div>
             </div>
             <div className="tooltip" style={{ left: position.x, top: position.y }}>
                 {spot.name}
@@ -59,7 +59,7 @@ const SpotCard = ({ spotId }) => {
                 <p className='loc skeleton'>&nbsp;</p>
                 <p className='rating skeleton'>&nbsp;</p>
             </div>
-            <div className='price skeleton'>&nbsp;</div>
+            <div className='spot-card-price skeleton'>&nbsp;</div>
         </>
     )
 }

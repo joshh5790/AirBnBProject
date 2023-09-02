@@ -51,7 +51,7 @@
     z-index: 1;
 }
 
-.price {
+.spot-card-price {
     max-width: 6rem;
 }
 
@@ -60,7 +60,7 @@
 }
 
 @media (max-width: 550px) {
-    .tooltip {
+    .spot-card:hover > .tooltip {
         display: none;
     }
 }

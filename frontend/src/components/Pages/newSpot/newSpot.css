@@ -1,7 +1,8 @@
 .new-spot-page {
     position: relative;
     top: 4.375rem;
-    width: 30rem;
+    width: 80vw;
+    max-width: 30rem;
     margin: auto;
 }
 
@@ -24,7 +25,8 @@ label {
 }
 
 .city-div {
-    width: 65%;
+    width: 52vw;
+    max-width: 20rem;
 }
 
 .comma {
@@ -34,7 +36,8 @@ label {
 }
 
 .state-div {
-    width: 35%;
+    width: 27vw;
+    max-width: 10rem;
 }
 
 .new-spot-input-city,
@@ -44,7 +47,7 @@ label {
 
 .new-spot-input-state {
     position: relative;
-    right: 1px;
+    width: 96%;
 }
 
 .new-spot-input-lng {

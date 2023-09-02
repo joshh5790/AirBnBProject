@@ -12,6 +12,7 @@ import './SpotDetailsPage.css'
 import { useHistory } from "react-router-dom"
 
 const SpotDetails = () => {
+    window.scroll(0, 0)
     const dispatch = useDispatch()
     const history = useHistory()
     const spotId = useParams().id
