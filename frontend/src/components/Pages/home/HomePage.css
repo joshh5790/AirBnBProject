@@ -1,10 +1,43 @@
 .home-page {
     position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    top: 4.375rem;
+}
+
+.home-filter-bar {
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.filter-size-label {
+    margin-bottom: 0.5rem;
+}
+
+.filter-size-input {
+    width: 2rem;
+    background-color: #EEEEEE;
+    text-align: center;
+    border-radius: 10px;
+    padding: 0.5rem;
+    margin-right: 0.5rem;
+}
+
+.filter-size-confirm {
+    background-color: #EEEEEE;
+    padding: 0.5rem;
+    border-radius: 10px;
+}
+
+.home-page-listings {
+    position: relative;
     display: grid;
     grid-template-columns: 1fr;
     grid-auto-flow: row;
     justify-items: center;
-    top: 4.375rem;
     list-style: none;
     margin: 0;
     grid-column-gap: 1.5rem;
@@ -19,19 +52,19 @@
 /* image takes up 100% of grid width, set to variable and set as height too */
 
 @media (min-width: 550px) {
-    .home-page {
+    .home-page-listings {
         grid-template-columns: repeat(2, 1fr);
     }
 }
 
 @media (min-width: 850px) {
-    .home-page {
+    .home-page-listings {
         grid-template-columns: repeat(3, 1fr);
     }
 }
 
 @media (min-width: 1128px) {
-    .home-page {
+    .home-page-listings {
         grid-template-columns: repeat(4, 1fr);
     }
 }

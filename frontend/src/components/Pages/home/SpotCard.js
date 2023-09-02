@@ -10,6 +10,8 @@ const SpotCard = ({ spotId }) => {
     const [isLoaded, setIsLoaded] = useState(false)
     const spot = useSelector(state => state.spots[spotId])
 
+    // future functionality to view all spotImages from home page
+
     useEffect(() => {
         dispatch(getSpotDetailsThunk(spotId))
         .then(() => setIsLoaded(true))

@@ -38,8 +38,17 @@ export function editSpot(spot) {
 
 // thunks
 
-export const getAllSpotsThunk = () => async dispatch => {
-    const response = await csrfFetch('/api/spots')
+export const getAllSpotsThunk = (query) => async dispatch => {
+    let queryString = ''
+    if (query) {
+        const queries = Object.entries(query)
+        queryString = '?'
+        queries.forEach(el => {
+            queryString += `${el[0]}=${el[1]}&`
+        })
+        queryString = queryString.slice(0, -1)
+    }
+    const response = await csrfFetch(`/api/spots${queryString}`)
 
     const data = await response.json()
     const dataID = {}
