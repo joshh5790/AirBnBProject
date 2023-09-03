@@ -36,7 +36,7 @@ const ManageSpots = () => {
                 className='gray-color-button'>
                 Create a New Spot
             </button>
-            {!allSpots.length && <div>You aren't currently hosting any spots.</div>}
+            {!allSpots.length && <div className='no-spots'>You aren't currently hosting any spots.</div>}
             <ul className='manage-spots-listing'>
                 {allSpots.map(spot => (
                     <li

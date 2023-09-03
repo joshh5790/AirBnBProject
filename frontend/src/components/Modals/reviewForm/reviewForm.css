@@ -28,4 +28,5 @@
 
 .star-span:hover {
     color: black;
+    cursor: pointer;
 }
