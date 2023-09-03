@@ -55,6 +55,9 @@ const HomePage = () => {
                     </button>
                 </div>
             </div>
+            {allSpots === 0 && <div className='no-spots'>
+                Thanos has snapped all spots out of existence. Just kidding, there are just no more spots on this page!
+            </div>}
             <ul className='home-page-listings'>
                 {allSpots.map(spot => <li
                         className='spot-li'
@@ -72,7 +75,7 @@ const HomePage = () => {
                     </button>
                     <span className='page-number'>{page}</span>
                     <button
-                        disabled={!(parseInt(cardsLoaded) === allSpots.length)}
+                        disabled={!(parseInt(cardsLoaded) === allSpots.length) || allSpots.length === 0}
                         onClick={() => checkPage('+')}
                         className='page-button'>
                         {`Next >>`}
