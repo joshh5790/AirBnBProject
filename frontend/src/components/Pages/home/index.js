@@ -55,7 +55,7 @@ const HomePage = () => {
                     </button>
                 </div>
             </div>
-            {allSpots === 0 && <div className='no-spots'>
+            {allSpots.length === 0 && <div className='no-spots'>
                 Thanos has snapped all spots out of existence. Just kidding, there are just no more spots on this page!
             </div>}
             <ul className='home-page-listings'>
