@@ -7,6 +7,7 @@ import './HomePage.css'
 const HomePage = () => {
     const dispatch = useDispatch()
     const [size, setSize] = useState(20)
+    const [page, setPage] = useState(1)
     const allSpots = useSelector(state => Object.values(state.spots))
 
     useEffect(() => {
@@ -14,14 +15,23 @@ const HomePage = () => {
     }, [dispatch])
 
     const checkSize = value => {
-        if (value > 20) setSize(20)
-        else if (value < 0) setSize(1)
-        else setSize(value)
+        if (value > 20) sessionStorage.setItem('size', 20)
+        else if (value < 0) sessionStorage.setItem('size', 1)
+        else sessionStorage.setItem('size', value)
+        setSize(sessionStorage.getItem('size'))
+    }
+
+    const checkPage = op => {
+        if (op === '-') sessionStorage.setItem('page', page - 1 || 1)
+        if (op === '+') sessionStorage.setItem('page', page + 1)
+        setPage(parseInt(sessionStorage.getItem('page')))
+        dispatch(getAllSpotsThunk({ page: sessionStorage.getItem('page'), size }))
     }
 
     const handleFilterSize = () => {
-        if (!size) setSize(20)
-        dispatch(getAllSpotsThunk({ size: size || 20 }))
+        console.log(size, "SUBMIT")
+        sessionStorage.setItem('page', 1)
+        dispatch(getAllSpotsThunk({ page: 1, size }))
     }
 
     return (
@@ -51,7 +61,18 @@ const HomePage = () => {
                 ))}
             </ul>
             <div className='paginate'>
-
+                    <button
+                        disabled={page === 1}
+                        onClick={() => checkPage('-')}
+                        className='page-button'>
+                        {`<< Previous`}
+                    </button>
+                    <span className='page-number'>{page}</span>
+                    <button
+                        onClick={() => checkPage('+')}
+                        className='page-button'>
+                        {`Next >>`}
+                    </button>
             </div>
         </div>
     )
