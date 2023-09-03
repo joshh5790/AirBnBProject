@@ -14,7 +14,8 @@ const HomePage = () => {
 
     useEffect(() => {
         dispatch(getAllSpotsThunk({ page, size }))
-        .then(setIsLoaded(true))
+        .then(() => window.scroll(0,0))
+        .then(() => setIsLoaded(true))
     }, [dispatch, page, refresh])
 
     const checkSize = value => {
@@ -58,7 +59,7 @@ const HomePage = () => {
                     <li
                     className='spot-li'
                     key={spot.id}>
-                        <SpotCard spotId={spot.id} homeLoaded={isLoaded} setHomeLoaded={setIsLoaded} />
+                        <SpotCard spotId={spot.id} setHomeLoaded={setIsLoaded} />
                     </li>
                 ))}
             </ul>

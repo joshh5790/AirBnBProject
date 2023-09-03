@@ -59,6 +59,10 @@
 
 }
 
+.weird-4-px {
+    height: 4px;
+}
+
 @media (max-width: 550px) {
     .spot-card:hover > .tooltip {
         display: none;

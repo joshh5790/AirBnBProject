@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useEffect, useState } from 'react'
 import { getSpotDetailsThunk } from '../../../store/spots'
 
-const SpotCard = ({ spotId, homeLoaded, setHomeLoaded }) => {
+const SpotCard = ({ spotId, setHomeLoaded }) => {
     const dispatch = useDispatch()
     const [position, setPosition] = useState({ x: 0, y: 0 })
     const [isLoaded, setIsLoaded] = useState(false)
@@ -13,12 +13,10 @@ const SpotCard = ({ spotId, homeLoaded, setHomeLoaded }) => {
     // future functionality to view all spotImages from home page
 
     useEffect(() => {
-        if (homeLoaded) {
-            setHomeLoaded(false)
-            dispatch(getSpotDetailsThunk(spotId))
-            .then(() => setIsLoaded(true))
-            .then(() => setHomeLoaded(true))
-        }
+        setHomeLoaded(false)
+        dispatch(getSpotDetailsThunk(spotId))
+        .then(() => setIsLoaded(true))
+        .then(() => setHomeLoaded(true))
     }, [dispatch])
 
     const handleMouseMove = (e) => {
@@ -59,6 +57,7 @@ const SpotCard = ({ spotId, homeLoaded, setHomeLoaded }) => {
     else return (
         <>
             <div className='image-container skeleton' />
+            <div className='weird-4-px'/>
             <div className='loc-rating'>
                 <p className='loc skeleton'>&nbsp;</p>
                 <p className='rating skeleton'>&nbsp;</p>
