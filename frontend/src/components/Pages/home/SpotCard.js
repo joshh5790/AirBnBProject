@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useEffect, useState } from 'react'
 import { getSpotDetailsThunk } from '../../../store/spots'
 
-const SpotCard = ({ spotId, setHomeLoaded }) => {
+const SpotCard = ({ spotId, setCardsLoaded }) => {
     const dispatch = useDispatch()
     const [position, setPosition] = useState({ x: 0, y: 0 })
     const [isLoaded, setIsLoaded] = useState(false)
@@ -13,10 +13,9 @@ const SpotCard = ({ spotId, setHomeLoaded }) => {
     // future functionality to view all spotImages from home page
 
     useEffect(() => {
-        setHomeLoaded(false)
         dispatch(getSpotDetailsThunk(spotId))
         .then(() => setIsLoaded(true))
-        .then(() => setHomeLoaded(true))
+        .then(() => setCardsLoaded(prev => prev + 1))
     }, [dispatch])
 
     const handleMouseMove = (e) => {
