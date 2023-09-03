@@ -35,10 +35,6 @@
     min-width: 2rem;
 }
 
-.price-num {
-    font-weight: bold;
-}
-
 .tooltip {
     visibility: hidden;
     position: absolute;

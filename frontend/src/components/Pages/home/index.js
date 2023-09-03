@@ -8,11 +8,14 @@ const HomePage = () => {
     const dispatch = useDispatch()
     const [size, setSize] = useState(20)
     const [page, setPage] = useState(1)
+    const [isLoaded, setIsLoaded] = useState(false)
+    const [refresh, setRefresh] = useState(false)
     const allSpots = useSelector(state => Object.values(state.spots))
 
     useEffect(() => {
-        dispatch(getAllSpotsThunk())
-    }, [dispatch])
+        dispatch(getAllSpotsThunk({ page, size }))
+        .then(setIsLoaded(true))
+    }, [dispatch, page, refresh])
 
     const checkSize = value => {
         if (value > 20) sessionStorage.setItem('size', 20)
@@ -25,13 +28,12 @@ const HomePage = () => {
         if (op === '-') sessionStorage.setItem('page', page - 1 || 1)
         if (op === '+') sessionStorage.setItem('page', page + 1)
         setPage(parseInt(sessionStorage.getItem('page')))
-        dispatch(getAllSpotsThunk({ page: sessionStorage.getItem('page'), size }))
     }
 
     const handleFilterSize = () => {
-        console.log(size, "SUBMIT")
         sessionStorage.setItem('page', 1)
-        dispatch(getAllSpotsThunk({ page: 1, size }))
+        setRefresh(prev => !prev)
+        setPage(1)
     }
 
     return (
@@ -56,23 +58,23 @@ const HomePage = () => {
                     <li
                     className='spot-li'
                     key={spot.id}>
-                        <SpotCard spotId={spot.id} />
+                        <SpotCard spotId={spot.id} homeLoaded={isLoaded} setHomeLoaded={setIsLoaded} />
                     </li>
                 ))}
             </ul>
             <div className='paginate'>
-                    <button
+                    {isLoaded && <button
                         disabled={page === 1}
                         onClick={() => checkPage('-')}
                         className='page-button'>
-                        {`<< Previous`}
-                    </button>
+                        {`<< Prev`}
+                    </button>}
                     <span className='page-number'>{page}</span>
-                    <button
+                    {isLoaded && <button
                         onClick={() => checkPage('+')}
                         className='page-button'>
                         {`Next >>`}
-                    </button>
+                    </button>}
             </div>
         </div>
     )

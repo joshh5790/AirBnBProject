@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useEffect, useState } from 'react'
 import { getSpotDetailsThunk } from '../../../store/spots'
 
-const SpotCard = ({ spotId }) => {
+const SpotCard = ({ spotId, homeLoaded, setHomeLoaded }) => {
     const dispatch = useDispatch()
     const [position, setPosition] = useState({ x: 0, y: 0 })
     const [isLoaded, setIsLoaded] = useState(false)
@@ -13,8 +13,12 @@ const SpotCard = ({ spotId }) => {
     // future functionality to view all spotImages from home page
 
     useEffect(() => {
-        dispatch(getSpotDetailsThunk(spotId))
-        .then(() => setIsLoaded(true))
+        if (homeLoaded) {
+            setHomeLoaded(false)
+            dispatch(getSpotDetailsThunk(spotId))
+            .then(() => setIsLoaded(true))
+            .then(() => setHomeLoaded(true))
+        }
     }, [dispatch])
 
     const handleMouseMove = (e) => {
@@ -26,7 +30,6 @@ const SpotCard = ({ spotId }) => {
     };
 
     if (isLoaded) return (
-        // <>{isLoaded &&
         <NavLink
             to={`/spots/${spot.id}`}
             className="spot-card"
@@ -46,13 +49,12 @@ const SpotCard = ({ spotId }) => {
                         {spot?.avgStarRating ? `  ${parseFloat(spot.avgStarRating).toFixed(1)}` : "  New"}
                     </p>
                 </div>
-                <div className='spot-card-price'><span className='price-num'>{`$${spot.price} `}</span>night</div>
+                <div className='spot-card-price'><b>${spot.price}</b> night</div>
             </div>
             <div className="tooltip" style={{ left: position.x, top: position.y }}>
                 {spot.name}
             </div>
         </NavLink>
-        // }</>
     )
     else return (
         <>
