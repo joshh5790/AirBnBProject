@@ -15,7 +15,9 @@ const SpotCard = ({ spotId, setCardsLoaded }) => {
     useEffect(() => {
         dispatch(getSpotDetailsThunk(spotId))
         .then(() => setIsLoaded(true))
-        .then(() => setCardsLoaded(prev => prev + 1))
+        .then(() => {
+            if (setCardsLoaded) return setCardsLoaded(prev => prev + 1)
+        })
     }, [dispatch])
 
     const handleMouseMove = (e) => {
