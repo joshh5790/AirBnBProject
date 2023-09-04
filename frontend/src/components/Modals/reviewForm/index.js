@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { useModal } from "../../../context/Modal";
 import { createReviewThunk, updateReviewThunk } from "../../../store/reviews";
 import { getSpotDetailsThunk } from "../../../store/spots";
+// import { validateImg } from "../../../utils/utils";
 import './reviewForm.css'
 
 function ReviewFormModal({ spotId, review, spotName }) {
@@ -11,9 +12,11 @@ function ReviewFormModal({ spotId, review, spotName }) {
     const [rating, setRating] = useState('')
     const [hoverRating, setHoverRating] = useState('')
     const [disableButton, setDisableButton] = useState(true)
+    const [imageArr, setImageArr] = useState({ 0: '', 1: '', 2: '', 3: '' })
     const [errors, setErrors] = useState({})
     const { closeModal } = useModal()
     const nums = [1,2,3,4,5]
+    console.log(review)
 
     const handleMouseEnter = num => {
         setHoverRating(num)

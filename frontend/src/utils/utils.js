@@ -12,3 +12,9 @@ export const month = {
     '11': 'November',
     '12': 'December'
 }
+
+export const validateImg = (image, name, errors) => {
+    if (!image.length) return true
+    if (/\.(jpg|jpeg|png)$/.test(image)) return true
+    errors[name] = 'Image URL must end in .png, .jpg, or .jpeg'
+}

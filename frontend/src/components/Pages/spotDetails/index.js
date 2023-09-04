@@ -19,9 +19,10 @@ const SpotDetails = () => {
     const spot = useSelector(state => state.spots[spotId])
     const reviews = useSelector(allSpotReviews)
     const sessionUser = useSelector(state => state.session.user)
-    const hasReview = reviews.find(review => review.userId === sessionUser?.id)
+    const hasReview = reviews.find(review => review.userId === sessionUser.id)
     const [imageList, setImageList] = useState([])
     const [isLoaded, setIsLoaded] = useState(false)
+    const nums = [1,2,3,4,5]
     useEffect(() => {
         dispatch(getSpotDetailsThunk(spotId))
         .then(res => setImageList([{ url: res.previewImage }, ...res.SpotImages]))
@@ -39,11 +40,11 @@ const SpotDetails = () => {
 
     if (isLoaded) return (
         <div className="spot-details-page">
-            <h1 className="spot-details-header">{spot?.name}</h1>
+            <h1 className="spot-details-header">{spot.name}</h1>
             <div
                 onClick={handleMap}
                 className="spot-details-loc">
-                {spot?.city}, {spot?.state}, {spot?.country}
+                {spot.city}, {spot.state}, {spot.country}
             </div>
             <div className="spot-details-images">
                 <ViewImageModal
@@ -69,17 +70,17 @@ const SpotDetails = () => {
             </div>
             <div className="spot-details-description">
                 <div className="spot-details-text">
-                    <h2>Hosted by {spot?.Owner?.firstName} {spot?.Owner?.lastName}</h2>
-                    <p>{spot?.description}</p>
+                    <h2>Hosted by {spot.Owner.firstName} {spot.Owner.lastName}</h2>
+                    <p>{spot.description}</p>
                 </div>
                 <div className="spot-details-reserve">
                     <div className="spot-details-reserve-top">
-                        <p>${spot?.price} night</p>
+                        <p>${spot.price} night</p>
                         <p>
                             <i className="fa-solid fa-star"></i>
-                            {(spot?.avgStarRating &&
-                                `  ${parseFloat(spot?.avgStarRating).toFixed(1)} · ${spot?.numReviews} review`)
-                                || ' New '}{spot?.avgStarRating && spot?.numReviews!==1 && 's'}
+                            {(spot.avgStarRating &&
+                                `  ${parseFloat(spot.avgStarRating).toFixed(1)} · ${spot.numReviews} review`)
+                                || ' New '}{spot.avgStarRating && spot.numReviews!==1 && 's'}
                         </p>
                     </div>
                     <button
@@ -92,20 +93,20 @@ const SpotDetails = () => {
             <div className="spot-details-reviews">
                 <h2>
                     <i className="fa-solid fa-star"></i>
-                    {(spot?.avgStarRating &&
-                        `  ${parseFloat(spot?.avgStarRating).toFixed(1)} · ${spot?.numReviews} review`)
-                        || ' New '}{spot?.avgStarRating && spot?.numReviews!==1 && 's'}
+                    {(spot.avgStarRating &&
+                        `  ${parseFloat(spot.avgStarRating).toFixed(1)} · ${spot.numReviews} review`)
+                        || ' New '}{spot.avgStarRating && spot.numReviews!==1 && 's'}
                 </h2>
-                {sessionUser && sessionUser?.id !== spot?.Owner?.id && !hasReview &&
+                {sessionUser && sessionUser.id !== spot.Owner.id && !hasReview &&
                 <OpenModalButton
                     buttonText="Post Your Review"
-                    modalComponent={<ReviewFormModal spotId={spot?.id}/>}
+                    modalComponent={<ReviewFormModal spotId={spot.id}/>}
                     className='gray-color-button'
                 />}
-                {!spot?.numReviews &&
-                    ((sessionUser?.id === spot?.Owner?.id &&
+                {!spot.numReviews &&
+                    ((sessionUser.id === spot.Owner.id &&
                     <div className="no-reviews">Your spot currently has no reviews.</div>)
-                    || (sessionUser?.id && <div className="no-reviews">Be the first to post a review!</div>)
+                    || (sessionUser.id && <div className="no-reviews">Be the first to post a review!</div>)
                     || <div className="no-reviews">Log in to post a review!</div>)
                 }
                 {reviews.map(review => {
@@ -113,26 +114,34 @@ const SpotDetails = () => {
                         <div key={review.id}>
                             <div
                                 className="spot-details-review-list"
-                                key={review?.id}>
+                                key={review.id}>
                                 <h2>
-                                    {review?.User?.firstName || sessionUser?.firstName}
+                                    {review.User.firstName || sessionUser.firstName}
                                 </h2>
+                                {nums.map(num =>
+                                    (<span
+                                        className="star-span"
+                                        key={num}>
+                                        {review.stars >= num ? <i className="fa-solid fa-star"></i>
+                                        : <i className="fa-regular fa-star"></i>}
+                                    </span>)
+                                )}
                                 <h3 className="gray">
-                                    {month[review?.createdAt.slice(5,7)]}&nbsp;
-                                    {review?.createdAt.slice(0,4)}
+                                    {month[review.createdAt.slice(5,7)]}&nbsp;
+                                    {review.createdAt.slice(0,4)}
                                 </h3>
-                                {review?.review}
+                                {review.review}
                             </div>
-                            {review?.userId===sessionUser?.id &&
+                            {review.userId===sessionUser.id &&
                             <div>
                                 <OpenModalButton
                                     buttonText="Update"
-                                    modalComponent={<ReviewFormModal spotId={spot?.id} review={review}/>}
+                                    modalComponent={<ReviewFormModal spotId={spot.id} review={review}/>}
                                     className='manage-review-button gray-color-button'
                                 />
                                 <OpenModalButton
                                     buttonText="Delete"
-                                    modalComponent={<DeleteRecordModal spotId={spot?.id} reviewId={review?.id} record='Review'/>}
+                                    modalComponent={<DeleteRecordModal spotId={spot.id} reviewId={review.id} record='Review'/>}
                                     className='manage-review-button gray-color-button'
                                 />
                             </div>

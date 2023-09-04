@@ -42,7 +42,7 @@ const ManageSpots = () => {
                     <li
                         className='spot-li'
                         key={spot.id}>
-                        <SpotCard spotId={spot?.id} />
+                        <SpotCard spotId={spot.id} />
                         <button
                             onClick={() => handleUpdate(spot.id)}
                             className='gray-color-button modify-spot-button'>
@@ -50,7 +50,7 @@ const ManageSpots = () => {
                         </button>
                         <OpenModalButton
                             buttonText="Delete"
-                            modalComponent={<DeleteRecordModal spotId={spot?.id} record='Spot'/>}
+                            modalComponent={<DeleteRecordModal spotId={spot.id} record='Spot'/>}
                             className='gray-color-button modify-spot-button'
                         />
                     </li>

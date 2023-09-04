@@ -66,6 +66,10 @@
     color: #BBBBBB;
 }
 
+.no-spots {
+    margin: 5vh 10vw;
+}
+
 /* image takes up 100% of grid width, set to variable and set as height too */
 
 @media (min-width: 550px) {

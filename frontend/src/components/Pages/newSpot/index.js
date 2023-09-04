@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { useHistory, useParams } from 'react-router-dom'
-import './newSpot.css'
 import { createSpotThunk, editSpotThunk, getSpotDetailsThunk } from '../../../store/spots'
 import { createSpotImageThunk, updateSpotImageThunk, deleteSpotImageThunk } from '../../../store/spotImages'
+import { validateImg } from '../../../utils/utils'
+import './newSpot.css'
 
 const NewSpot = () => {
     const history = useHistory()
@@ -22,8 +23,8 @@ const NewSpot = () => {
     const [images, setImages] = useState({ 0: '', 1: '', 2: '', 3: ''});
     const [submitStatus, setSubmitStatus] = useState(false)
     const [disableButton, setDisableButton] = useState(true)
-    const [errors, setErrors] = useState({})
     const [imageArr, setImageArr] = useState([])
+    const [errors, setErrors] = useState({})
     const [isLoaded, setIsLoaded] = useState(false)
     useEffect(() => {
         if (spotId) {
@@ -63,12 +64,6 @@ const NewSpot = () => {
             setIsLoaded(true)
         }
     }, [spotId, dispatch])
-
-    const validateImg = (image, name, errors) => {
-        if (!image.length) return true
-        if (/\.(jpg|jpeg|png)$/.test(image)) return true
-        errors[name] = 'Image URL must end in .png, .jpg, or .jpeg'
-    }
 
     const validateSpot = () => {
         const spotErrors = {}
@@ -159,7 +154,7 @@ const NewSpot = () => {
                 })
 
             for (const image in images) {
-                if (images[image].length) dispatch(createSpotImageThunk(images[image], newSpot?.id))
+                if (images[image].length) dispatch(createSpotImageThunk(images[image], newSpot.id))
             }
 
             history.push(`/spots/${newSpot.id}`)

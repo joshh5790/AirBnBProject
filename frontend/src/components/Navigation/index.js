@@ -62,7 +62,7 @@ function Navigation({ isLoaded }){
             <li>Other edit buttons are disabled and other information is grayed out when one set of inputs is open</li>
             <li><b>Save buttons:</b> Disabled until user input is valid and different from original inputs.</li>
             <li><b>Delete account:</b> Delete account button which opens a modal which asks for user confirmation before deleting their account by asking for the user to type out a string.</li>
-            <li><b>Mobile-friendly:</b> Display on mobile is streamlined</li>
+            <li><b>Mobile-friendly</b></li>
           </ul>
         </div>}
         {(location.pathname === '/spots/new' || location.pathname.match(spotUpdatePath)) && <div className='page-info'>

@@ -27,25 +27,25 @@ const ManageReviews = () => {
                     <div key={review.id}>
                         <div
                             className="spot-details-review-list"
-                            key={review?.id}>
+                            key={review.id}>
                             <h2>
-                                {review?.Spot?.name}
+                                {review.Spot.name}
                             </h2>
                             <h3 className="review-date">
-                                {month[review?.createdAt.slice(5,7)]}&nbsp;
-                                {review?.createdAt.slice(0,4)}
+                                {month[review.createdAt.slice(5,7)]}&nbsp;
+                                {review.createdAt.slice(0,4)}
                             </h3>
-                            {review?.review}
+                            {review.review}
                         </div>
                         <div>
                             <OpenModalButton
                                 buttonText="Update"
-                                modalComponent={<ReviewFormModal spotId={review?.Spot?.id} review={review} spotName={review?.Spot?.name}/>}
+                                modalComponent={<ReviewFormModal spotId={review.Spot.id} review={review} spotName={review.Spot.name}/>}
                                 className='manage-review-button gray-color-button'
                             />
                             <OpenModalButton
                                 buttonText="Delete"
-                                modalComponent={<DeleteRecordModal spotId={review?.Spot?.id} reviewId={review?.id} record='Review'/>}
+                                modalComponent={<DeleteRecordModal spotId={review.Spot.id} reviewId={review.id} record='Review'/>}
                                 className='manage-review-button gray-color-button'
                             />
                         </div>
