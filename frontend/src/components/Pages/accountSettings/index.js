@@ -32,7 +32,7 @@ function AccountSettings() {
                     label='Legal name'
                     desc='This is the name on your travel document, which could be a license or a passport.'
                     type='name'
-                    variables={ {'First Name': user.firstName, 'Last Name': user.lastName} }
+                    variables={ {'First Name': user?.firstName, 'Last Name': user?.lastName} }
                     otherEdit={otherEdit}
                     changeOther={changeEditStatus}
                     restoreUser={restoreUser}
@@ -41,7 +41,7 @@ function AccountSettings() {
                     label='Email address'
                     desc='Use an address you’ll always have access to.'
                     type='email'
-                    variables={ {'Email address': user.email} }
+                    variables={ {'Email address': user?.email} }
                     otherEdit={otherEdit}
                     changeOther={changeEditStatus}
                     restoreUser={restoreUser}

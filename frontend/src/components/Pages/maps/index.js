@@ -25,8 +25,8 @@ const MapContainer = () => {
   }
 
   const center = {
-    lat: currSpot.lat,
-    lng: currSpot.lng
+    lat: currSpot?.lat,
+    lng: currSpot?.lng
   }
 
   return (
@@ -37,9 +37,9 @@ const MapContainer = () => {
       </div>
       <div className='map-page-desc'>
         <h1 className='map-page-header'>Where you'll be:</h1>
-        <p className='map-loc'>{currSpot.city}, {currSpot.state}, {currSpot.country}</p>
-        <p>Latitude: {currSpot.lat}</p>
-        <p>Longitude: {currSpot.lng}</p>
+        <p className='map-loc'>{currSpot?.city}, {currSpot?.state}, {currSpot?.country}</p>
+        <p>Latitude: {currSpot?.lat}</p>
+        <p>Longitude: {currSpot?.lng}</p>
         <NavLink
           className='map-page-return'
           exact to={`/spots/${spotId}`}>

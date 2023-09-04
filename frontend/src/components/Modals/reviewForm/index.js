@@ -12,11 +12,11 @@ function ReviewFormModal({ spotId, review, spotName }) {
     const [rating, setRating] = useState('')
     const [hoverRating, setHoverRating] = useState('')
     const [disableButton, setDisableButton] = useState(true)
-    const [imageArr, setImageArr] = useState({ 0: '', 1: '', 2: '', 3: '' })
+    // const [images, setImages] = useState({})
+    // const [imageArr, setImageArr] = useState([])
     const [errors, setErrors] = useState({})
     const { closeModal } = useModal()
     const nums = [1,2,3,4,5]
-    console.log(review)
 
     const handleMouseEnter = num => {
         setHoverRating(num)
@@ -31,6 +31,19 @@ function ReviewFormModal({ spotId, review, spotName }) {
             setReviewText(review.review)
             setRating(review.stars)
             setHoverRating(review.stars)
+            // setImages({
+            //     0: review?.reviewImages[0].url || '',
+            //     1: review?.reviewImages[1].url || '',
+            //     2: review?.reviewImages[2].url || '',
+            //     3: review?.reviewImages[3].url || '',
+            //     4: review?.reviewImages[4].url || '',
+            //     5: review?.reviewImages[5].url || '',
+            //     6: review?.reviewImages[6].url || '',
+            //     7: review?.reviewImages[7].url || '',
+            //     8: review?.reviewImages[8].url || '',
+            //     9: review?.reviewImages[9].url || '',
+            // })
+            // setImageArr([...review.reviewImages])
         }
     }, [review])
 

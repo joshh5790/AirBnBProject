@@ -45,7 +45,7 @@ const SpotCard = ({ spotId, setCardsLoaded }) => {
                     <p className='loc'>{spot.city}, {spot.state}</p>
                     <p className='rating'>
                         <i className="fa-solid fa-star"></i>
-                        {spot.avgStarRating ? `  ${parseFloat(spot.avgStarRating).toFixed(1)}` : "  New"}
+                        {spot?.avgStarRating ? `  ${parseFloat(spot.avgStarRating).toFixed(1)}` : "  New"}
                     </p>
                 </div>
                 <div className='spot-card-price'><b>${spot.price}</b> night</div>
