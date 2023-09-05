@@ -14,7 +14,7 @@ function Navigation({ isLoaded }){
 
   return (
     <ul className='nav'>
-      <li>
+      <li className='nav-left'>
         <NavLink exact to="/" className='logo-link'>
           <img
             src={logo}
@@ -23,8 +23,7 @@ function Navigation({ isLoaded }){
           />
           <p className='logo-text'>air-bee-n-bee</p>
         </NavLink>
-      </li>
-      <i className="fa-solid fa-info">
+        <i className="fa-solid fa-info">
         {location.pathname === '/' && <div className='page-info'>
           <h4>Home Page Functionalities</h4>
           <ul>
@@ -95,6 +94,8 @@ function Navigation({ isLoaded }){
           </ul>
         </div>}
       </i>
+      </li>
+
       {isLoaded && <li className='nav-right'>
         {sessionUser && <NavLink
           className='new-spot-button'
