@@ -103,9 +103,9 @@ router.delete('/:reviewId', async (req, res) => {
 
     await currReview.destroy()
     const sum = await Review.sum('stars', { where: { spotId: currSpot.id } })
-    const numReviews = currSpot.numReviews - 1
+    const numReviews = currSpot.numReviews - 1 || ''
     const avgStarRating = numReviews ?
-        Math.round(sum * 10 / numReviews) / 10 : 0
+        Math.round(sum * 10 / numReviews) / 10 : ''
     await currSpot.update({ avgStarRating, numReviews })
 
     return res.json({ message: "Successfully deleted" })
