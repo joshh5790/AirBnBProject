@@ -80,7 +80,7 @@ const SpotDetails = () => {
                             <i className="fa-solid fa-star"></i>
                             {(spot?.avgStarRating &&
                                 `  ${parseFloat(spot?.avgStarRating).toFixed(1)} · ${spot?.numReviews} review`)
-                                || ' New '}{spot?.avgStarRating && spot?.numReviews!==1 && 's'}
+                                || ' New '}{spot?.numReviews > 1 && 's'}
                         </p>
                     </div>
                     <button
@@ -95,7 +95,7 @@ const SpotDetails = () => {
                     <i className="fa-solid fa-star"></i>
                     {(spot?.avgStarRating &&
                         `  ${parseFloat(spot?.avgStarRating).toFixed(1)} · ${spot?.numReviews} review`)
-                        || ' New '}{spot?.avgStarRating && spot?.numReviews!==1 && 's'}
+                        || ' New '}{spot?.numReviews > 1 && 's'}
                 </h2>
                 {sessionUser && sessionUser?.id !== spot?.Owner?.id && !hasReview &&
                 <OpenModalButton
