@@ -14,18 +14,26 @@ import AccountSettings from "./components/Pages/accountSettings";
 function App() {
   const dispatch = useDispatch()
   const [isLoaded, setIsLoaded] = useState(false)
+  const [sessionCheck, setSessionCheck] = useState(false)
 
   useEffect(() => {
     dispatch(sessionActions.restoreUserThunk())
     .then(() => setIsLoaded(true))
-  }, [dispatch])
+    // dispatch(restoreUserThunk())
+    // .then(res => {
+    //   if (!res.user) {
+    //     history.push('/')
+    //     location.reload()
+    //   }
+    // })
+  }, [dispatch, sessionCheck]) // pass down setSessionCheck to every page
 
 
   return (
     <>
       <Switch>
         <Route exact path='/'>
-          {isLoaded && <HomePage />}
+          {isLoaded && <HomePage setSessionCheck={setSessionCheck} />}
         </Route>
         <Route exact path='/spots/new'>
           {isLoaded && <NewSpot />}
