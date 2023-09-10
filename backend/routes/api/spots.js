@@ -221,6 +221,7 @@ router.get('/', validateQuery, async (req, res) => {
         },
         attributes: { exclude: ['numReviews'] },
         offset: size * (page - 1),
+        order: ['id'],
         limit: size
     })
     return res.json({ Spots: allSpots })

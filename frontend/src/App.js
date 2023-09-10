@@ -18,7 +18,7 @@ function App() {
   useEffect(() => {
     dispatch(sessionActions.restoreUserThunk())
     .then(() => setIsLoaded(true))
-  }, [dispatch]) // pass down setSessionCheck to every page
+  }, [dispatch])
 
 
   return (
