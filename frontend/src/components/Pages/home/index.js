@@ -4,8 +4,7 @@ import SpotCard from './SpotCard'
 import { getAllSpotsThunk } from '../../../store/spots'
 import './HomePage.css'
 
-const HomePage = ({ setSessionCheck }) => {
-    setSessionCheck(prev => !prev)
+const HomePage = () => {
     const dispatch = useDispatch()
     const [size, setSize] = useState(20)
     const [page, setPage] = useState(1)
