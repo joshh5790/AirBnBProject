@@ -68,14 +68,14 @@ const HomePage = () => {
             </ul>
             <div className='paginate'>
                     <button
-                        disabled={page === 1 || !(parseInt(cardsLoaded) === allSpots.length)}
+                        disabled={page === 1 || !(parseInt(cardsLoaded) >= allSpots.length)}
                         onClick={() => checkPage('-')}
                         className='page-button'>
                         {`<< Prev`}
                     </button>
                     <span className='page-number'>{page}</span>
                     <button
-                        disabled={!(parseInt(cardsLoaded) === allSpots.length) || allSpots.length === 0}
+                        disabled={!(parseInt(cardsLoaded) >= allSpots.length) || allSpots.length === 0}
                         onClick={() => checkPage('+')}
                         className='page-button'>
                         {`Next >>`}

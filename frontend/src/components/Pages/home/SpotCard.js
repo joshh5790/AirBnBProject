@@ -16,7 +16,7 @@ const SpotCard = ({ spotId, setCardsLoaded }) => {
         dispatch(getSpotDetailsThunk(spotId))
         .then(() => setIsLoaded(true))
         .then(() => {
-            if (setCardsLoaded) return setCardsLoaded(prev => prev + 1)
+            if (setCardsLoaded) return setCardsLoaded(prev => parseInt(prev) + 1)
         })
     }, [dispatch])
 
