@@ -116,4 +116,7 @@
     .new-spot-button {
         display: none;
     }
+    .logo-text {
+        display: none;
+    }
 }
