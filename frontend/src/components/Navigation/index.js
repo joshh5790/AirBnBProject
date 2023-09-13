@@ -29,9 +29,10 @@ function Navigation({ isLoaded }){
           <ul>
             <li><b>Tooltip:</b> tooltip with name will appear after hovering above spot card for 1 second.</li>
             <li><b>Query:</b> Allows for size query, which specifies how many listings should be shown on a single page</li>
-            <li><b>Pagination:</b> Allows user to see further listings than the ones currently on the home page.</li>
+            <li><b>Pagination:</b> Allows user to click to next page of listings</li>
             <li><b>Mobile-friendly</b></li>
             <li><b>Skeleton</b></li>
+            <li><b>NOTICE:</b> {"Due to Render's (the hosting site) dyno shutting down at inconsistent times, you may be logged out randomly. Should you encounter a blank screen while playing around, calmly navigate your way to the logo on the top left and click on it, which will bring you back to the home page."}</li>
           </ul>
         </div>}
         {location.pathname === '/spots/current' && <div className='page-info'>
