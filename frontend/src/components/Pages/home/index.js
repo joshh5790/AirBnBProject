@@ -1,16 +1,27 @@
 import { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
+import { useLocation } from 'react-router-dom'
 import SpotCard from './SpotCard'
 import { getAllSpotsThunk } from '../../../store/spots'
 import './HomePage.css'
 
 const HomePage = () => {
+    const location = useLocation()
     const dispatch = useDispatch()
     const [size, setSize] = useState(20)
     const [page, setPage] = useState(1)
     const [refresh, setRefresh] = useState(false)
     const [cardsLoaded, setCardsLoaded] = useState(0)
     const allSpots = useSelector(state => Object.values(state.spots))
+
+    useEffect(() => {
+        if (location.state === 'reset') {
+            setSize(20)
+            setPage(1)
+            setRefresh(prev => !prev)
+            location.state = ''
+        }
+    })
 
     useEffect(() => {
         dispatch(getAllSpotsThunk({ page, size }))
@@ -31,7 +42,9 @@ const HomePage = () => {
         setPage(parseInt(sessionStorage.getItem('page')))
     }
 
-    const handleFilterSize = () => {
+    const handleFilterSize = e => {
+        e.preventDefault()
+        if (!size) setSize(20)
         setCardsLoaded(size)
         sessionStorage.setItem('page', 1)
         setRefresh(prev => !prev)
@@ -42,18 +55,17 @@ const HomePage = () => {
         <div className='home-page'>
             <div className='home-filter-bar'>
                 <label className='filter-size-label'>Listings per page (max 20):</label>
-                <div className='filter-size-div'>
+                <form  onSubmit={e => handleFilterSize(e)} className='filter-size-div'>
                     <input
                         className='filter-size-input'
                         value={size}
                         onChange={e => checkSize(e.target.value)}
                         type='number' />
                     <button
-                        onClick={handleFilterSize}
                         className='filter-size-confirm'>
                         Set
                     </button>
-                </div>
+                </form>
             </div>
             {allSpots.length === 0 && <div className='no-spots'>
                 Thanos has snapped all spots out of existence. Just kidding, there are just no more spots on this page!
