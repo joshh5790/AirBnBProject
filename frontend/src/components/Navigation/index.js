@@ -39,7 +39,7 @@ function Navigation({ isLoaded }){
             <li><b>Pagination:</b> Allows user to click to next page of listings</li>
             <li><b>Responsive (Mobile friendly)</b></li>
             <li><b>Skeleton</b></li>
-            <li><b>NOTICE:</b> {"Due to Render's (the hosting site) dyno shutting down at inconsistent times, you may be logged out randomly. Should you encounter a blank screen while playing around, calmly navigate your way to the logo on the top left and click on it, which will bring you back to the home page."}</li>
+            <li><b>NOTICE:</b> Due to Render's (the hosting site) dyno shutting down at inconsistent times, you may be logged out randomly. Should you encounter a blank screen while playing around, do not panic and calmly navigate your way to the logo on the top left and click on it, which will bring you back to the home page."</li>
           </ul>
         </div>}
         {location.pathname === '/spots/current' && <div className='page-info'>
