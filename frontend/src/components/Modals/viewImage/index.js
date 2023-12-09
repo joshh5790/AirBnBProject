@@ -41,10 +41,10 @@ function ViewImageModal({ imageOrder, imageList, className }) {
     }
 
     return (<img
-                src={imageList[imageOrder]?.url || 'https://static.vecteezy.com/system/resources/previews/005/337/799/original/icon-image-not-found-free-vector.jpg'}
-                alt={imageList[imageOrder]?.url || 'Image not found'}
-                onClick={() => handleClick({ lStyle: styleSet(0), rStyle: styleSet(lastIdx) })}
-                className={className}/>)
+            src={imageList[imageOrder]?.url || 'https://static.vecteezy.com/system/resources/previews/005/337/799/original/icon-image-not-found-free-vector.jpg'}
+            alt={imageList[imageOrder]?.url || 'Image not found'}
+            onClick={() => handleClick({ lStyle: styleSet(0), rStyle: styleSet(lastIdx) })}
+            className={className}/>)
 }
 
 export default ViewImageModal

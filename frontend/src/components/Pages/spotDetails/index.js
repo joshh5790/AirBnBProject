@@ -92,7 +92,7 @@ const SpotDetails = () => {
             </div>
             <div className="spot-details-reviews">
                 <h2>
-                    <i className="fa-solid fa-star"></i>
+                    <i className="fa-solid fa-star" />
                     {(parseInt(spot?.avgStarRating) &&
                         `  ${parseFloat(spot?.avgStarRating).toFixed(1)} · ${spot?.numReviews} review`)
                         || ' New '}{parseInt(spot?.numReviews) > 1 && 's'}
